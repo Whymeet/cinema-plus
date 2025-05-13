@@ -36,11 +36,15 @@
     "typeface-montserrat": "0.0.75",
     "uuid": "3.3.3"
   },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "react-scripts": "^3.0.1"
+  },
   "scripts": {
     "clean": "rm -rf node_modules package-lock.json && npm cache clean --force",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "test": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts test",
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:8080",
@@ -55,8 +59,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "react-scripts": "^3.0.1"
   }
 }
+
