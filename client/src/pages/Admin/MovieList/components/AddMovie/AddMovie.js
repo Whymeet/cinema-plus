@@ -80,6 +80,7 @@ class AddMovie extends Component {
 
   onAddMovie = () => {
     const { image, genre, ...rest } = this.state;
+    console.log('Adding movie with data:', { image, ...rest, genre: genre.join(',') }); // Debug log
     const movie = { ...rest, genre: genre.join(',') };
     this.props.addMovie(image, movie);
   };
