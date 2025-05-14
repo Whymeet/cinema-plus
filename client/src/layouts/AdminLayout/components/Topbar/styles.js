@@ -2,7 +2,7 @@ export default theme => ({
   root: {
     borderBottom: `1px solid ${theme.palette.borderShadow}`,
     boxShadow: `0 0 35px 0  ${theme.palette.borderShadow}`,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#00008B',
     display: 'flex',
     alignItems: 'center',
     height: theme.topBar.height,
