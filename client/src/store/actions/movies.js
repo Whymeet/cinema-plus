@@ -3,14 +3,18 @@ import { setAlert } from './alert';
 
 export const uploadMovieImage = (id, image) => async dispatch => {
   try {
+    const token = localStorage.getItem('jwtToken');
     const data = new FormData();
     data.append('file', image);
-    const url = '/movies/photo/' + id;
+    const url = `/movies/photo/${id}`;
     const response = await fetch(url, {
       method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
       body: data
     });
-    const responseData = await response.json();
+    const responseData = await response.json(); 
     if (response.ok) {
       dispatch(setAlert('Image Uploaded', 'success', 5000));
     }
@@ -98,7 +102,7 @@ export const addMovie = (image, newMovie) => async dispatch => {
   }
 };
 
-export const updateMovie = (movieId, movie, image) => async dispatch => {
+export const updateMovie = (image, movie, movieId) => async dispatch => {
   try {
     const token = localStorage.getItem('jwtToken');
     const url = '/movies/' + movieId;
