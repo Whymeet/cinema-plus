@@ -87,7 +87,8 @@ class AddMovie extends Component {
   onUpdateMovie = () => {
     const { image, genre, ...rest } = this.state;
     const movie = { ...rest, genre: genre.join(',') };
-    this.props.updateMovie(this.props.edit._id, movie, image);
+    // сначала файл, потом данные, потом id
+    this.props.updateMovie(image, movie, this.props.edit._id);
   };
 
   onRemoveMovie = () => this.props.removeMovie(this.props.edit._id);
