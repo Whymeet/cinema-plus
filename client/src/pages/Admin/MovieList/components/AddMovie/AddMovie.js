@@ -91,6 +91,7 @@ class AddMovie extends Component {
     this.props.updateMovie(image, movie, this.props.edit._id);
   };
 
+  
   onRemoveMovie = () => this.props.removeMovie(this.props.edit._id);
 
   render() {
