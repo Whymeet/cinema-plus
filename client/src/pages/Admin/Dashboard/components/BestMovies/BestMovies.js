@@ -38,12 +38,12 @@ const BestMovies = props => {
     labels: validMovies.map(movie => movie.movie?.title?.toUpperCase() || 'Неизвестный'),
     datasets: [
       {
-        label: 'This year',
+        label: 'Текущий год',
         backgroundColor: palette.primary.main,
         data: validMovies.map(movie => movie.count)
       },
       {
-        label: 'Last year',
+        label: 'Прошлый год',
         backgroundColor: palette.neutral,
         data: validMovies.map(() => Math.floor(Math.random() * 30) + 10) // Генерируем случайные данные для примера
       }

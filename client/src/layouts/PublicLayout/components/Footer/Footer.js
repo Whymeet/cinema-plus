@@ -8,8 +8,8 @@ export default function Footer() {
     <div className={classes.root}>
       <Divider />
       <Typography className={classes.copyright} variant="body1">
-        <Link href="https://github.com/Whymeet/fokus" target="_blank" rel="noopener">
-          @https://github.com/Whymeet/fokus
+        <Link href="https://github.com/Whymeet/cinema-plus" target="_blank" rel="noopener">
+          @https://github.com/Whymeet/cinema-plus
         </Link>
       </Typography>
     </div>

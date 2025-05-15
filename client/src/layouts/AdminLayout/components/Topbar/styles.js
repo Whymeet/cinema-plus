@@ -44,9 +44,11 @@ export default theme => ({
     marginLeft: '-4px'
   },
   notificationsButton: {
-    marginLeft: 'auto'
+    marginLeft: 'auto',
+    color: theme.palette.common.white
   },
   signOutButton: {
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1),
+    color: theme.palette.common.white
   }
 });

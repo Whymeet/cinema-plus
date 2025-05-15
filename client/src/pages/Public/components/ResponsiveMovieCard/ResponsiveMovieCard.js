@@ -65,7 +65,9 @@ const MovieCard = props => {
         <div
           className={classes.blurBackground}
           style={{
-            backgroundImage: `url(${movie.image})`
+            backgroundImage: movie.image ? `url(${movie.image})` : 'none',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
           }}
         />
       </Paper>
