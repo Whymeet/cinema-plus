@@ -48,7 +48,7 @@ export default function BookingCheckout(props) {
               <Typography className={classes.bannerTitle}>Билеты</Typography>
               {selectedSeats > 0 ? (
                 <Typography className={classes.bannerContent}>
-                  {selectedSeats} билетов
+                  {selectedSeats} {selectedSeats === 1 ? 'билет' : (selectedSeats >= 2 && selectedSeats <= 4) ? 'билета' : 'билетов'}
                 </Typography>
               ) : (
                 <Typography className={classes.bannerContent}>0</Typography>
