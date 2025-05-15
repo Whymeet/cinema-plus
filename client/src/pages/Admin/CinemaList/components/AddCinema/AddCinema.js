@@ -88,7 +88,7 @@ class AddCinema extends Component {
       <>
         <div className={classes.field}>
           <Button onClick={() => this.onAddSeatRow()}>
-            <Add /> add Seats
+            <Add /> Добавить ряд
           </Button>
         </div>
         {seats.length > 0 &&
@@ -98,7 +98,7 @@ class AddCinema extends Component {
                 key={`new-seat-${index}`}
                 className={classes.textField}
                 label={
-                  'Add number of seats for row : ' +
+                  'Количество мест для ряда : ' +
                   (index + 10).toString(36).toUpperCase()
                 }
                 margin="dense"
@@ -132,10 +132,10 @@ class AddCinema extends Component {
     } = this.state;
 
     const rootClassName = classNames(classes.root, className);
-    const mainTitle = this.props.editCinema ? 'Edit Cinema' : 'Add Cinema';
+    const mainTitle = this.props.editCinema ? 'Редактировать кинотеатр' : 'Добавить кинотеатр';
     const submitButton = this.props.editCinema
-      ? 'Update Cinema'
-      : 'Save Details';
+      ? 'Обновить кинотеатр'
+      : 'Сохранить';
     const submitAction = this.props.editCinema
       ? () => this.onSubmitAction('update')
       : () => this.onSubmitAction('create');
@@ -149,8 +149,8 @@ class AddCinema extends Component {
           <div className={classes.field}>
             <TextField
               className={classes.textField}
-              helperText="Please specify the cinema name"
-              label="Name"
+              helperText="Пожалуйста, укажите название кинотеатра"
+              label="Название"
               margin="dense"
               required
               value={name}
@@ -163,7 +163,7 @@ class AddCinema extends Component {
             <TextField
               fullWidth
               className={classes.textField}
-              label="City"
+              label="Город"
               margin="dense"
               required
               variant="outlined"
@@ -187,7 +187,7 @@ class AddCinema extends Component {
           <div className={classes.field}>
             <TextField
               className={classes.textField}
-              label="Ticket Price"
+              label="Стоимость билета"
               margin="dense"
               type="number"
               value={ticketPrice}
@@ -198,7 +198,7 @@ class AddCinema extends Component {
             />
             <TextField
               className={classes.textField}
-              label="Seats Available"
+              label="Доступных мест"
               margin="dense"
               required
               value={seatsAvailable}
@@ -224,7 +224,7 @@ class AddCinema extends Component {
             className={classes.buttonFooter}
             variant="contained"
             onClick={() => this.onSubmitAction('remove')}>
-            Delete Cinema
+            Удалить кинотеатр
           </Button>
         )}
 

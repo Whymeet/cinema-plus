@@ -68,16 +68,22 @@ export const createCinemas = (image, newCinema) => async dispatch => {
     });
     const cinema = await response.json();
     if (response.ok) {
-      dispatch(setAlert('Cinema Created', 'success', 5000));
+      dispatch(setAlert('Кинотеатр создан', 'success', 5000));
       if (image) dispatch(uploadCinemaImage(cinema._id, image));
       dispatch(getCinemas());
-      return { status: 'success', message: 'Cinema Created' };
+      return { status: 'success', message: 'Кинотеатр создан' };
     }
   } catch (error) {
-    dispatch(setAlert(error.message, 'error', 5000));
+    dispatch(
+      setAlert(
+        error.message || 'Кинотеатр не сохранен, попробуйте снова.',
+        'error',
+        5000
+      )
+    );
     return {
       status: 'error',
-      message: ' Cinema have not been saved, try again.'
+      message: 'Кинотеатр не сохранен, попробуйте снова.'
     };
   }
 };
@@ -95,15 +101,21 @@ export const updateCinemas = (image, cinema, id) => async dispatch => {
       body: JSON.stringify(cinema)
     });
     if (response.ok) {
-      dispatch(setAlert('Cinema Updated', 'success', 5000));
+      dispatch(setAlert('Кинотеатр обновлен', 'success', 5000));
       if (image) dispatch(uploadCinemaImage(id, image));
-      return { status: 'success', message: 'Cinema Updated' };
+      return { status: 'success', message: 'Кинотеатр обновлен' };
     }
   } catch (error) {
-    dispatch(setAlert(error.message, 'error', 5000));
+    dispatch(
+      setAlert(
+        error.message || 'Кинотеатр не обновлен, попробуйте снова.',
+        'error',
+        5000
+      )
+    );
     return {
       status: 'error',
-      message: ' Cinema have not been updated, try again.'
+      message: 'Кинотеатр не обновлен, попробуйте снова.'
     };
   }
 };
@@ -120,14 +132,20 @@ export const removeCinemas = id => async dispatch => {
       }
     });
     if (response.ok) {
-      dispatch(setAlert('Cinema Deleted', 'success', 5000));
-      return { status: 'success', message: 'Cinema Removed' };
+      dispatch(setAlert('Кинотеатр удален', 'success', 5000));
+      return { status: 'success', message: 'Кинотеатр удален' };
     }
   } catch (error) {
-    dispatch(setAlert(error.message, 'error', 5000));
+    dispatch(
+      setAlert(
+        error.message || 'Кинотеатр не удален, попробуйте снова.',
+        'error',
+        5000
+      )
+    );
     return {
       status: 'error',
-      message: ' Cinema have not been deleted, try again.'
+      message: 'Кинотеатр не удален, попробуйте снова.'
     };
   }
 };

@@ -38,21 +38,21 @@ class Navbar extends Component {
           })}>
           <Link className={classes.logoLink} to="/">
             <Typography className={classes.logo} variant="h2">
-              Cinema +
+              Фокус
             </Typography>
           </Link>
           <div className={classes.navLinks}>
             <Link className={classes.navLink} to="/">
-              Home
+              Главная
             </Link>
             <Link className={classes.navLink} to="/movie/category/nowShowing">
-              Now Showing
+              Афиша
             </Link>
             <Link className={classes.navLink} to="/movie/category/comingSoon">
-              Coming Soon
+              Скоро в кино
             </Link>
             <Link className={classes.navLink} to="/cinemas">
-              Cinemas
+              Кинотеатры
             </Link>
           </div>
 
@@ -68,7 +68,7 @@ class Navbar extends Component {
                           ? '/admin/dashboard'
                           : '/mydashboard'
                       }>
-                      Dashboard
+                      Управление
                     </Link>
                   </ListItem>
                 )}
@@ -76,13 +76,13 @@ class Navbar extends Component {
                 {isAuth ? (
                   <ListItem>
                     <Link className={classes.navLink} onClick={logout} to="/">
-                      Logout
+                      Выход
                     </Link>
                   </ListItem>
                 ) : (
                   <ListItem>
                     <Link className={classes.navLink} to="/login">
-                      Login
+                      Вход
                     </Link>
                   </ListItem>
                 )}
@@ -116,32 +116,32 @@ class Navbar extends Component {
             [classes.nav]: true
           })}>
           <div className={classes.navContent}>
-            <div className={classes.currentPageShadow}>Movies</div>
+            <div className={classes.currentPageShadow}>Фильмы</div>
             <ul
               className={classes.innerNav}
               onClick={() => this.setState({ showMenu: !this.state.showMenu })}>
               <li className={classes.innerNavListItem}>
                 <Link className={classes.innerNavLink} to="/">
-                  Home
+                  Главная
                 </Link>
               </li>
               <li className={classes.innerNavListItem}>
                 <Link
                   className={classes.innerNavLink}
                   to="/movie/category/nowShowing">
-                  Now Showing
+                  Афиша
                 </Link>
               </li>
               <li className={classes.innerNavListItem}>
                 <Link
                   className={classes.innerNavLink}
                   to="/movie/category/comingSoon">
-                  Coming Soon
+                  Скоро в кино
                 </Link>
               </li>
               <li className={classes.innerNavListItem}>
                 <Link className={classes.innerNavLink} to="/cinemas">
-                  Cinemas
+                  Кинотеатры
                 </Link>
               </li>
             </ul>

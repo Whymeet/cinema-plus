@@ -54,7 +54,7 @@ function MyDashboard(props) {
                 className={classes.title}
                 variant="h2"
                 color="inherit">
-                My Reservations
+                Мои бронирования
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -68,7 +68,7 @@ function MyDashboard(props) {
         )}
         <Grid item xs={12}>
           <Typography className={classes.title} variant="h2" color="inherit">
-            My Account
+            Мой аккаунт
           </Typography>
         </Grid>
         <Grid item xs={12}>

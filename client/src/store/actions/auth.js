@@ -45,7 +45,7 @@ export const login = (username, password) => async dispatch => {
       const { user } = responseData;
       user && setUser(user);
       dispatch({ type: LOGIN_SUCCESS, payload: responseData });
-      dispatch(setAlert(`Welcome ${user.name}`, 'success', 5000));
+      dispatch(setAlert(`Добро пожаловать, ${user.name}`, 'success', 5000));
     }
     if (responseData.error) {
       dispatch({ type: LOGIN_FAIL });
@@ -73,7 +73,7 @@ export const facebookLogin = e => async dispatch => {
       const { user } = responseData;
       user && setUser(user);
       dispatch({ type: LOGIN_SUCCESS, payload: responseData });
-      dispatch(setAlert(`Welcome ${user.name}`, 'success', 5000));
+      dispatch(setAlert(`Добро пожаловать, ${user.name}`, 'success', 5000));
     }
     if (responseData.error) {
       dispatch({ type: LOGIN_FAIL });
@@ -101,7 +101,7 @@ export const googleLogin = ({ profileObj }) => async dispatch => {
       const { user } = responseData;
       user && setUser(user);
       dispatch({ type: LOGIN_SUCCESS, payload: responseData });
-      dispatch(setAlert(`Welcome ${user.name}`, 'success', 5000));
+      dispatch(setAlert(`Добро пожаловать, ${user.name}`, 'success', 5000));
     }
     if (responseData.error) {
       dispatch({ type: LOGIN_FAIL });
@@ -136,7 +136,7 @@ export const register = ({
       user && setUser(user);
       if (image) dispatch(uploadImage(user._id, image)); // Upload image
       dispatch({ type: REGISTER_SUCCESS, payload: responseData });
-      dispatch(setAlert('Register Success', 'success', 5000));
+      dispatch(setAlert('Регистрация прошла успешно', 'success', 5000));
     }
     if (responseData._message) {
       dispatch({ type: REGISTER_FAIL });
@@ -185,7 +185,7 @@ export const logout = () => async dispatch => {
     if (response.ok) {
       removeUser();
       dispatch({ type: LOGOUT });
-      dispatch(setAlert('LOGOUT Success', 'success', 5000));
+      dispatch(setAlert('Выход выполнен успешно', 'success', 5000));
     }
     if (responseData.error) {
       dispatch(setAlert(responseData.error.message, 'error', 5000));

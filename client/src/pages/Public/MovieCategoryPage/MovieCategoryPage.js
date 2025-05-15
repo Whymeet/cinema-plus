@@ -28,19 +28,32 @@ function MovieCategoryPage(props) {
   }, [movies, getMovies]);
 
   const classes = useStyles(props);
+  
+  // Перевод категорий на русский
+  const getCategoryTitle = (category) => {
+    switch(category) {
+      case 'nowShowing':
+        return 'Афиша';
+      case 'comingSoon':
+        return 'Скоро в кино';
+      default:
+        return category;
+    }
+  };
+
   return (
     <Grid container spacing={2}>
       {!['nowShowing', 'comingSoon'].includes(category) ? (
         <Grid item xs={12}>
           <Typography className={classes.title} variant="h2" color="inherit">
-            Category Does not exist.
+            Категория не существует
           </Typography>
         </Grid>
       ) : (
         <>
           <Grid item xs={12}>
             <Typography className={classes.title} variant="h2" color="inherit">
-              {category}
+              {getCategoryTitle(category)}
             </Typography>
           </Grid>
           <Grid

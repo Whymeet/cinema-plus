@@ -5,8 +5,36 @@ import {
   KeyboardDatePicker
 } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles(() => ({
+  inputField: {
+    backgroundColor: '#ffffff',
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#e0e0e0',
+      },
+      '&:hover fieldset': {
+        borderColor: '#bebebe',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#7d58ff',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#555555',
+    },
+    '& .MuiInputBase-input': {
+      color: '#000000',
+    },
+    '& .MuiSelect-icon': {
+      color: '#555555',
+    }
+  }
+}));
 
 export default function BookingForm(props) {
+  const classes = useStyles();
   const {
     cinemas,
     showtimes,
@@ -32,7 +60,7 @@ export default function BookingForm(props) {
         alignItems="center"
         justifyContent="center">
         <Typography align="center" variant="h2" color="inherit">
-          No Cinema Available.
+          Нет доступных кинотеатров.
         </Typography>
       </Box>
     );
@@ -44,8 +72,9 @@ export default function BookingForm(props) {
           fullWidth
           select
           value={selectedCinema}
-          label="Select Cinema"
+          label="Выбрать кинотеатр"
           variant="outlined"
+          className={classes.inputField}
           onChange={onChangeCinema}>
           {cinemas.map(cinema => (
             <MenuItem key={cinema._id} value={cinema._id}>
@@ -62,13 +91,14 @@ export default function BookingForm(props) {
               margin="none"
               fullWidth
               id="start-date"
-              label="Start Date"
+              label="Дата показа"
               minDate={new Date(showtime.startDate)}
               maxDate={new Date(showtime.endDate)}
               value={selectedDate}
+              className={classes.inputField}
               onChange={date => onChangeDate(date._d)}
               KeyboardButtonProps={{
-                'aria-label': 'change date'
+                'aria-label': 'изменить дату'
               }}
             />
           </MuiPickersUtilsProvider>
@@ -80,8 +110,9 @@ export default function BookingForm(props) {
             fullWidth
             select
             value={selectedTime}
-            label="Select Time"
+            label="Выбрать время"
             variant="outlined"
+            className={classes.inputField}
             onChange={onChangeTime}>
             {times.map((time, index) => (
               <MenuItem key={time + '-' + index} value={time}>

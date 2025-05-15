@@ -48,7 +48,7 @@ class ReservationsTable extends Component {
 
   onFindAttr = (id, list, attr) => {
     const item = list.find(item => item._id === id);
-    return item ? item[attr] : `Not ${attr} Found`;
+    return item ? item[attr] : `Не найдено ${attr}`;
   };
 
   render() {
@@ -62,12 +62,12 @@ class ReservationsTable extends Component {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell align="left">Movie</TableCell>
-                <TableCell align="left">Cinema</TableCell>
-                <TableCell align="left">Date</TableCell>
-                <TableCell align="left">Start At</TableCell>
-                <TableCell align="left">Ticket Price</TableCell>
-                <TableCell align="left">Total</TableCell>
+                <TableCell align="left">Фильм</TableCell>
+                <TableCell align="left">Кинотеатр</TableCell>
+                <TableCell align="left">Дата</TableCell>
+                <TableCell align="left">Начало</TableCell>
+                <TableCell align="left">Цена билета</TableCell>
+                <TableCell align="left">Итого</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -102,18 +102,20 @@ class ReservationsTable extends Component {
           </Table>
           <TablePagination
             backIconButtonProps={{
-              'aria-label': 'Previous Page'
+              'aria-label': 'Предыдущая страница'
             }}
             component="div"
             count={reservations.length}
             nextIconButtonProps={{
-              'aria-label': 'Next Page'
+              'aria-label': 'Следующая страница'
             }}
             onChangePage={this.handleChangePage}
             onChangeRowsPerPage={this.handleChangeRowsPerPage}
             page={page}
             rowsPerPage={rowsPerPage}
             rowsPerPageOptions={[5, 10, 25]}
+            labelRowsPerPage="Строк на странице:"
+            labelDisplayedRows={({ from, to, count }) => `${from}-${to} из ${count}`}
           />
         </PortletContent>
       </Portlet>

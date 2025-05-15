@@ -14,6 +14,26 @@ const useStyles = makeStyles(theme => ({
   successInfo: { margin: theme.spacing(3) },
   ignoreButton: {
     marginLeft: theme.spacing(3)
+  },
+  inputField: {
+    backgroundColor: '#ffffff',
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#e0e0e0',
+      },
+      '&:hover fieldset': {
+        borderColor: '#bebebe',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#7d58ff',
+      },
+    },
+    '& .MuiInputLabel-root': {
+      color: '#555555',
+    },
+    '& .MuiInputBase-input': {
+      color: '#000000',
+    }
   }
 }));
 
@@ -36,21 +56,21 @@ export default function BookingInvitation(props) {
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Typography variant="h4" align="center">
-          Guest Invitation
+          Приглашение гостя
         </Typography>
         <Typography
           className={classes.successInfo}
           variant="body1"
           align="center">
-          You have successfuly booked your seats. Please fill the emails below,
-          to send invitations to your friends!
+          Вы успешно забронировали свои места. Пожалуйста, заполните электронные адреса ниже,
+          чтобы отправить приглашения вашим друзьям!
         </Typography>
         <Box width={1} textAlign="center">
           <Button
             color="primary"
             variant="outlined"
             onClick={() => onDownloadPDF()}>
-            Download Pass
+            Скачать билет
           </Button>
         </Box>
         <Grid className={classes.gridContainer} container spacing={3}>
@@ -58,17 +78,18 @@ export default function BookingInvitation(props) {
             <Grid item xs={12} md={6} lg={4} key={'seat-' + index}>
               <TextField
                 fullWidth
-                label="email"
+                label="Email"
                 name={`${convertToAlphabet(seat[0])}-${seat[1]}`}
-                helperText={`Please select an Email for Row : ${convertToAlphabet(
+                helperText={`Пожалуйста, введите Email для Ряда: ${convertToAlphabet(
                   seat[0]
-                )} - Seat Number : ${seat[1]}`}
+                )} - Места: ${seat[1]}`}
                 margin="dense"
                 required
                 value={
                   invitations[`${convertToAlphabet(seat[0])}-${seat[1]}`] || ''
                 }
                 variant="outlined"
+                className={classes.inputField}
                 onChange={event => onSetInvitation(event)}
               />
             </Grid>
@@ -80,7 +101,7 @@ export default function BookingInvitation(props) {
                 color="primary"
                 variant="outlined"
                 onClick={() => sendInvitations()}>
-                Send Invitations
+                Отправить приглашения
               </Button>
             </Grid>
             <Grid item>
@@ -89,7 +110,7 @@ export default function BookingInvitation(props) {
                 color="secondary"
                 variant="outlined"
                 onClick={() => ignore()}>
-                Ignore
+                Пропустить
               </Button>
             </Grid>
           </Grid>
