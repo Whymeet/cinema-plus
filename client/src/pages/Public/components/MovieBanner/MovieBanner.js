@@ -67,13 +67,13 @@ function MovieBanner(props) {
             {textTruncate(movie.description, 450)}
           </Typography>
           <Typography className={classes.director} variant="h4" color="inherit">
-            By: {movie.director}
+            Режиссер: {movie.director}
           </Typography>
           <Typography
             className={classes.duration}
             variant="body1"
             color="inherit">
-            {movie.duration} min
+            {movie.duration} мин
           </Typography>
           <Typography className={classes.genre} variant="body1" color="inherit">
             {movie.genre}
@@ -90,14 +90,14 @@ function MovieBanner(props) {
         {fullDescription ? (
           <Link to={`booking/${movie._id}`} style={{ textDecoration: 'none' }}>
             <Button variant="contained" className={classes.button}>
-              Buy Tickets
+              Купить билеты
               <ArrowRightAlt className={classes.buttonIcon} />
             </Button>
           </Link>
         ) : (
           <Link to={`movie/${movie._id}`} style={{ textDecoration: 'none' }}>
             <Button className={classnames(classes.button, classes.learnMore)}>
-              Learn More
+              Подробнее
               <ArrowRightAlt className={classes.buttonIcon} />
             </Button>
           </Link>

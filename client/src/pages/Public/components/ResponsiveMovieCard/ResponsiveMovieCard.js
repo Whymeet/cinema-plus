@@ -26,13 +26,13 @@ const MovieCard = props => {
               className={classes.director}
               variant="h4"
               color="inherit">
-              By: {movie.director}
+              Режиссер: {movie.director}
             </Typography>
             <Typography
               className={classes.duration}
               variant="body1"
               color="inherit">
-              {movie.duration} min
+              {movie.duration} мин
             </Typography>
             <Typography
               className={classes.genre}

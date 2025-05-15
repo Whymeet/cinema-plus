@@ -91,7 +91,7 @@ function LoginForm(props) {
   return (
     <form className={classes.form}>
       <Typography className={classes.title} variant="h2">
-        Sign in
+        Вход в систему
       </Typography>
 
       <div className={classes.socialLogin}>
@@ -115,7 +115,7 @@ function LoginForm(props) {
                 fontSize: 'calc(.27548vw + 12.71074px)',
                 fontWeight: 700
               }}>
-              Login With Google
+              Войти через Google
             </Button>
           )}
         />
@@ -130,7 +130,7 @@ function LoginForm(props) {
       <div className={classes.fields}>
         <TextField
           className={classes.textField}
-          label="username"
+          label="Имя пользователя"
           name="username"
           onChange={event => handleFieldChange(event)}
           type="text"
@@ -139,7 +139,7 @@ function LoginForm(props) {
         />
         <TextField
           className={classes.textField}
-          label="Password"
+          label="Пароль"
           name="password"
           onChange={event => handleFieldChange(event)}
           type="password"
@@ -154,12 +154,12 @@ function LoginForm(props) {
         onClick={() => props.login(values.username, values.password)}
         size="large"
         variant="contained">
-        Login now
+        Войти
       </Button>
       <Typography className={classes.register} variant="body1">
-        Don't have an account?
+        Нет аккаунта?{' '}
         <Link className={classes.registerUrl} to="/register">
-          register
+          Регистрация
         </Link>
       </Typography>
     </form>

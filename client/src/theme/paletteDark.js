@@ -51,6 +51,11 @@ export default {
     dark: red[700],
     contrastText: white
   },
+  text: {
+    primary: white,
+    secondary: white,
+    link: white
+  },
   background: {
     paper: '#ADD8E6',
     default: darkPurple,

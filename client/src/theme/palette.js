@@ -58,9 +58,9 @@ export default {
     contrastText: white
   },
   text: {
-    primary: '#00008B',
-    secondary: '#ADD8E6',
-    link: blue[600]
+    primary: white,
+    secondary: white,
+    link: white
   },
   background: {
     default: darkPurple,

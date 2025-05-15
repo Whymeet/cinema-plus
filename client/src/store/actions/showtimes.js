@@ -55,7 +55,7 @@ export const addShowtime = showtime => async dispatch => {
     dispatch(setAlert(error.message, 'error', 5000));
     return {
       status: 'error',
-      message: ' Cinema have not been saved, try again.'
+      message: 'Кинотеатр не сохранен, попробуйте снова.'
     };
   }
 };
@@ -80,7 +80,7 @@ export const updateShowtime = (showtime, id) => async dispatch => {
     dispatch(setAlert(error.message, 'error', 5000));
     return {
       status: 'error',
-      message: ' Cinema have not been saved, try again.'
+      message: 'Кинотеатр не сохранен, попробуйте снова.'
     };
   }
 };
@@ -106,7 +106,7 @@ export const deleteShowtime = id => async dispatch => {
     dispatch(setAlert(error.message, 'error', 5000));
     return {
       status: 'error',
-      message: ' Showtime have not been deleted, try again.'
+      message: 'Кинотеатр не сохранен, попробуйте снова.'
     };
   }
 };
