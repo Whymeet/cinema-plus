@@ -8,7 +8,7 @@ const cinemaSchema = new Schema({
     required: true,
     trim: true,
   },
-  ticketPrice: {
+  basePrice: {
     type: Number,
     required: true,
   },

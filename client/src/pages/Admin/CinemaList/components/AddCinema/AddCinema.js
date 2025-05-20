@@ -3,28 +3,31 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
-import { Button, TextField, Typography } from '@material-ui/core';
+import { Button, TextField, Typography, Grid } from '@material-ui/core';
 import styles from './styles';
-import { Add } from '@material-ui/icons';
+import { Add, Settings } from '@material-ui/icons';
 import {
   getCinemas,
   createCinemas,
   updateCinemas,
   removeCinemas
 } from '../../../../../store/actions';
+import { updatePlaceCoefficients } from '../../../../../store/actions/places';
 import { FileUpload } from '../../../../../components';
+import PlaceCoefficients from '../PlaceCoefficients/PlaceCoefficients';
 
 class AddCinema extends Component {
   state = {
     _id: '',
     name: '',
     image: null,
-    ticketPrice: '',
+    basePrice: '',
     city: '',
-    country: '', // поле для страны
+    country: '',
     seatsAvailable: '',
     seats: [],
-    notification: {}
+    notification: {},
+    openCoefficientsDialog: false
   };
 
   componentDidMount() {
@@ -51,13 +54,13 @@ class AddCinema extends Component {
       _id,
       name,
       image,
-      ticketPrice,
+      basePrice,
       city,
-      country, // Добавляем country
+      country,
       seatsAvailable,
       seats
     } = this.state;
-    const cinema = { name, ticketPrice, city, country, seatsAvailable, seats }; // Включаем country
+    const cinema = { name, basePrice, city, country, seatsAvailable, seats };
     let notification = {};
     type === 'create'
       ? (notification = await createCinemas(image, cinema))
@@ -83,43 +86,20 @@ class AddCinema extends Component {
     }));
   };
 
-  renderSeatFields = () => {
-    const { seats } = this.state;
-    const { classes } = this.props;
-    return (
-      <>
-        <div className={classes.field}>
-          <Button onClick={() => this.onAddSeatRow()}>
-            <Add /> Добавить ряд
-          </Button>
-        </div>
-        {seats.length > 0 &&
-          seats.map((seat, index) => (
-            <div key={`seat-${index}-${seat.length}`} className={classes.field}>
-              <TextField
-                key={`new-seat-${index}`}
-                className={classes.textField}
-                label={
-                  'Количество мест для ряда : ' +
-                  (index + 10).toString(36).toUpperCase()
-                }
-                margin="dense"
-                required
-                value={seat.length}
-                variant="outlined"
-                type="number"
-                inputProps={{
-                  min: 0,
-                  max: 10
-                }}
-                onChange={event =>
-                  this.handleSeatsChange(index, event.target.value)
-                }
-              />
-            </div>
-          ))}
-      </>
-    );
+  handleOpenCoefficientsDialog = () => {
+    this.setState({ openCoefficientsDialog: true });
+  };
+
+  handleCloseCoefficientsDialog = () => {
+    this.setState({ openCoefficientsDialog: false });
+  };
+
+  handleSaveCoefficients = async (coefficients) => {
+    const { _id } = this.state;
+    const result = await this.props.updatePlaceCoefficients(_id, coefficients);
+    if (result) {
+      this.handleCloseCoefficientsDialog();
+    }
   };
 
   render() {
@@ -127,11 +107,12 @@ class AddCinema extends Component {
     const {
       name,
       image,
-      ticketPrice,
+      basePrice,
       city,
-      country, // Новое поле
+      country,
       seatsAvailable,
-      notification
+      notification,
+      openCoefficientsDialog
     } = this.state;
 
     const rootClassName = classNames(classes.root, className);
@@ -148,134 +129,112 @@ class AddCinema extends Component {
         <Typography variant="h4" className={classes.title}>
           {mainTitle}
         </Typography>
-        <form autoComplete="off" noValidate>
-          <div className={classes.field}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
             <TextField
-              className={classes.textField}
-              helperText="Пожалуйста, укажите название кинотеатра"
+              fullWidth
               label="Название"
-              margin="dense"
-              required
+              name="name"
+              onChange={e => this.handleFieldChange('name', e.target.value)}
               value={name}
               variant="outlined"
-              onChange={event =>
-                this.handleFieldChange('name', event.target.value)
-              }
             />
+          </Grid>
+          <Grid item xs={12}>
             <TextField
-              className={classes.textField}
-              label="Город"
-              margin="dense"
-              required
-              variant="outlined"
-              value={city}
-              onChange={event =>
-                this.handleFieldChange('city', event.target.value)
-              }
-            />
-            <TextField
-              className={classes.textField}
-              label="Страна"
-              margin="dense"
-              required
-              variant="outlined"
-              value={country}
-              onChange={event =>
-                this.handleFieldChange('country', event.target.value)
-              }
-            />
-          </div>
-          <div className={classes.field}>
-            <FileUpload
-              className={classes.textField}
-              file={image}
-              onUpload={event => {
-                const file = event.target.files[0];
-                this.handleFieldChange('image', file);
-              }}
-            />
-          </div>
-          <div className={classes.field}>
-            <TextField
-              className={classes.textField}
-              label="Стоимость билета"
-              margin="dense"
+              fullWidth
+              label="Базовая цена"
+              name="basePrice"
               type="number"
-              value={ticketPrice}
+              onChange={e => this.handleFieldChange('basePrice', e.target.value)}
+              value={basePrice}
               variant="outlined"
-              onChange={event =>
-                this.handleFieldChange('ticketPrice', event.target.value)
-              }
             />
+          </Grid>
+          <Grid item xs={12}>
             <TextField
-              className={classes.textField}
-              label="Доступных мест"
-              margin="dense"
-              required
+              fullWidth
+              label="Город"
+              name="city"
+              onChange={e => this.handleFieldChange('city', e.target.value)}
+              value={city}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Страна"
+              name="country"
+              onChange={e => this.handleFieldChange('country', e.target.value)}
+              value={country}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Количество мест"
+              name="seatsAvailable"
+              type="number"
+              onChange={e => this.handleFieldChange('seatsAvailable', e.target.value)}
               value={seatsAvailable}
               variant="outlined"
-              onChange={event =>
-                this.handleFieldChange('seatsAvailable', event.target.value)
-              }
             />
-          </div>
-          {this.renderSeatFields()}
-        </form>
-
-        <Button
-          className={classes.buttonFooter}
-          color="primary"
-          variant="contained"
-          onClick={submitAction}
-        >
-          {submitButton}
-        </Button>
-        {this.props.editCinema && (
-          <Button
-            color="secondary"
-            className={classes.buttonFooter}
-            variant="contained"
-            onClick={() => this.onSubmitAction('remove')}
-          >
-            Удалить кинотеатр
-          </Button>
-        )}
-
-        {notification && notification.status ? (
-          notification.status === 'success' ? (
-            <Typography
-              className={classes.infoMessage}
+          </Grid>
+          <Grid item xs={12}>
+            <FileUpload
+              image={image}
+              handleChange={file => this.handleFieldChange('image', file)}
+            />
+          </Grid>
+          {this.props.editCinema && (
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<Settings />}
+                onClick={this.handleOpenCoefficientsDialog}
+              >
+                Управление коэффициентами цен
+              </Button>
+            </Grid>
+          )}
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
               color="primary"
-              variant="caption"
+              onClick={submitAction}
             >
-              {notification.message}
-            </Typography>
-          ) : (
-            <Typography
-              className={classes.infoMessage}
-              color="error"
-              variant="caption"
-            >
-              {notification.message}
-            </Typography>
-          )
-        ) : null}
+              {submitButton}
+            </Button>
+          </Grid>
+        </Grid>
+        <PlaceCoefficients
+          open={openCoefficientsDialog}
+          onClose={this.handleCloseCoefficientsDialog}
+          onSave={this.handleSaveCoefficients}
+          cinema={this.props.editCinema}
+        />
       </div>
     );
   }
 }
 
 AddCinema.propTypes = {
+  classes: PropTypes.object.isRequired,
   className: PropTypes.string,
-  classes: PropTypes.object.isRequired
+  editCinema: PropTypes.object
 };
 
-const mapStateToProps = null;
+const mapStateToProps = () => ({});
+
 const mapDispatchToProps = {
   getCinemas,
   createCinemas,
   updateCinemas,
-  removeCinemas
+  removeCinemas,
+  updatePlaceCoefficients
 };
 
 export default connect(
