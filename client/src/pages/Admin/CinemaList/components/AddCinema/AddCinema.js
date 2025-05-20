@@ -21,6 +21,7 @@ class AddCinema extends Component {
     image: null,
     ticketPrice: '',
     city: '',
+    country: '', // поле для страны
     seatsAvailable: '',
     seats: [],
     notification: {}
@@ -52,10 +53,11 @@ class AddCinema extends Component {
       image,
       ticketPrice,
       city,
+      country, // Добавляем country
       seatsAvailable,
       seats
     } = this.state;
-    const cinema = { name, ticketPrice, city, seatsAvailable, seats };
+    const cinema = { name, ticketPrice, city, country, seatsAvailable, seats }; // Включаем country
     let notification = {};
     type === 'create'
       ? (notification = await createCinemas(image, cinema))
@@ -127,6 +129,7 @@ class AddCinema extends Component {
       image,
       ticketPrice,
       city,
+      country, // Новое поле
       seatsAvailable,
       notification
     } = this.state;
@@ -159,9 +162,7 @@ class AddCinema extends Component {
                 this.handleFieldChange('name', event.target.value)
               }
             />
-
             <TextField
-              fullWidth
               className={classes.textField}
               label="Город"
               margin="dense"
@@ -170,6 +171,17 @@ class AddCinema extends Component {
               value={city}
               onChange={event =>
                 this.handleFieldChange('city', event.target.value)
+              }
+            />
+            <TextField
+              className={classes.textField}
+              label="Страна"
+              margin="dense"
+              required
+              variant="outlined"
+              value={country}
+              onChange={event =>
+                this.handleFieldChange('country', event.target.value)
               }
             />
           </div>
@@ -183,7 +195,6 @@ class AddCinema extends Component {
               }}
             />
           </div>
-
           <div className={classes.field}>
             <TextField
               className={classes.textField}
@@ -215,7 +226,8 @@ class AddCinema extends Component {
           className={classes.buttonFooter}
           color="primary"
           variant="contained"
-          onClick={submitAction}>
+          onClick={submitAction}
+        >
           {submitButton}
         </Button>
         {this.props.editCinema && (
@@ -223,7 +235,8 @@ class AddCinema extends Component {
             color="secondary"
             className={classes.buttonFooter}
             variant="contained"
-            onClick={() => this.onSubmitAction('remove')}>
+            onClick={() => this.onSubmitAction('remove')}
+          >
             Удалить кинотеатр
           </Button>
         )}
@@ -233,14 +246,16 @@ class AddCinema extends Component {
             <Typography
               className={classes.infoMessage}
               color="primary"
-              variant="caption">
+              variant="caption"
+            >
               {notification.message}
             </Typography>
           ) : (
             <Typography
               className={classes.infoMessage}
               color="error"
-              variant="caption">
+              variant="caption"
+            >
               {notification.message}
             </Typography>
           )
