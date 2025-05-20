@@ -147,9 +147,8 @@ function MovieCategoryPage(props) {
           {/* Список фильмов */}
           <Grid
             container
-            spacing={2}
-            className={classes.movieContainer}
-            justifyContent="center"
+            spacing={3}
+            className={classes.moviesContainer}
           >
             {filteredMovies.length > 0 ? (
               filteredMovies.map((movie) => (
@@ -159,7 +158,7 @@ function MovieCategoryPage(props) {
                   xs={12}
                   sm={6}
                   md={4}
-                  className={classes.movieItem}
+                  lg={3}
                 >
                   <ResponsiveMovieCard movie={movie} />
                 </Grid>
