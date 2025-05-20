@@ -96,6 +96,16 @@ export default function MovieInfo(props) {
               </Typography>
             </div>
           )}
+          {movie.country && (
+            <div className={classes.infoBox}>
+              <Typography variant="subtitle1" color="inherit">
+                Страна
+              </Typography>
+              <Typography variant="caption" color="inherit">
+                {movie.country}
+              </Typography>
+            </div>
+          )}
         </div>
       </div>
     </Grid>
