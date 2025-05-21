@@ -28,6 +28,7 @@ class AddMovie extends Component {
     description: '',
     director: '',
     cast: '',
+    country: '',
     releaseDate: new Date(),
     endDate: new Date()
   };
@@ -43,7 +44,8 @@ class AddMovie extends Component {
         description,
         duration,
         releaseDate,
-        endDate
+        endDate,
+        country
       } = this.props.edit;
       this.setState({
         title,
@@ -54,7 +56,8 @@ class AddMovie extends Component {
         description,
         duration,
         releaseDate,
-        endDate
+        endDate,
+        country
       });
     }
   }
@@ -86,8 +89,12 @@ class AddMovie extends Component {
 
   onUpdateMovie = () => {
     const { image, genre, ...rest } = this.state;
-    const movie = { ...rest, genre: genre.join(',') };
-    // сначала файл, потом данные, потом id
+    const movie = { 
+      ...rest, 
+      genre: genre.join(','),
+      country: this.state.country || 'Не указана'
+    };
+    console.log('Отправляем данные для обновления:', movie);
     this.props.updateMovie(image, movie, this.props.edit._id);
   };
 
@@ -105,6 +112,7 @@ class AddMovie extends Component {
       description,
       director,
       cast,
+      country,
       releaseDate,
       endDate
     } = this.state;
@@ -223,6 +231,19 @@ class AddMovie extends Component {
               variant="outlined"
               onChange={event =>
                 this.handleFieldChange('cast', event.target.value)
+              }
+            />
+          </div>
+          <div className={classes.field}>
+            <TextField
+              className={classes.textField}
+              label="Country"
+              margin="dense"
+              required
+              value={country}
+              variant="outlined"
+              onChange={event =>
+                this.handleFieldChange('country', event.target.value)
               }
             />
           </div>

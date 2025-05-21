@@ -27,18 +27,20 @@ router.post(
     const movieId = req.params.id;
     try {
       if (!file) {
-        const error = new Error('Please upload a file');
+        const error = new Error('Пожалуйста, загрузите файл');
         error.httpStatusCode = 400;
         return next(error);
       }
       const movie = await Movie.findById(movieId);
-      if (!movie) return res.sendStatus(404);
+      if (!movie) {
+        return res.status(404).send({ error: 'Фильм не найден' });
+      }
       movie.image = `${url}/${file.path}`;
       await movie.save();
       res.send({ movie, file });
     } catch (e) {
       console.log(e);
-      res.sendStatus(400).send(e);
+      res.status(400).send(e);
     }
   }
 );
@@ -70,6 +72,9 @@ router.get('/movies/:id', async (req, res) => {
 router.put('/movies/:id', auth.enhance, async (req, res) => {
   const _id = req.params.id;
   const updates = Object.keys(req.body);
+  console.log('Получены данные для обновления:', req.body);
+  console.log('Поля для обновления:', updates);
+  
   const allowedUpdates = [
     'title',
     'image',
@@ -81,18 +86,29 @@ router.put('/movies/:id', auth.enhance, async (req, res) => {
     'duration',
     'releaseDate',
     'endDate',
+    'country'
   ];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
-  if (!isValidOperation) return res.status(400).send({ error: 'Invalid updates!' });
+  if (!isValidOperation) {
+    console.log('Недопустимые поля:', updates.filter(update => !allowedUpdates.includes(update)));
+    return res.status(400).send({ error: 'Недопустимые поля для обновления!' });
+  }
 
   try {
     const movie = await Movie.findById(_id);
+    if (!movie) {
+      console.log('Фильм не найден:', _id);
+      return res.status(404).send({ error: 'Фильм не найден' });
+    }
+    console.log('Текущие данные фильма:', movie);
     updates.forEach((update) => (movie[update] = req.body[update]));
     await movie.save();
-    return !movie ? res.sendStatus(404) : res.send(movie);
+    console.log('Обновленные данные фильма:', movie);
+    res.send(movie);
   } catch (e) {
-    return res.status(400).send(e);
+    console.error('Ошибка при обновлении фильма:', e);
+    res.status(400).send(e);
   }
 });
 
@@ -103,7 +119,7 @@ router.delete('/movies/:id', auth.enhance, async (req, res) => {
     const movie = await Movie.findByIdAndDelete(_id);
     return !movie ? res.sendStatus(404) : res.send(movie);
   } catch (e) {
-    return res.sendStatus(400);
+    return res.status(400).send(e);
   }
 });
 

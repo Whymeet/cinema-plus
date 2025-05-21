@@ -16,7 +16,7 @@ export const uploadMovieImage = (id, image) => async dispatch => {
     });
     const responseData = await response.json(); 
     if (response.ok) {
-      dispatch(setAlert('Image Uploaded', 'success', 5000));
+      dispatch(setAlert('Изображение загружено', 'success', 5000));
     }
     if (responseData.error) {
       dispatch(setAlert(responseData.error.message, 'error', 5000));
@@ -106,6 +106,7 @@ export const updateMovie = (image, movie, movieId) => async dispatch => {
   try {
     const token = localStorage.getItem('jwtToken');
     const url = '/movies/' + movieId;
+    console.log('Отправляем данные для обновления:', movie);
     const response = await fetch(url, {
       method: 'PUT',
       headers: {
@@ -114,13 +115,18 @@ export const updateMovie = (image, movie, movieId) => async dispatch => {
       },
       body: JSON.stringify(movie)
     });
+    const responseData = await response.json();
+    console.log('Ответ сервера:', responseData);
     if (response.ok) {
       dispatch(onSelectMovie(null));
-      dispatch(setAlert('Movie have been saved!', 'success', 5000));
+      dispatch(setAlert('Фильм успешно обновлен', 'success', 5000));
       if (image) dispatch(uploadMovieImage(movieId, image));
       dispatch(getMovies());
+    } else {
+      dispatch(setAlert(responseData.error || 'Ошибка при обновлении фильма', 'error', 5000));
     }
   } catch (error) {
+    console.error('Ошибка при обновлении фильма:', error);
     dispatch(setAlert(error.message, 'error', 5000));
   }
 };
