@@ -47,7 +47,7 @@ const cinemaUserModeling = async (cinemas, username) => {
 };
 
 const moviesUserModeling = async username => {
-  userPreference = {
+  let userPreference = {
     genre: {},
     director: {},
     cast: {},
@@ -58,54 +58,48 @@ const moviesUserModeling = async username => {
   );
   const Allmovies = JSON.parse(JSON.stringify(await Movie.find({})));
 
-  const moviesWatched = userReservations.map(reservation => {
-    for (let movie of Allmovies) {
-      if (movie._id == reservation.movieId) {
-        return movie;
-      }
-    }
-  });
+  // Если нет бронирований, возвращаем все доступные фильмы
+  if (!userReservations || userReservations.length === 0) {
+    return availableMoviesFilter(Allmovies);
+  }
 
-  //  console.log(moviesWatched);
+  const moviesWatched = userReservations
+    .map(reservation => {
+      return Allmovies.find(movie => movie._id == reservation.movieId);
+    })
+    .filter(movie => movie !== undefined);
 
-  moviesWatched.map(movie => {
+  if (moviesWatched.length === 0) {
+    return availableMoviesFilter(Allmovies);
+  }
+
+  moviesWatched.forEach(movie => {
+    if (!movie) return;
+    
     let genres = movie.genre.replace(/\s*,\s*/g, ',').split(',');
     let directors = movie.director.replace(/\s*,\s*/g, ',').split(',');
     let casts = movie.cast.replace(/\s*,\s*/g, ',').split(',');
-    for (let genre of genres) {
-      userPreference.genre[genre]
-        ? ++userPreference.genre[genre]
-        : (userPreference.genre[genre] = 1);
-    }
-    for (let director of directors) {
-      userPreference.director[director]
-        ? ++userPreference.director[director]
-        : (userPreference.director[director] = 1);
-    }
-    for (let cast of casts) {
-      userPreference.cast[cast] ? ++userPreference.cast[cast] : (userPreference.cast[cast] = 1);
-    }
+    
+    genres.forEach(genre => {
+      userPreference.genre[genre] = (userPreference.genre[genre] || 0) + 1;
+    });
+    
+    directors.forEach(director => {
+      userPreference.director[director] = (userPreference.director[director] || 0) + 1;
+    });
+    
+    casts.forEach(cast => {
+      userPreference.cast[cast] = (userPreference.cast[cast] || 0) + 1;
+    });
   });
 
-  //console.log(userPreference)
-
-  //find movies that are available for booking
   const availableMovies = availableMoviesFilter(Allmovies);
-  //console.log(availableMovies)
   const moviesNotWatched = moviesNotWatchedFilter(availableMovies, userReservations);
-  //console.log(moviesNotWatched)
-
   const moviesRated = findRates(moviesNotWatched, userPreference);
 
-  moviesRated.sort((a, b) => {
-    return b[1] - a[1];
-  });
-  // console.log(moviesRated)
+  moviesRated.sort((a, b) => b[1] - a[1]);
 
-  const moviesToObject = moviesRated.map(array => {
-    return array[0];
-  });
-  return moviesToObject;
+  return moviesRated.map(array => array[0]);
 };
 
 const findRates = (moviesNotWatched, userPreference) => {
