@@ -43,7 +43,9 @@ function MovieCategoryPage(props) {
   // Состояние для фильтров
   const [titleFilter, setTitleFilter] = useState('');
   const [genreFilter, setGenreFilter] = useState('Все');
+  const [countryFilter, setCountryFilter] = useState('Все');
   const [genres, setGenres] = useState(['Все']);
+  const [countries, setCountries] = useState(['Все']);
   const [isLoading, setIsLoading] = useState(false);
 
   // Загрузка фильмов
@@ -54,13 +56,18 @@ function MovieCategoryPage(props) {
     }
   }, [movies, getMovies]);
 
-  // Извлечение уникальных жанров
+  // Извлечение уникальных жанров и стран
   useEffect(() => {
     if (movies.length > 0) {
       const allGenres = movies
         .flatMap((movie) => movie.genre.split(','))
         .filter((genre, index, self) => self.indexOf(genre) === index);
       setGenres(['Все', ...allGenres]);
+
+      const allCountries = movies
+        .map((movie) => movie.country)
+        .filter((country, index, self) => self.indexOf(country) === index);
+      setCountries(['Все', ...allCountries]);
     }
   }, [movies]);
 
@@ -68,7 +75,8 @@ function MovieCategoryPage(props) {
   const filteredMovies = movies.filter(
     (movie) =>
       movie.title.toLowerCase().includes(titleFilter.toLowerCase()) &&
-      (genreFilter === 'Все' || movie.genre.includes(genreFilter))
+      (genreFilter === 'Все' || movie.genre.includes(genreFilter)) &&
+      (countryFilter === 'Все' || movie.country === countryFilter)
   );
 
   // Перевод категорий на русский
@@ -106,7 +114,7 @@ function MovieCategoryPage(props) {
           </Grid>
           {/* Фильтры */}
           <Grid container spacing={2} className={classes.filterContainer}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={4}>
               <TextField
                 label="Фильтр по названию фильма"
                 value={titleFilter}
@@ -131,16 +139,32 @@ function MovieCategoryPage(props) {
               </Select>
             </Grid>
             <Grid item xs={12} sm={3}>
+              <Select
+                value={countryFilter}
+                onChange={(e) => setCountryFilter(e.target.value)}
+                displayEmpty
+                fullWidth
+                variant="outlined"
+              >
+                {countries.map((country, index) => (
+                  <MenuItem key={index} value={country}>
+                    {country || 'Выберите страну'}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Grid item xs={12} sm={2}>
               <Button
                 variant="outlined"
                 color="secondary"
                 onClick={() => {
                   setTitleFilter('');
                   setGenreFilter('Все');
+                  setCountryFilter('Все');
                 }}
                 fullWidth
               >
-                Сбросить фильтры
+                Сбросить
               </Button>
             </Grid>
           </Grid>
