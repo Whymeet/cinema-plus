@@ -22,9 +22,9 @@ const useStyles = makeStyles(theme => ({
 function MyDashboard(props) {
   const {
     user,
-    reservations,
-    movies,
-    cinemas,
+    reservations = [],
+    movies = [],
+    cinemas = [],
     getMovies,
     getReservations,
     getCinemas
@@ -39,32 +39,25 @@ function MyDashboard(props) {
   const classes = useStyles(props);
 
   const myReservations = reservations.filter(
-    reservation => reservation.username === user.username
+    reservation => reservation.username === (user?.username || '')
   );
-
-  console.log(myReservations);
 
   return (
     <Container>
       <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography className={classes.title} variant="h2" color="inherit">
+            {myReservations.length ? 'Мои бронирования' : 'У вас нет бронирований'}
+          </Typography>
+        </Grid>
         {!!myReservations.length && (
-          <>
-            <Grid item xs={12}>
-              <Typography
-                className={classes.title}
-                variant="h2"
-                color="inherit">
-                Мои бронирования
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <MyReservationTable
-                reservations={myReservations}
-                movies={movies}
-                cinemas={cinemas}
-              />
-            </Grid>
-          </>
+          <Grid item xs={12}>
+            <MyReservationTable
+              reservations={myReservations}
+              movies={movies}
+              cinemas={cinemas}
+            />
+          </Grid>
         )}
         <Grid item xs={12}>
           <Typography className={classes.title} variant="h2" color="inherit">
@@ -85,10 +78,10 @@ const mapStateToProps = ({
   reservationState,
   cinemaState
 }) => ({
-  user: authState.user,
-  movies: movieState.movies,
-  reservations: reservationState.reservations,
-  cinemas: cinemaState.cinemas
+  user: authState.user || null,
+  movies: movieState.movies || [],
+  reservations: reservationState.reservations || [],
+  cinemas: cinemaState.cinemas || []
 });
 
 const mapDispatchToProps = { getMovies, getReservations, getCinemas };
@@ -97,3 +90,95 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(MyDashboard);
+// import React, { useEffect } from 'react';
+// import { connect } from 'react-redux';
+// import { makeStyles, Grid, Typography, Container } from '@material-ui/core';
+// import { getMovies, getReservations, getCinemas } from '../../../store/actions';
+// import { MyReservationTable } from './components';
+// import Account from '../../Admin/Account';
+
+// const useStyles = makeStyles(theme => ({
+//   title: {
+//     fontSize: '3rem',
+//     lineHeight: '3rem',
+//     textAlign: 'center',
+//     textTransform: 'capitalize',
+//     marginTop: theme.spacing(15),
+//     marginBottom: theme.spacing(3)
+//   },
+//   [theme.breakpoints.down('sm')]: {
+//     fullWidth: { width: '100%' }
+//   }
+// }));
+
+// function MyDashboard(props) {
+//   const {
+//     user,
+//     reservations = [],
+//     movies = [],
+//     cinemas = [],
+//     getMovies,
+//     getReservations,
+//     getCinemas
+//   } = props;
+
+//   useEffect(() => {
+//     getMovies();
+//     getReservations();
+//     getCinemas();
+//   }, [getMovies, getReservations, getCinemas]);
+
+//   const classes = useStyles(props);
+
+//   const myReservations = reservations.filter(
+//     reservation => reservation.username === (user?.username || '')
+//   );
+
+//   return (
+//     <Container>
+//       <Grid container spacing={2}>
+//         <Grid item xs={12}>
+//           <Typography className={classes.title} variant="h2" color="inherit">
+//             {myReservations.length ? 'Мои бронирования' : 'У вас нет бронирований'}
+//           </Typography>
+//         </Grid>
+//         {!!myReservations.length && (
+//           <Grid item xs={12}>
+//             <MyReservationTable
+//               reservations={myReservations}
+//               movies={movies}
+//               cinemas={cinemas}
+//             />
+//           </Grid>
+//         )}
+//         <Grid item xs={12}>
+//           <Typography className={classes.title} variant="h2" color="inherit">
+//             Мой аккаунт
+//           </Typography>
+//         </Grid>
+//         <Grid item xs={12}>
+//           <Account />
+//         </Grid>
+//       </Grid>
+//     </Container>
+//   );
+// }
+
+// const mapStateToProps = ({
+//   authState,
+//   movieState,
+//   reservationState,
+//   cinemaState
+// }) => ({
+//   user: authState.user || null,
+//   movies: movieState.movies || [],
+//   reservations: reservationState.reservations || [],
+//   cinemas: cinemaState.cinemas || []
+// });
+
+// const mapDispatchToProps = { getMovies, getReservations, getCinemas };
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(MyDashboard);

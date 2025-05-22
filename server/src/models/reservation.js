@@ -45,6 +45,10 @@ const reservationSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  QRCode: {
+    type: String,
+    default: ''
+  },
 });
 
 const Reservation = mongoose.model('Reservation', reservationSchema);

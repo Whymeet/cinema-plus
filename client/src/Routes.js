@@ -31,6 +31,8 @@ const BookingPage = lazy(() => import('./pages/Public/BookingPage'));
 
 const Checkin = lazy(() => import('./pages/Public/Checkin'));
 
+const CheckInPage = lazy(() => import('./pages/Public/CheckInPage/CheckInPage'));
+
 const Routes = () => {
   return (
     <Suspense fallback={<Loading />}>
@@ -43,6 +45,13 @@ const Routes = () => {
             exact
             path="/checkin/:reservationId"
             component={Checkin}
+            layout={PublicLayout}
+          />
+
+          <WithLayoutRoute
+            exact
+            path="/verify-ticket/:id"
+            component={CheckInPage}
             layout={PublicLayout}
           />
 
