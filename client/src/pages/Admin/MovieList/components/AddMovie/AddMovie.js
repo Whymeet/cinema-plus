@@ -28,6 +28,7 @@ class AddMovie extends Component {
     description: '',
     director: '',
     cast: '',
+    country: '',
     releaseDate: new Date(),
     endDate: new Date()
   };
@@ -42,6 +43,7 @@ class AddMovie extends Component {
         cast,
         description,
         duration,
+        country,
         releaseDate,
         endDate
       } = this.props.edit;
@@ -53,6 +55,7 @@ class AddMovie extends Component {
         cast,
         description,
         duration,
+        country,
         releaseDate,
         endDate
       });
@@ -105,6 +108,7 @@ class AddMovie extends Component {
       description,
       director,
       cast,
+      country,
       releaseDate,
       endDate
     } = this.state;
@@ -223,6 +227,19 @@ class AddMovie extends Component {
               variant="outlined"
               onChange={event =>
                 this.handleFieldChange('cast', event.target.value)
+              }
+            />
+          </div>
+          <div className={classes.field}>
+            <TextField
+              className={classes.textField}
+              label="Country"
+              margin="dense"
+              required
+              value={country}
+              variant="outlined"
+              onChange={event =>
+                this.handleFieldChange('country', event.target.value)
               }
             />
           </div>
