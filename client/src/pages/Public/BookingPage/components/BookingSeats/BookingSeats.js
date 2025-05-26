@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Box } from '@material-ui/core';
+
 const useStyles = makeStyles(theme => ({
   row: {
     display: 'flex',
@@ -24,18 +25,20 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     textAlign: 'center',
-    color: '#eee'
+    color: '#eee',
+    flexWrap: 'wrap',
+    justifyContent: 'center'
   },
-
-  seatInfo: { marginRight: theme.spacing(2) },
-
+  seatInfo: { 
+    marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(1)
+  },
   seatInfoLabel: {
     marginRight: theme.spacing(1),
     display: 'inline-block',
     width: 10,
     height: 10
   },
-
   [theme.breakpoints.down('sm')]: {
     seat: { padding: theme.spacing(1.2), margin: theme.spacing(0.5) },
     seatInfoContainer: { width: '100%', display: 'block' },
@@ -46,6 +49,16 @@ const useStyles = makeStyles(theme => ({
 export default function BookingSeats(props) {
   const classes = useStyles(props);
   const { seats, onSelectSeat } = props;
+
+  const getSeatColor = (seat) => {
+    if (seat === 1) return 'rgb(65, 66, 70)'; // Занятое место
+    if (seat === 2) return 'rgb(120, 205, 4)'; // Выбранное место
+    if (seat === 3) return 'rgb(14, 151, 218)'; // Рекомендуемое место
+    
+    // Проверяем коэффициент места
+    if (seat.coefficient === 2.0) return 'rgb(25, 25, 112)'; // VIP место
+    return 'rgb(96, 93, 169)'; // Обычное место
+  };
 
   return (
     <Fragment>
@@ -58,15 +71,7 @@ export default function BookingSeats(props) {
                   key={`seat-${index}`}
                   onClick={() => onSelectSeat(indexRow, index)}
                   className={classes.seat}
-                  bgcolor={
-                    seat === 1
-                      ? 'rgb(65, 66, 70)'
-                      : seat === 2
-                      ? 'rgb(120, 205, 4)'
-                      : seat === 3
-                      ? 'rgb(14, 151, 218)'
-                      : 'rgb(96, 93, 169)'
-                  }>
+                  bgcolor={getSeatColor(seat)}>
                   {index + 1}
                 </Box>
               ))}
@@ -79,7 +84,13 @@ export default function BookingSeats(props) {
             <div
               className={classes.seatInfoLabel}
               style={{ background: 'rgb(96, 93, 169)' }}></div>
-            Доступное место
+            Обычное место (x1.0)
+          </div>
+          <div className={classes.seatInfo}>
+            <div
+              className={classes.seatInfoLabel}
+              style={{ background: 'rgb(25, 25, 112)' }}></div>
+            VIP место (x2.0)
           </div>
           <div className={classes.seatInfo}>
             <div

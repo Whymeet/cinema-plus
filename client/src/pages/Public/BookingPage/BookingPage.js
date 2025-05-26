@@ -97,15 +97,38 @@ class BookingPage extends Component {
     const { cinema, setSelectedSeats } = this.props;
     const seats = [...cinema.seats];
     const newSeats = [...seats];
-    if (seats[row][seat] === 1) {
+    
+    // Получаем текущие данные места
+    const currentSeat = seats[row][seat];
+    const isVIP = typeof currentSeat === 'object' && currentSeat.coefficient === 2.0;
+    
+    if (currentSeat === 1) {
+      // Место занято
       newSeats[row][seat] = 1;
-    } else if (seats[row][seat] === 2) {
-      newSeats[row][seat] = 0;
-    } else if (seats[row][seat] === 3) {
-      newSeats[row][seat] = 2;
+    } else if (currentSeat === 2) {
+      // Отменяем выбор места
+      newSeats[row][seat] = {
+        number: seat + 1,
+        coefficient: isVIP ? 2.0 : 1.0
+      };
+    } else if (currentSeat === 3) {
+      // Выбираем рекомендуемое место
+      newSeats[row][seat] = {
+        number: seat + 1,
+        coefficient: isVIP ? 2.0 : 1.0,
+        selected: true
+      };
     } else {
-      newSeats[row][seat] = 2;
+      // Выбираем свободное место
+      newSeats[row][seat] = {
+        number: seat + 1,
+        coefficient: isVIP ? 2.0 : 1.0,
+        selected: true
+      };
     }
+    
+    // Обновляем места в кинотеатре
+    cinema.seats = newSeats;
     setSelectedSeats([row, seat]);
   };
 
@@ -442,7 +465,8 @@ class BookingPage extends Component {
                   user={user}
                   ticketPrice={cinema.ticketPrice}
                   seatsAvailable={cinema.seatsAvailable}
-                  selectedSeats={selectedSeats.length}
+                  selectedSeats={selectedSeats}
+                  cinema={cinema}
                   onBookSeats={() => this.checkout()}
                 />
               </>
