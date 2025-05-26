@@ -134,6 +134,24 @@ class BookingPage extends Component {
     setSelectedSeats([row, seat]);
   };
 
+  bookSeats() {
+    const { cinema, selectedSeats } = this.props;
+    const seats = [...cinema.seats];
+
+    if (!selectedSeats || selectedSeats.length === 0) return [];
+
+    // Собираем все выбранные места
+    const bookedSeats = seats.map((row, rowIndex) => {
+      return row.map((seat, seatIndex) => {
+        // Проверяем, выбрано ли место (значение 2 или объект с selected: true)
+        const isSelected = seat === 2 || (typeof seat === 'object' && seat.selected);
+        return isSelected ? [rowIndex, seatIndex] : null;
+      }).filter(seat => seat !== null);
+    }).flat();
+
+    return bookedSeats;
+  }
+
   async checkout() {
     const {
       movie,
@@ -150,15 +168,25 @@ class BookingPage extends Component {
       setQRCode
     } = this.props;
 
-    if (selectedSeats.length === 0) return;
+    if (!selectedSeats || selectedSeats.length === 0) return;
     if (!isAuth) return toggleLoginPopup();
+
+    const bookedSeats = this.bookSeats();
+    if (bookedSeats.length === 0) return;
+
+    // Рассчитываем общую стоимость с учетом коэффициентов
+    const total = bookedSeats.reduce((sum, [row, seat]) => {
+      const seatData = cinema.seats[row][seat];
+      const coefficient = typeof seatData === 'object' ? seatData.coefficient : 1.0;
+      return sum + (cinema.ticketPrice * coefficient);
+    }, 0);
 
     const response = await addReservation({
       date: selectedDate,
       startAt: selectedTime,
-      seats: this.bookSeats(),
+      seats: bookedSeats,
       ticketPrice: cinema.ticketPrice,
-      total: selectedSeats.length * cinema.ticketPrice,
+      total: total,
       movieId: movie._id,
       cinemaId: cinema._id,
       username: user.username,
@@ -170,23 +198,6 @@ class BookingPage extends Component {
       getReservations();
       showInvitationForm();
     }
-  }
-
-  bookSeats() {
-    const { cinema, selectedSeats } = this.props;
-    const seats = [...cinema.seats];
-
-    if (selectedSeats.length === 0) return;
-
-    const bookedSeats = seats
-      .map(row =>
-        row.map((seat, i) => (seat === 2 ? i : -1)).filter(seat => seat !== -1)
-      )
-      .map((seats, i) => (seats.length ? seats.map(seat => [i, seat]) : -1))
-      .filter(seat => seat !== -1)
-      .reduce((a, b) => a.concat(b));
-
-    return bookedSeats;
   }
 
   onFilterCinema() {
@@ -264,7 +275,13 @@ class BookingPage extends Component {
   };
 
   onGetSuggestedSeats = (seats, suggestedSeats) => {
+    // Проверяем наличие необходимых данных
+    if (!suggestedSeats || !seats) return;
+    
     const { numberOfTickets, positions } = suggestedSeats;
+    
+    // Проверяем наличие необходимых свойств
+    if (!numberOfTickets || !positions) return;
 
     const positionsArray = Object.keys(positions).map(key => {
       return [String(key), positions[key]];
@@ -296,8 +313,10 @@ class BookingPage extends Component {
         default:
           break;
       }
-      if (suggested) this.getSeat(suggested, seats, numberOfTickets);
-      break;
+      if (suggested) {
+        this.getSeat(suggested, seats, numberOfTickets);
+        break;
+      }
     }
   };
 
