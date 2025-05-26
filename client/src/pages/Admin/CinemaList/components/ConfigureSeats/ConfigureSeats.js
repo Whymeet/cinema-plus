@@ -108,12 +108,23 @@ function ConfigureSeats({ cinema, getCinema, updateCinema }) {
         seatTypesMap.set(key, value);
       });
 
-      await updateCinema(null, { 
-        ...cinema, 
-        seats,
+      // Создаем объект только с разрешенными полями
+      const updatedCinema = {
+        name: cinema.name,
+        ticketPrice: cinema.ticketPrice,
+        seatsAvailable: cinema.seatsAvailable,
+        seats: seats,
         seatTypes: Object.fromEntries(seatTypesMap)
-      }, id);
-      history.push('/admin/cinemas');
+      };
+
+      console.log('Saving cinema configuration:', updatedCinema);
+      const response = await updateCinema(null, updatedCinema, id);
+      
+      if (response && response.status === 'success') {
+        history.push('/admin/cinemas');
+      } else {
+        console.error('Error saving configuration:', response);
+      }
     } catch (error) {
       console.error('Error saving seat configuration:', error);
     }
@@ -139,7 +150,7 @@ function ConfigureSeats({ cinema, getCinema, updateCinema }) {
                 key={`seat-${index}`}
                 onClick={() => handleSeatClick(indexRow, index)}
                 className={classes.seat}
-                bgcolor={seat === 1 ? 'rgb(14, 151, 218)' : 'rgb(96, 93, 169)'}>
+                bgcolor={seat === 1 ? 'rgb(25, 25, 112)' : 'rgb(96, 93, 169)'}>
                 {index + 1}
               </Box>
             ))}
@@ -158,7 +169,7 @@ function ConfigureSeats({ cinema, getCinema, updateCinema }) {
           <div className={classes.seatInfo}>
             <div
               className={classes.seatInfoLabel}
-              style={{ background: 'rgb(14, 151, 218)' }}></div>
+              style={{ background: 'rgb(25, 25, 112)' }}></div>
             VIP место (x2.0)
           </div>
         </div>

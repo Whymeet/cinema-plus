@@ -72,7 +72,7 @@ router.get('/cinemas/:id', async (req, res) => {
 router.patch('/cinemas/:id', auth.enhance, async (req, res) => {
   const _id = req.params.id;
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['name', 'ticketPrice', 'seats', 'seatsAvailable'];
+  const allowedUpdates = ['name', 'ticketPrice', 'seats', 'seatsAvailable', 'seatTypes'];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
   if (!isValidOperation) return res.status(400).send({ error: 'Invalid updates!' });
