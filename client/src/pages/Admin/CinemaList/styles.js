@@ -43,6 +43,14 @@ export default theme => ({
       color: theme.palette.text.secondary
     }
   },
+  cinemaActions: {
+    display: 'flex',
+    gap: theme.spacing(1),
+    marginTop: theme.spacing(2)
+  },
+  actionButton: {
+    flex: 1
+  },
   content: {
     marginTop: theme.spacing(2)
   },

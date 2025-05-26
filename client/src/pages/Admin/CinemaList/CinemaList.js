@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCinemas, removeCinemas } from '../../../store/actions';
 import { withStyles } from '@material-ui/core';
-import { CircularProgress, Grid } from '@material-ui/core';
+import { CircularProgress, Grid, Button } from '@material-ui/core';
 import { AddCinema, CinemaToolbar } from './components';
 import { ResponsiveDialog } from '../../../components';
 import styles from './styles';
@@ -51,6 +51,10 @@ class CinemaList extends Component {
     this.OpenEditDialog(cinema);
   }
 
+  configureSeats = (cinema) => {
+    this.props.history.push(`/admin/cinemas/configure-seats/${cinema._id}`);
+  };
+
   render() {
     const { classes, cinemas } = this.props;
     const { editCinema, search, isLoading } = this.state;
@@ -80,8 +84,7 @@ class CinemaList extends Component {
                   key={cinema._id}
                   lg={4}
                   md={6}
-                  xs={12}
-                  onClick={() => this.openEditDialog(cinema)}>
+                  xs={12}>
                   <div className={classes.cinema}>
                     <div className={classes.cinemaImage}>
                       {cinema.image ? (
@@ -101,6 +104,24 @@ class CinemaList extends Component {
                       <h3>{cinema.name}</h3>
                       <p>Цена билета: {cinema.ticketPrice} ₽</p>
                       <p>Доступных мест: {cinema.seatsAvailable}</p>
+                      <div className={classes.cinemaActions}>
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          size="small"
+                          onClick={() => this.openEditDialog(cinema)}
+                          className={classes.actionButton}>
+                          Редактировать
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          size="small"
+                          onClick={() => this.configureSeats(cinema)}
+                          className={classes.actionButton}>
+                          Настроить места
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </Grid>
