@@ -69,8 +69,8 @@ class AddCinema extends Component {
           const cinemas = await getCinemas();
           const createdCinema = cinemas.find(c => c.name === name);
           if (createdCinema) {
-            console.log('Redirecting to:', `#/admin/cinemas/configure-seats/${createdCinema._id}`);
-            window.location.href = `#/admin/cinemas/configure-seats/${createdCinema._id}`;
+            console.log('Redirecting to:', `/admin/cinemas/configure-seats/${createdCinema._id}`);
+            this.props.history.push(`/admin/cinemas/configure-seats/${createdCinema._id}`);
           } else {
             console.error('Created cinema not found in list');
             this.setState({
@@ -115,7 +115,10 @@ class AddCinema extends Component {
   handleSeatsChange = (index, value) => {
     if (value > 10) return;
     const { seats } = this.state;
-    seats[index] = Array.from({ length: value }, () => 0);
+    seats[index] = Array.from({ length: value }, (_, i) => ({
+      number: i + 1,
+      coefficient: 1.0
+    }));
     this.setState({
       seats
     });
@@ -288,7 +291,10 @@ class AddCinema extends Component {
 
 AddCinema.propTypes = {
   className: PropTypes.string,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  editCinema: PropTypes.object,
+  handleClose: PropTypes.func
 };
 
 const mapStateToProps = null;

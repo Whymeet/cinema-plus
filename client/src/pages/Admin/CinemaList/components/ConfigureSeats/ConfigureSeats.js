@@ -63,7 +63,6 @@ function ConfigureSeats({ cinema, getCinema, updateCinema }) {
   const { id } = useParams();
   const history = useHistory();
   const [seats, setSeats] = useState([]);
-  const [seatTypes, setSeatTypes] = useState({});
 
   useEffect(() => {
     if (id) {
@@ -73,48 +72,35 @@ function ConfigureSeats({ cinema, getCinema, updateCinema }) {
 
   useEffect(() => {
     if (cinema) {
-      // Инициализируем все места как обычные (0)
-      const initialSeats = cinema.seats.map(row => 
-        row.map(() => 0)
+      // Инициализируем места с учетом сохраненных коэффициентов
+      const initialSeats = cinema.seats.map((row, rowIndex) => 
+        row.map((seat, seatIndex) => ({
+          number: seatIndex + 1,
+          coefficient: seat.coefficient || 1.0
+        }))
       );
       setSeats(initialSeats);
-
-      // Инициализируем типы мест, если они есть
-      if (cinema.seatTypes) {
-        setSeatTypes(cinema.seatTypes);
-      }
     }
   }, [cinema]);
 
   const handleSeatClick = (rowIndex, seatIndex) => {
     const newSeats = [...seats];
-    // Переключаем тип места: 0 (обычное) -> 1 (VIP) -> 0
-    newSeats[rowIndex][seatIndex] = newSeats[rowIndex][seatIndex] === 0 ? 1 : 0;
+    // Переключаем коэффициент места: 1.0 (обычное) -> 2.0 (VIP) -> 1.0
+    newSeats[rowIndex][seatIndex] = {
+      ...newSeats[rowIndex][seatIndex],
+      coefficient: newSeats[rowIndex][seatIndex].coefficient === 1.0 ? 2.0 : 1.0
+    };
     setSeats(newSeats);
-
-    // Сохраняем тип места в объекте seatTypes
-    const seatKey = `${rowIndex}-${seatIndex}`;
-    setSeatTypes(prev => ({
-      ...prev,
-      [seatKey]: newSeats[rowIndex][seatIndex]
-    }));
   };
 
   const handleSave = async () => {
     try {
-      // Преобразуем seatTypes в формат для сохранения
-      const seatTypesMap = new Map();
-      Object.entries(seatTypes).forEach(([key, value]) => {
-        seatTypesMap.set(key, value);
-      });
-
       // Создаем объект только с разрешенными полями
       const updatedCinema = {
         name: cinema.name,
         ticketPrice: cinema.ticketPrice,
         seatsAvailable: cinema.seatsAvailable,
-        seats: seats,
-        seatTypes: Object.fromEntries(seatTypesMap)
+        seats: seats
       };
 
       console.log('Saving cinema configuration:', updatedCinema);
@@ -150,8 +136,8 @@ function ConfigureSeats({ cinema, getCinema, updateCinema }) {
                 key={`seat-${index}`}
                 onClick={() => handleSeatClick(indexRow, index)}
                 className={classes.seat}
-                bgcolor={seat === 1 ? 'rgb(25, 25, 112)' : 'rgb(96, 93, 169)'}>
-                {index + 1}
+                bgcolor={seat.coefficient === 2.0 ? 'rgb(25, 25, 112)' : 'rgb(96, 93, 169)'}>
+                {seat.number}
               </Box>
             ))}
           </div>
