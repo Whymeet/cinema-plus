@@ -23,6 +23,11 @@ const cinemaSchema = new Schema({
   image: {
     type: String,
   },
+  seatTypes: {
+    type: Map,
+    of: Number,
+    default: new Map()
+  }
 });
 
 const Cinema = mongoose.model('Cinema', cinemaSchema);

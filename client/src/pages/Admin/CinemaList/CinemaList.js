@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCinemas } from '../../../store/actions';
+import { getCinemas, removeCinemas } from '../../../store/actions';
 import { withStyles } from '@material-ui/core';
 import { CircularProgress, Grid } from '@material-ui/core';
 import { AddCinema, CinemaToolbar } from './components';
@@ -16,14 +16,28 @@ class CinemaList extends Component {
     this.state = {
       editCinema: null,
       openEditDialog: false,
-      search: ''
+      search: '',
+      isLoading: false
     };
   }
 
   componentDidMount() {
-    const { cinemas, getCinemas } = this.props;
-    if (!cinemas.length) getCinemas();
+    this.loadCinemas();
   }
+
+  loadCinemas = async () => {
+    const { cinemas, getCinemas } = this.props;
+    if (!cinemas.length && !this.state.isLoading) {
+      this.setState({ isLoading: true });
+      try {
+        await getCinemas();
+      } catch (error) {
+        console.error('Ошибка загрузки кинотеатров:', error);
+      } finally {
+        this.setState({ isLoading: false });
+      }
+    }
+  };
 
   openEditDialog = cinema => {
     this.setState({ openEditDialog: true, editCinema: cinema });
@@ -39,17 +53,25 @@ class CinemaList extends Component {
 
   render() {
     const { classes, cinemas } = this.props;
-    const { editCinema, search } = this.state;
+    const { editCinema, search, isLoading } = this.state;
     const filteredCinemas = match(search, cinemas, 'name');
+    
     return (
       <div className={classes.root}>
         <CinemaToolbar
           search={this.state.search}
           onChangeSearch={e => this.setState({ search: e.target.value })}
+          onAddClick={() => this.openEditDialog()}
         />
         <div className={classes.content}>
-          {filteredCinemas.length === 0 ? (
-            <CircularProgress />
+          {isLoading ? (
+            <div className={classes.progressWrapper}>
+              <CircularProgress />
+            </div>
+          ) : filteredCinemas.length === 0 ? (
+            <div className={classes.progressWrapper}>
+              <p>Кинотеатры не найдены</p>
+            </div>
           ) : (
             <Grid container spacing={3}>
               {filteredCinemas.map(cinema => (
@@ -60,7 +82,27 @@ class CinemaList extends Component {
                   md={6}
                   xs={12}
                   onClick={() => this.openEditDialog(cinema)}>
-                  <CinemaCard cinema={cinema} />
+                  <div className={classes.cinema}>
+                    <div className={classes.cinemaImage}>
+                      {cinema.image ? (
+                        <img
+                          src={cinema.image}
+                          alt={cinema.name}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = '/images/cinema-placeholder.jpg';
+                          }}
+                        />
+                      ) : (
+                        <img src="/images/cinema-placeholder.jpg" alt={cinema.name} />
+                      )}
+                    </div>
+                    <div className={classes.cinemaInfo}>
+                      <h3>{cinema.name}</h3>
+                      <p>Цена билета: {cinema.ticketPrice} ₽</p>
+                      <p>Доступных мест: {cinema.seatsAvailable}</p>
+                    </div>
+                  </div>
                 </Grid>
               ))}
             </Grid>
@@ -88,7 +130,7 @@ const mapStateToProps = ({ cinemaState }) => ({
   cinemas: cinemaState.cinemas
 });
 
-const mapDispatchToProps = { getCinemas };
+const mapDispatchToProps = { getCinemas, removeCinemas };
 
 export default connect(
   mapStateToProps,
