@@ -1,4 +1,4 @@
-import { GET_RESERVATIONS, GET_RESERVATION_SUGGESTED_SEATS } from '../types';
+import { GET_RESERVATIONS, GET_RESERVATION_SUGGESTED_SEATS, DELETE_RESERVATION } from '../types';
 import { setAlert } from './alert';
 
 export const getReservations = () => async dispatch => {
@@ -8,7 +8,8 @@ export const getReservations = () => async dispatch => {
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
       }
     });
     const reservations = await response.json();
@@ -118,5 +119,26 @@ export const removeReservation = id => async dispatch => {
       status: 'error',
       message: ' Reservation have not been deleted, try again.'
     };
+  }
+};
+
+export const deleteReservation = (id) => async dispatch => {
+  try {
+    const token = localStorage.getItem('jwtToken');
+    const url = `/reservations/${id}`;
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    if (response.ok) {
+      dispatch({ type: DELETE_RESERVATION, payload: id });
+      dispatch(setAlert('Бронирование успешно отменено', 'success', 5000));
+      dispatch(getReservations()); // Обновляем список бронирований
+    }
+  } catch (error) {
+    dispatch(setAlert(error.message, 'error', 5000));
   }
 };

@@ -20,8 +20,6 @@ class AddCinema extends Component {
     name: '',
     image: null,
     ticketPrice: '',
-    city: '',
-    country: '', // поле для страны
     seatsAvailable: '',
     seats: [],
     notification: {}
@@ -52,12 +50,10 @@ class AddCinema extends Component {
       name,
       image,
       ticketPrice,
-      city,
-      country, // Добавляем country
       seatsAvailable,
       seats
     } = this.state;
-    const cinema = { name, ticketPrice, city, country, seatsAvailable, seats }; // Включаем country
+    const cinema = { name, ticketPrice, seatsAvailable, seats };
     let notification = {};
     type === 'create'
       ? (notification = await createCinemas(image, cinema))
@@ -125,11 +121,10 @@ class AddCinema extends Component {
   render() {
     const { classes, className } = this.props;
     const {
+      _id,
       name,
       image,
       ticketPrice,
-      city,
-      country, // Новое поле
       seatsAvailable,
       notification
     } = this.state;
@@ -160,28 +155,6 @@ class AddCinema extends Component {
               variant="outlined"
               onChange={event =>
                 this.handleFieldChange('name', event.target.value)
-              }
-            />
-            <TextField
-              className={classes.textField}
-              label="Город"
-              margin="dense"
-              required
-              variant="outlined"
-              value={city}
-              onChange={event =>
-                this.handleFieldChange('city', event.target.value)
-              }
-            />
-            <TextField
-              className={classes.textField}
-              label="Страна"
-              margin="dense"
-              required
-              variant="outlined"
-              value={country}
-              onChange={event =>
-                this.handleFieldChange('country', event.target.value)
               }
             />
           </div>

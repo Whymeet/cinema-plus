@@ -8,8 +8,16 @@ const router = new express.Router();
 
 // Create a cinema
 router.post('/cinemas', auth.enhance, async (req, res) => {
-  const cinema = new Cinema(req.body);
   try {
+    // Проверяем существование кинотеатра с таким названием
+    const existingCinema = await Cinema.findOne({ name: req.body.name });
+    if (existingCinema) {
+      return res.status(400).send({ 
+        error: 'Кинотеатр с таким названием уже существует' 
+      });
+    }
+
+    const cinema = new Cinema(req.body);
     await cinema.save();
     res.status(201).send(cinema);
   } catch (e) {
@@ -64,16 +72,30 @@ router.get('/cinemas/:id', async (req, res) => {
 router.patch('/cinemas/:id', auth.enhance, async (req, res) => {
   const _id = req.params.id;
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['name', 'ticketPrice', 'city', 'seats', 'seatsAvailable'];
+  const allowedUpdates = ['name', 'ticketPrice', 'seats', 'seatsAvailable'];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
   if (!isValidOperation) return res.status(400).send({ error: 'Invalid updates!' });
 
   try {
+    // Если обновляется название, проверяем его уникальность
+    if (updates.includes('name')) {
+      const existingCinema = await Cinema.findOne({ 
+        name: req.body.name,
+        _id: { $ne: _id } // Исключаем текущий кинотеатр из проверки
+      });
+      if (existingCinema) {
+        return res.status(400).send({ 
+          error: 'Кинотеатр с таким названием уже существует' 
+        });
+      }
+    }
+
     const cinema = await Cinema.findById(_id);
+    if (!cinema) return res.sendStatus(404);
+    
     updates.forEach((update) => (cinema[update] = req.body[update]));
     await cinema.save();
-    if (!cinema) return res.sendStatus(404);
     return res.send(cinema);
   } catch (e) {
     return res.status(400).send(e);

@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
 import {
   Table,
@@ -8,119 +7,114 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TablePagination
+  Button,
+  Typography,
+  Paper
 } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { deleteReservation } from '../../../../../store/actions';
+import moment from 'moment';
 
-import { Portlet, PortletContent } from '../../../../../components';
-import styles from './styles';
-
-class ReservationsTable extends Component {
-  state = {
-    rowsPerPage: 10,
-    page: 0
-  };
-
-  static propTypes = {
-    className: PropTypes.string,
-    classes: PropTypes.object.isRequired,
-    onSelect: PropTypes.func,
-    onShowDetails: PropTypes.func,
-    reservations: PropTypes.array.isRequired,
-    movies: PropTypes.array.isRequired,
-    cinemas: PropTypes.array.isRequired
-  };
-
-  static defaultProps = {
-    reservations: [],
-    movies: [],
-    cinemas: [],
-    onSelect: () => {},
-    onShowDetails: () => {}
-  };
-
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  };
-
-  onFindAttr = (id, list, attr) => {
-    const item = list.find(item => item._id === id);
-    return item ? item[attr] : `Не найдено ${attr}`;
-  };
-
-  render() {
-    const { classes, className, reservations, movies, cinemas } = this.props;
-    const { rowsPerPage, page } = this.state;
-    const rootClassName = classNames(classes.root, className);
-
-    return (
-      <Portlet className={rootClassName}>
-        <PortletContent noPadding>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell align="left">Фильм</TableCell>
-                <TableCell align="left">Кинотеатр</TableCell>
-                <TableCell align="left">Дата</TableCell>
-                <TableCell align="left">Начало</TableCell>
-                <TableCell align="left">Цена билета</TableCell>
-                <TableCell align="left">Итого</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {reservations
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(reservation => (
-                  <TableRow
-                    className={classes.tableRow}
-                    hover
-                    key={reservation._id}>
-                    <TableCell className={classes.tableCell}>
-                      {this.onFindAttr(reservation.movieId, movies, 'title')}
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {this.onFindAttr(reservation.cinemaId, cinemas, 'name')}
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {new Date(reservation.date).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {reservation.startAt}
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {reservation.ticketPrice}
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {reservation.total}
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-          <TablePagination
-            backIconButtonProps={{
-              'aria-label': 'Предыдущая страница'
-            }}
-            component="div"
-            count={reservations.length}
-            nextIconButtonProps={{
-              'aria-label': 'Следующая страница'
-            }}
-            onChangePage={this.handleChangePage}
-            onChangeRowsPerPage={this.handleChangeRowsPerPage}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={[5, 10, 25]}
-            labelRowsPerPage="Строк на странице:"
-            labelDisplayedRows={({ from, to, count }) => `${from}-${to} из ${count}`}
-          />
-        </PortletContent>
-      </Portlet>
-    );
+const styles = theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing(3),
+    overflowX: 'auto'
+  },
+  table: {
+    minWidth: 650
+  },
+  button: {
+    margin: theme.spacing(1)
   }
+});
+
+function MyReservationTable(props) {
+  const { classes, reservations, movies, cinemas, deleteReservation } = props;
+
+  const findMovie = movieId => {
+    return movies.find(movie => movie._id === movieId);
+  };
+
+  const findCinema = cinemaId => {
+    return cinemas.find(cinema => cinema._id === cinemaId);
+  };
+
+  const handleCancelReservation = async (reservationId) => {
+    try {
+      await deleteReservation(reservationId);
+    } catch (error) {
+      console.error('Ошибка при отмене бронирования:', error);
+    }
+  };
+
+  return (
+    <Paper className={classes.root}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell>Фильм</TableCell>
+            <TableCell>Кинотеатр</TableCell>
+            <TableCell>Дата</TableCell>
+            <TableCell>Время</TableCell>
+            <TableCell>Места</TableCell>
+            <TableCell>Сумма</TableCell>
+            <TableCell>Статус</TableCell>
+            <TableCell>Действия</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {reservations.map(reservation => {
+            const movie = findMovie(reservation.movieId);
+            const cinema = findCinema(reservation.cinemaId);
+            return (
+              <TableRow key={reservation._id}>
+                <TableCell>{movie ? movie.title : 'Загрузка...'}</TableCell>
+                <TableCell>{cinema ? cinema.name : 'Загрузка...'}</TableCell>
+                <TableCell>
+                  {moment(reservation.date).format('DD.MM.YYYY')}
+                </TableCell>
+                <TableCell>{reservation.startAt}</TableCell>
+                <TableCell>
+                  {reservation.seats.map(seat => `${seat.row}-${seat.col}`).join(', ')}
+                </TableCell>
+                <TableCell>{reservation.total} ₽</TableCell>
+                <TableCell>
+                  {reservation.checkin ? (
+                    <Typography color="primary">Использовано</Typography>
+                  ) : (
+                    <Typography color="secondary">Активно</Typography>
+                  )}
+                </TableCell>
+                <TableCell>
+                  {!reservation.checkin && (
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      className={classes.button}
+                      onClick={() => handleCancelReservation(reservation._id)}
+                    >
+                      Отменить
+                    </Button>
+                  )}
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </Paper>
+  );
 }
 
-export default withStyles(styles)(ReservationsTable);
+MyReservationTable.propTypes = {
+  classes: PropTypes.object.isRequired,
+  reservations: PropTypes.array.isRequired,
+  movies: PropTypes.array.isRequired,
+  cinemas: PropTypes.array.isRequired,
+  deleteReservation: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = { deleteReservation };
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(MyReservationTable));
