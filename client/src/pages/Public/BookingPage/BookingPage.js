@@ -48,11 +48,18 @@ class BookingPage extends Component {
       getReservations,
       getSuggestedReservationSeats
     } = this.props;
-    getMovie(match.params.id);
-    user ? getCinemasUserModeling(user.username) : getCinemas();
+    
+    // Сначала загружаем все необходимые данные
     getShowtimes();
+    getCinemas();
+    getMovie(match.params.id);
     getReservations();
-    if (user) getSuggestedReservationSeats(user.username);
+    
+    // Если пользователь авторизован, загружаем персонализированные данные
+    if (user) {
+      getCinemasUserModeling(user.username);
+      getSuggestedReservationSeats(user.username);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -160,19 +167,42 @@ class BookingPage extends Component {
   onFilterCinema() {
     const { cinemas, showtimes, selectedCinema, selectedTime } = this.props;
     const initialReturn = { uniqueCinemas: [], uniqueTimes: [] };
-    if (!showtimes || !cinemas) return initialReturn;
+    
+    // Проверяем наличие необходимых данных
+    if (!showtimes || !cinemas || !showtimes.length || !cinemas.length) {
+      console.log('Missing data:', { showtimes, cinemas });
+      return initialReturn;
+    }
 
-    const uniqueCinemasId = showtimes
-      .filter(showtime =>
-        selectedTime ? showtime.startAt === selectedTime : true
-      )
+    console.log('Filtering cinemas:', {
+      cinemas,
+      showtimes,
+      selectedCinema,
+      selectedTime
+    });
+
+    // Фильтруем сеансы по времени, если оно выбрано
+    const filteredShowtimes = showtimes.filter(showtime =>
+      selectedTime ? showtime.startAt === selectedTime : true
+    );
+
+    console.log('Filtered showtimes:', filteredShowtimes);
+
+    // Получаем уникальные ID кинотеатров
+    const uniqueCinemasId = filteredShowtimes
       .map(showtime => showtime.cinemaId)
       .filter((value, index, self) => self.indexOf(value) === index);
 
+    console.log('Unique cinema IDs:', uniqueCinemasId);
+
+    // Фильтруем кинотеатры
     const uniqueCinemas = cinemas.filter(cinema =>
       uniqueCinemasId.includes(cinema._id)
     );
 
+    console.log('Filtered cinemas:', uniqueCinemas);
+
+    // Получаем уникальные времена
     const uniqueTimes = showtimes
       .filter(showtime =>
         selectedCinema ? selectedCinema === showtime.cinemaId : true

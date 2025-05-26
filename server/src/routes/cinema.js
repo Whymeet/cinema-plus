@@ -118,11 +118,18 @@ router.delete('/cinemas/:id', auth.enhance, async (req, res) => {
 router.get('/cinemas/usermodeling/:username', async (req, res) => {
   const { username } = req.params;
   try {
+    console.log('Getting cinemas for user:', username);
     const cinemas = await Cinema.find({});
+    if (!cinemas) {
+      return res.status(404).send({ error: 'Кинотеатры не найдены' });
+    }
+    // Если нет моделирования, просто возвращаем все кинотеатры
     const cinemasUserModeled = await userModeling.cinemaUserModeling(cinemas, username);
+    console.log('Returning cinemas:', cinemasUserModeled);
     res.send(cinemasUserModeled);
   } catch (e) {
-    res.status(400).send(e);
+    console.error('Error in cinema user modeling:', e);
+    res.status(400).send({ error: 'Ошибка при получении кинотеатров' });
   }
 });
 
