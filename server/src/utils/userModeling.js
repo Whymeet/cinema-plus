@@ -22,24 +22,26 @@ const cinemaUserModeling = async (cinemas, username) => {
     sortedCinemaResult.sort((a, b) => {
       return b[1] - a[1];
     });
-    console.log(sortedCinemaResult);
+    console.log('Sorted cinema result:', sortedCinemaResult);
 
     const newCinemas = JSON.parse(JSON.stringify(cinemas));
     let i = 0;
     let extractedObj;
+    
     for (let sortedCinema of sortedCinemaResult) {
-      newCinemas.forEach((cinema, index) => {
-        if (cinema._id == sortedCinema[0]) {
-          console.log('FOUND');
+      for (let index = 0; index < newCinemas.length; index++) {
+        if (newCinemas[index]._id.toString() === sortedCinema[0]) {
           extractedObj = newCinemas.splice(index, 1);
+          if (extractedObj && extractedObj.length > 0) {
+            newCinemas.splice(i, 0, extractedObj[0]);
+            i++;
+          }
+          break;
         }
-      });
-      newCinemas.splice(i, 0, extractedObj[0]);
-      i++;
+      }
     }
 
-    console.log(newCinemas);
-
+    console.log('New cinemas order:', newCinemas);
     return newCinemas;
   } else {
     return cinemas;

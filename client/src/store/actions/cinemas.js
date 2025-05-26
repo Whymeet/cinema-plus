@@ -29,12 +29,18 @@ export const getCinemas = () => async dispatch => {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     });
-    const cinemas = await response.json();
-    if (response.ok) {
-      dispatch({ type: GET_CINEMAS, payload: cinemas });
+    
+    if (!response.ok) {
+      throw new Error(`Ошибка загрузки кинотеатров: ${response.status}`);
     }
+    
+    const cinemas = await response.json();
+    dispatch({ type: GET_CINEMAS, payload: cinemas });
+    return cinemas;
   } catch (error) {
+    console.error('Ошибка при загрузке кинотеатров:', error);
     dispatch(setAlert(error.message, 'error', 5000));
+    throw error;
   }
 };
 
@@ -145,7 +151,12 @@ export const removeCinemas = id => async dispatch => {
     });
     if (response.ok) {
       dispatch(setAlert('Кинотеатр удален', 'success', 5000));
+      await dispatch(getCinemas());
       return { status: 'success', message: 'Кинотеатр удален' };
+    } else {
+      const errorMessage = 'Кинотеатр не удален, попробуйте снова.';
+      dispatch(setAlert(errorMessage, 'error', 5000));
+      return { status: 'error', message: errorMessage };
     }
   } catch (error) {
     dispatch(

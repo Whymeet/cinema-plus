@@ -13,6 +13,7 @@ import {
   removeCinemas
 } from '../../../../../store/actions';
 import { FileUpload } from '../../../../../components';
+import { useHistory, withRouter } from 'react-router-dom';
 
 class AddCinema extends Component {
   state = {
@@ -55,19 +56,69 @@ class AddCinema extends Component {
     } = this.state;
     const cinema = { name, ticketPrice, seatsAvailable, seats };
     let notification = {};
-    type === 'create'
-      ? (notification = await createCinemas(image, cinema))
-      : type === 'update'
-      ? (notification = await updateCinemas(image, cinema, _id))
-      : (notification = await removeCinemas(_id));
-    this.setState({ notification });
-    if (notification && notification.status === 'success') getCinemas();
+    let response;
+    
+    try {
+      if (type === 'create') {
+        console.log('Creating cinema...');
+        response = await createCinemas(image, cinema);
+        console.log('Create response:', response);
+        
+        if (response && response.status === 'success') {
+          // Получаем список кинотеатров для поиска созданного
+          const cinemas = await getCinemas();
+          const createdCinema = cinemas.find(c => c.name === name);
+          if (createdCinema) {
+            console.log('Redirecting to:', `/admin/cinemas/configure-seats/${createdCinema._id}`);
+            this.props.history.push(`/admin/cinemas/configure-seats/${createdCinema._id}`);
+          } else {
+            console.error('Created cinema not found in list');
+            this.setState({
+              notification: {
+                status: 'error',
+                message: 'Ошибка при создании кинотеатра: кинотеатр не найден в списке'
+              }
+            });
+          }
+          return;
+        } else {
+          console.error('Invalid response format:', response);
+          this.setState({
+            notification: {
+              status: 'error',
+              message: 'Ошибка при создании кинотеатра: неверный формат ответа'
+            }
+          });
+        }
+      } else if (type === 'update') {
+        notification = await updateCinemas(image, cinema, _id);
+      } else {
+        notification = await removeCinemas(_id);
+      }
+      
+      if (notification.status === 'success') {
+        this.props.handleClose();
+      }
+      
+      this.setState({ notification });
+    } catch (error) {
+      console.error('Error in onSubmitAction:', error);
+      this.setState({
+        notification: {
+          status: 'error',
+          message: error.message || 'Произошла ошибка при выполнении операции'
+        }
+      });
+    }
   };
 
   handleSeatsChange = (index, value) => {
     if (value > 10) return;
     const { seats } = this.state;
-    seats[index] = Array.from({ length: value }, () => 0);
+    seats[index] = Array.from({ length: value }, (_, i) => ({
+      number: i + 1,
+      coefficient: 1.0
+    }));
     this.setState({
       seats
     });
@@ -240,7 +291,10 @@ class AddCinema extends Component {
 
 AddCinema.propTypes = {
   className: PropTypes.string,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  editCinema: PropTypes.object,
+  handleClose: PropTypes.func
 };
 
 const mapStateToProps = null;
@@ -254,4 +308,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(AddCinema));
+)(withRouter(withStyles(styles)(AddCinema)));

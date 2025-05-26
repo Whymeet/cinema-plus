@@ -29,6 +29,34 @@ const useStyles = makeStyles(() => ({
     },
     '& .MuiSelect-icon': {
       color: '#555555',
+    },
+    '& .MuiPickersDay-day': {
+      color: '#ffffff',
+    },
+    '& .MuiPickersDay-daySelected': {
+      backgroundColor: '#7d58ff',
+      color: '#ffffff',
+      '&:hover': {
+        backgroundColor: '#6a4ad8',
+      },
+    },
+    '& .MuiPickersDay-current': {
+      color: '#7d58ff',
+    },
+    '& .MuiPickersDay-dayDisabled': {
+      color: '#999999',
+    },
+    '& .MuiPickersCalendarHeader-dayLabel': {
+      color: '#ffffff',
+    },
+    '& .MuiPickersCalendarHeader-switchHeader': {
+      color: '#ffffff',
+    },
+    '& .MuiPickersCalendarHeader-iconButton': {
+      color: '#ffffff',
+    },
+    '& .MuiPickersCalendarHeader-transitionContainer': {
+      color: '#ffffff',
     }
   }
 }));
