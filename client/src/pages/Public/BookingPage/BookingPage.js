@@ -100,19 +100,20 @@ class BookingPage extends Component {
     
     // Получаем текущие данные места
     const currentSeat = seats[row][seat];
-    const isVIP = typeof currentSeat === 'object' && currentSeat.coefficient === 2.0;
     
     if (currentSeat === 1) {
       // Место занято
       newSeats[row][seat] = 1;
-    } else if (currentSeat === 2) {
+    } else if (currentSeat === 2 || (typeof currentSeat === 'object' && currentSeat.selected)) {
       // Отменяем выбор места
+      const isVIP = typeof currentSeat === 'object' && currentSeat.coefficient === 2.0;
       newSeats[row][seat] = {
         number: seat + 1,
         coefficient: isVIP ? 2.0 : 1.0
       };
     } else if (currentSeat === 3) {
       // Выбираем рекомендуемое место
+      const isVIP = typeof currentSeat === 'object' && currentSeat.coefficient === 2.0;
       newSeats[row][seat] = {
         number: seat + 1,
         coefficient: isVIP ? 2.0 : 1.0,
@@ -120,6 +121,7 @@ class BookingPage extends Component {
       };
     } else {
       // Выбираем свободное место
+      const isVIP = typeof currentSeat === 'object' && currentSeat.coefficient === 2.0;
       newSeats[row][seat] = {
         number: seat + 1,
         coefficient: isVIP ? 2.0 : 1.0,

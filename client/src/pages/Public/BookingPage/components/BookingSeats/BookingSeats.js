@@ -51,13 +51,24 @@ export default function BookingSeats(props) {
   const { seats, onSelectSeat } = props;
 
   const getSeatColor = (seat) => {
-    if (seat === 1) return 'rgb(65, 66, 70)'; // Занятое место
-    if (seat === 2) return 'rgb(120, 205, 4)'; // Выбранное место
-    if (seat === 3) return 'rgb(14, 151, 218)'; // Рекомендуемое место
+    // Если место занято
+    if (seat === 1) return 'rgb(65, 66, 70)';
     
-    // Проверяем коэффициент места
-    if (seat.coefficient === 2.0) return 'rgb(25, 25, 112)'; // VIP место
-    return 'rgb(96, 93, 169)'; // Обычное место
+    // Если место выбрано
+    if (seat === 2 || (typeof seat === 'object' && seat.selected)) {
+      return 'rgb(120, 205, 4)';
+    }
+    
+    // Если место рекомендовано
+    if (seat === 3) return 'rgb(14, 151, 218)';
+    
+    // Проверяем тип места
+    if (typeof seat === 'object' && seat !== null) {
+      return seat.coefficient === 2.0 ? 'rgb(25, 25, 112)' : 'rgb(96, 93, 169)';
+    }
+    
+    // По умолчанию - обычное место
+    return 'rgb(96, 93, 169)';
   };
 
   return (
