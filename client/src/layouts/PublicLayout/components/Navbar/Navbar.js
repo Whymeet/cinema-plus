@@ -57,6 +57,11 @@ class Navbar extends Component {
           </div>
 
           <div className={classes.navAccount}>
+            {isAuth && user && (
+              <Typography className={classes.username}>
+                {user.username}
+              </Typography>
+            )}
             <UserPopover logout={logout}>
               <List component="nav">
                 {user && (
