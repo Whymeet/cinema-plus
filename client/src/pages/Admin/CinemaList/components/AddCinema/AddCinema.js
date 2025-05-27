@@ -10,7 +10,8 @@ import {
   getCinemas,
   createCinemas,
   updateCinemas,
-  removeCinemas
+  removeCinemas,
+  uploadCinemaImage
 } from '../../../../../store/actions';
 import { FileUpload } from '../../../../../components';
 import { useHistory, withRouter } from 'react-router-dom';
@@ -20,6 +21,8 @@ class AddCinema extends Component {
     _id: '',
     name: '',
     image: null,
+    imagePreview: null,
+    imageUrl: '',
     ticketPrice: '',
     seatsAvailable: '',
     seats: [],
@@ -29,7 +32,10 @@ class AddCinema extends Component {
   componentDidMount() {
     if (this.props.editCinema) {
       const { image, ...rest } = this.props.editCinema;
-      this.setState({ ...rest });
+      this.setState({ 
+        ...rest,
+        imageUrl: image // Сохраняем URL изображения
+      });
     }
   }
 
@@ -37,6 +43,18 @@ class AddCinema extends Component {
     const newState = { ...this.state };
     newState[field] = value;
     this.setState(newState);
+
+    // Если изменилось изображение, создаем превью
+    if (field === 'image' && value) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        this.setState({
+          imagePreview: reader.result,
+          imageUrl: '' // Очищаем старый URL при выборе нового файла
+        });
+      };
+      reader.readAsDataURL(value);
+    }
   };
 
   onSubmitAction = async type => {
@@ -44,7 +62,8 @@ class AddCinema extends Component {
       getCinemas,
       createCinemas,
       updateCinemas,
-      removeCinemas
+      removeCinemas,
+      uploadCinemaImage
     } = this.props;
     const {
       _id,
@@ -65,10 +84,15 @@ class AddCinema extends Component {
         console.log('Create response:', response);
         
         if (response && response.status === 'success') {
-          // Получаем список кинотеатров для поиска созданного
+          // Получаем обновленный список залов
           const cinemas = await getCinemas();
           const createdCinema = cinemas.find(c => c.name === name);
           if (createdCinema) {
+            // Обновляем состояние с новым изображением
+            this.setState({
+              imageUrl: createdCinema.image,
+              imagePreview: null // Очищаем превью, так как теперь есть реальный URL
+            });
             console.log('Redirecting to:', `/admin/cinemas/configure-seats/${createdCinema._id}`);
             this.props.history.push(`/admin/cinemas/configure-seats/${createdCinema._id}`);
           } else {
@@ -76,22 +100,27 @@ class AddCinema extends Component {
             this.setState({
               notification: {
                 status: 'error',
-                message: 'Ошибка при создании кинотеатра: кинотеатр не найден в списке'
+                message: 'Ошибка при создании зала: зал не найден в списке'
               }
             });
           }
           return;
-        } else {
-          console.error('Invalid response format:', response);
-          this.setState({
-            notification: {
-              status: 'error',
-              message: 'Ошибка при создании кинотеатра: неверный формат ответа'
-            }
-          });
         }
       } else if (type === 'update') {
-        notification = await updateCinemas(image, cinema, _id);
+        // Сначала обновляем основные данные
+        notification = await updateCinemas(null, cinema, _id); // Передаем null вместо image
+        
+        if (notification.status === 'success' && image) {
+          // Если есть новое изображение, загружаем его отдельно
+          const imageResponse = await uploadCinemaImage(_id, image);
+          if (imageResponse && imageResponse.cinema) {
+            this.setState({
+              imageUrl: imageResponse.cinema.image,
+              imagePreview: null,
+              image: null // Очищаем выбранный файл
+            });
+          }
+        }
       } else {
         notification = await removeCinemas(_id);
       }
@@ -100,7 +129,7 @@ class AddCinema extends Component {
         this.props.handleClose();
       }
       
-    this.setState({ notification });
+      this.setState({ notification });
     } catch (error) {
       console.error('Error in onSubmitAction:', error);
       this.setState({
@@ -175,6 +204,8 @@ class AddCinema extends Component {
       _id,
       name,
       image,
+      imagePreview,
+      imageUrl,
       ticketPrice,
       seatsAvailable,
       notification
@@ -213,6 +244,7 @@ class AddCinema extends Component {
             <FileUpload
               className={classes.textField}
               file={image}
+              preview={imagePreview || imageUrl}
               onUpload={event => {
                 const file = event.target.files[0];
                 this.handleFieldChange('image', file);
@@ -302,7 +334,8 @@ const mapDispatchToProps = {
   getCinemas,
   createCinemas,
   updateCinemas,
-  removeCinemas
+  removeCinemas,
+  uploadCinemaImage
 };
 
 export default connect(
