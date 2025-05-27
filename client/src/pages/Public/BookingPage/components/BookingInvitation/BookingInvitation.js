@@ -86,19 +86,19 @@ export default function BookingInvitation(props) {
         </Box>
         <Grid className={classes.gridContainer} container spacing={3}>
           <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Email"
+              <TextField
+                fullWidth
+                label="Email"
               name="email"
               helperText="Пожалуйста, введите Email для отправки билетов"
-              margin="dense"
-              required
+                margin="dense"
+                required
               value={email}
-              variant="outlined"
-              className={classes.inputField}
+                variant="outlined"
+                className={classes.inputField}
               onChange={handleEmailChange}
-            />
-          </Grid>
+              />
+            </Grid>
           <Grid item xs={12} container>
             <Grid item>
               <Button

@@ -100,7 +100,7 @@ class AddCinema extends Component {
         this.props.handleClose();
       }
       
-      this.setState({ notification });
+    this.setState({ notification });
     } catch (error) {
       console.error('Error in onSubmitAction:', error);
       this.setState({

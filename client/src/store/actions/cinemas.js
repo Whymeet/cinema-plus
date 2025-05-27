@@ -35,7 +35,7 @@ export const getCinemas = () => async dispatch => {
     }
     
     const cinemas = await response.json();
-    dispatch({ type: GET_CINEMAS, payload: cinemas });
+      dispatch({ type: GET_CINEMAS, payload: cinemas });
     return cinemas;
   } catch (error) {
     console.error('Ошибка при загрузке кинотеатров:', error);

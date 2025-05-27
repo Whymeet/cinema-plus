@@ -17,7 +17,7 @@ router.post('/cinemas', auth.enhance, async (req, res) => {
       });
     }
 
-    const cinema = new Cinema(req.body);
+  const cinema = new Cinema(req.body);
     await cinema.save();
     res.status(201).send(cinema);
   } catch (e) {
