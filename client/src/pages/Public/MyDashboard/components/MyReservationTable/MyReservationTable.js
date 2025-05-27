@@ -1,46 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core';
-import {
-
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  Grid,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle
-} from '@material-ui/core';
+import classNames from 'classnames';
+import { withStyles, Button, Typography, Card, CardContent, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import moment from 'moment';
+import { connect } from 'react-redux';
+import { deleteReservation } from '../../../../../actions/reservationActions'; // Импорт по необходимости
 import { Portlet, PortletContent } from '../../../../../components';
 import styles from './styles';
 
-class ReservationsTable extends Component {
+class MyReservationTable extends Component {
   state = {
     deleteDialogOpen: false,
     selectedReservation: null
   };
 
   static propTypes = {
-    className: PropTypes.string,
     classes: PropTypes.object.isRequired,
-    onSelect: PropTypes.func,
-    onShowDetails: PropTypes.func,
     reservations: PropTypes.array.isRequired,
     movies: PropTypes.array.isRequired,
     cinemas: PropTypes.array.isRequired,
-    onDeleteReservation: PropTypes.func.isRequired
-  };
-
-  static defaultProps = {
-    reservations: [],
-    movies: [],
-    cinemas: [],
-    onSelect: () => {},
-    onShowDetails: () => {},
-    onDeleteReservation: () => {}
+    deleteReservation: PropTypes.func.isRequired
   };
 
   handleDeleteClick = (reservation) => {
@@ -53,7 +32,7 @@ class ReservationsTable extends Component {
   handleDeleteConfirm = () => {
     const { selectedReservation } = this.state;
     if (selectedReservation) {
-      this.props.onDeleteReservation(selectedReservation._id);
+      this.props.deleteReservation(selectedReservation._id);
     }
     this.handleDeleteClose();
   };
@@ -63,87 +42,75 @@ class ReservationsTable extends Component {
       deleteDialogOpen: false,
       selectedReservation: null
     });
-
   };
 
-  const handleCancelReservation = async (reservationId) => {
+  handleCancelReservation = async (reservationId) => {
     try {
-      await deleteReservation(reservationId);
+      await this.props.deleteReservation(reservationId);
     } catch (error) {
       console.error('Ошибка при отмене бронирования:', error);
     }
   };
 
+  onFindAttr = (id, arr, attr) => {
+    const found = arr.find(el => el._id === id);
+    return found ? found[attr] : 'Неизвестно';
+  };
 
   render() {
-    const { classes, className, reservations, movies, cinemas } = this.props;
+    const { classes, reservations, movies, cinemas } = this.props;
     const { deleteDialogOpen } = this.state;
-    const rootClassName = classNames(classes.root, className);
 
     return (
-      <Portlet className={rootClassName}>
+      <Portlet className={classes.root}>
         <PortletContent noPadding>
           <div className={classes.cardsContainer}>
             {reservations.map(reservation => {
               const movie = movies.find(m => m._id === reservation.movieId) || {};
+              const cinema = cinemas.find(c => c._id === reservation.cinemaId) || {};
+
               return (
                 <Card key={reservation._id} className={classes.card}>
                   <CardContent>
                     <div className={classes.cardHeader}>
-                      <Typography variant="h6">
-                        Заказ {reservation._id}
-                      </Typography>
+                      <Typography variant="h6">Заказ {reservation._id}</Typography>
                       <Typography variant="h6" className={classes.total}>
                         Итого: {reservation.total} руб.
                       </Typography>
-                    </div>
+                    </div>П
                     <div className={classes.cardContent}>
                       <div className={classes.posterContainer}>
                         {movie.image && (
-                          <img
-                            src={movie.image}
-                            alt={movie.title}
-                            className={classes.poster}
-                          />
+                          <img src={movie.image} alt={movie.title} className={classes.poster} />
                         )}
                       </div>
                       <div className={classes.infoContainer}>
-                        <Typography variant="h6">
-                          {this.onFindAttr(reservation.movieId, movies, 'title')}
-                        </Typography>
-                        <Typography>
-                          Кинотеатр: {this.onFindAttr(reservation.cinemaId, cinemas, 'name')}
-                        </Typography>
-                        <Typography>
-                          Дата: {new Date(reservation.date).toLocaleDateString()}
-                        </Typography>
-                        <Typography>
-                          Начало: {reservation.startAt}
-                        </Typography>
+                        <Typography variant="h6">{movie.title}</Typography>
+                        <Typography>Кинотеатр: {cinema.name}</Typography>
+                        <Typography>Дата: {new Date(reservation.date).toLocaleDateString()}</Typography>
+                        <Typography>Начало: {reservation.startAt}</Typography>
                         <Typography>
                           Места: {reservation.seats.map((seat, index) => {
-                            const seatRow = (seat.row || seat.seatRow || seat[0] || 0) + 1;
-                            const seatNumber = (seat.number || seat.seatNumber || seat[1] || 0) + 1;
+                            const seatRow = (seat.row || seat[0]) + 1;
+                            const seatNumber = (seat.number || seat[1]) + 1;
                             return `Ряд ${seatRow}, Место ${seatNumber}${index < reservation.seats.length - 1 ? '; ' : ''}`;
                           })}
                         </Typography>
                       </div>
                       <div className={classes.qrContainer}>
                         {reservation.qrCode && (
-                          <img
-                            src={reservation.qrCode}
-                            alt="QR код"
-                            className={classes.qrCode}
-                          />
+                          <img src={reservation.qrCode} alt="QR код" className={classes.qrCode} />
                         )}
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          onClick={() => this.handleDeleteClick(reservation)}
-                          className={classes.deleteButton}
-                        >
-                          Отменить бронь
-                        </Button>
+                        {!reservation.checkin && (
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => this.handleDeleteClick(reservation)}
+                            className={classes.deleteButton}
+                          >
+                            Отменить бронь
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </CardContent>
@@ -168,31 +135,14 @@ class ReservationsTable extends Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleDeleteClose} color="primary">
-              Отмена
-            </Button>
-            <Button 
-              onClick={this.handleDeleteConfirm} 
-              color="secondary" 
-              variant="contained"
-            >
-              Удалить
-            </Button>
+            <Button onClick={this.handleDeleteClose} color="primary">Отмена</Button>
+            <Button onClick={this.handleDeleteConfirm} color="secondary" variant="contained">Удалить</Button>
           </DialogActions>
         </Dialog>
       </Portlet>
     );
   }
-
 }
-
-MyReservationTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-  reservations: PropTypes.array.isRequired,
-  movies: PropTypes.array.isRequired,
-  cinemas: PropTypes.array.isRequired,
-  deleteReservation: PropTypes.func.isRequired
-};
 
 const mapDispatchToProps = { deleteReservation };
 

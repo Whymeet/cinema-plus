@@ -90,7 +90,7 @@ class ShowtimesTable extends Component {
                   ID
                 </TableCell>
                 <TableCell align="left">Фильм</TableCell>
-                <TableCell align="left">Кинотеатр</TableCell>
+                <TableCell align="left">Зал</TableCell>
                 <TableCell align="left">Дата начала</TableCell>
                 <TableCell align="left">Дата окончания</TableCell>
                 <TableCell align="left">Время</TableCell>

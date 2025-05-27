@@ -55,7 +55,7 @@ const TotalCinemas = props => {
               color="textSecondary"
               gutterBottom
               variant="body2">
-              ВСЕГО КИНОТЕАТРОВ
+              ВСЕГО ЗАЛОВ
             </Typography>
             <Typography variant="h3">{cinemas}</Typography>
           </Grid>
