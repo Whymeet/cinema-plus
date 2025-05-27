@@ -90,6 +90,11 @@ export default function BookingCheckout(props) {
               <Typography className={classes.bannerContent}>
                 {getSelectedSeatsCount()} {getSelectedSeatsCount() === 1 ? 'билет' : (getSelectedSeatsCount() >= 2 && getSelectedSeatsCount() <= 4) ? 'билета' : 'билетов'}
               </Typography>
+              {getSelectedSeatsCount() >= 10 && (
+                <Typography style={{ color: '#ff6b6b', fontSize: '0.8rem', marginTop: '4px' }}>
+                  Достигнуто максимальное количество билетов (10)
+                </Typography>
+              )}
             </Grid>
             <Grid item>
               <Typography className={classes.bannerTitle}>Цена</Typography>

@@ -94,7 +94,7 @@ class BookingPage extends Component {
   };
 
   onSelectSeat = (row, seat) => {
-    const { cinema, setSelectedSeats } = this.props;
+    const { cinema, setSelectedSeats, selectedSeats } = this.props;
     const seats = [...cinema.seats];
     const newSeats = [...seats];
     
@@ -106,7 +106,16 @@ class BookingPage extends Component {
       return;
     }
     
-    if (currentSeat === 2 || (typeof currentSeat === 'object' && currentSeat.selected)) {
+    // Проверяем количество уже выбранных мест
+    const selectedSeatsCount = selectedSeats.length;
+    const isSeatSelected = currentSeat === 2 || (typeof currentSeat === 'object' && currentSeat.selected);
+    
+    // Если пытаемся выбрать новое место и уже выбрано 10 мест, не позволяем выбрать еще
+    if (!isSeatSelected && selectedSeatsCount >= 10) {
+      return;
+    }
+    
+    if (isSeatSelected) {
       // Отменяем выбор места
       const isVIP = typeof currentSeat === 'object' && currentSeat.coefficient === 2.0;
       newSeats[row][seat] = {
@@ -221,7 +230,7 @@ class BookingPage extends Component {
 
     // Фильтруем сеансы по времени, если оно выбрано
     const filteredShowtimes = showtimes.filter(showtime =>
-      selectedTime ? showtime.startAt === selectedTime : true
+        selectedTime ? showtime.startAt === selectedTime : true
     );
 
     console.log('Filtered showtimes:', filteredShowtimes);
@@ -317,7 +326,7 @@ class BookingPage extends Component {
       }
       if (suggested) {
         this.getSeat(suggested, seats, numberOfTickets);
-        break;
+      break;
       }
     }
   };

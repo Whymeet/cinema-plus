@@ -70,7 +70,7 @@ class CinemaList extends Component {
         <div className={classes.content}>
           {isLoading ? (
             <div className={classes.progressWrapper}>
-              <CircularProgress />
+            <CircularProgress />
             </div>
           ) : filteredCinemas.length === 0 ? (
             <div className={classes.progressWrapper}>

@@ -12,23 +12,23 @@ class CinemaToolbar extends Component {
     const rootClassName = classNames(classes.root, className);
 
     return (
-      <div className={rootClassName}>
-        <div className={classes.row}>
-          <SearchInput
-            className={classes.searchInput}
-            placeholder="Поиск кинотеатра"
-            value={search}
-            onChange={onChangeSearch}
-          />
-          <Button
+        <div className={rootClassName}>
+          <div className={classes.row}>
+            <SearchInput
+              className={classes.searchInput}
+              placeholder="Поиск кинотеатра"
+              value={search}
+              onChange={onChangeSearch}
+            />
+            <Button
             onClick={onAddClick}
-            color="primary"
-            size="small"
-            variant="outlined">
-            Добавить
-          </Button>
+              color="primary"
+              size="small"
+              variant="outlined">
+              Добавить
+            </Button>
+          </div>
         </div>
-      </div>
     );
   }
 }
