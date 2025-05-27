@@ -28,8 +28,49 @@ export default function BookingCheckout(props) {
     ticketPrice,
     selectedSeats,
     seatsAvailable,
-    onBookSeats
+    onBookSeats,
+    cinema
   } = props;
+
+  // Рассчитываем общую стоимость с учетом коэффициентов
+  const calculateTotalPrice = () => {
+    if (!selectedSeats || !cinema || !cinema.seats) return 0;
+    
+    // Проверяем, что selectedSeats это массив
+    if (!Array.isArray(selectedSeats)) return 0;
+
+    console.log('Selected seats:', selectedSeats);
+    console.log('Cinema seats:', cinema.seats);
+
+    return selectedSeats.reduce((total, [row, seat]) => {
+      // Получаем данные места
+      const seatData = cinema.seats[row][seat];
+      console.log('Seat data:', seatData);
+      
+      // Получаем коэффициент места
+      let coefficient = 1.0;
+      if (typeof seatData === 'object' && seatData !== null) {
+        coefficient = seatData.coefficient || 1.0;
+      } else if (seatData === 2) {
+        // Если место выбрано, проверяем его тип
+        const originalSeat = cinema.seats[row][seat];
+        if (typeof originalSeat === 'object' && originalSeat !== null) {
+          coefficient = originalSeat.coefficient || 1.0;
+        }
+      }
+      
+      console.log('Seat coefficient:', coefficient);
+      const seatPrice = ticketPrice * coefficient;
+      console.log('Seat price:', seatPrice);
+      
+      return total + seatPrice;
+    }, 0);
+  };
+
+  // Получаем количество выбранных мест
+  const getSelectedSeatsCount = () => {
+    return Array.isArray(selectedSeats) ? selectedSeats.length : 0;
+  };
 
   return (
     <Box marginTop={2} bgcolor="rgb(18, 20, 24)">
@@ -46,18 +87,19 @@ export default function BookingCheckout(props) {
             )}
             <Grid item>
               <Typography className={classes.bannerTitle}>Билеты</Typography>
-              {selectedSeats > 0 ? (
-                <Typography className={classes.bannerContent}>
-                  {selectedSeats} {selectedSeats === 1 ? 'билет' : (selectedSeats >= 2 && selectedSeats <= 4) ? 'билета' : 'билетов'}
+              <Typography className={classes.bannerContent}>
+                {getSelectedSeatsCount()} {getSelectedSeatsCount() === 1 ? 'билет' : (getSelectedSeatsCount() >= 2 && getSelectedSeatsCount() <= 4) ? 'билета' : 'билетов'}
+              </Typography>
+              {getSelectedSeatsCount() >= 10 && (
+                <Typography style={{ color: '#ff6b6b', fontSize: '0.8rem', marginTop: '4px' }}>
+                  Достигнуто максимальное количество билетов (10)
                 </Typography>
-              ) : (
-                <Typography className={classes.bannerContent}>0</Typography>
               )}
             </Grid>
             <Grid item>
               <Typography className={classes.bannerTitle}>Цена</Typography>
               <Typography className={classes.bannerContent}>
-                {ticketPrice * selectedSeats} ₽
+                {calculateTotalPrice()} ₽
               </Typography>
             </Grid>
           </Grid>

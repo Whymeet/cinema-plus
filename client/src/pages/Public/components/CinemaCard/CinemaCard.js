@@ -31,16 +31,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2),
     textTransform: 'capitalize'
   },
-  city: {
-    lineHeight: '16px',
-    height: theme.spacing(4),
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-    color: theme.palette.text.secondary,
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(2)
-  },
   stats: {
     display: 'flex',
     alignItems: 'center',
@@ -73,9 +63,6 @@ function CinemaCard(props) {
       <div className={classes.details}>
         <Typography className={classes.name} variant="h4">
           {cinema.name}
-        </Typography>
-        <Typography className={classes.city} variant="body1">
-          {cinema.city}
         </Typography>
       </div>
       <div className={classes.stats}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Typography, TextField, Grid, Button, Box } from '@material-ui/core';
 import { Paper } from '../../../../../components';
@@ -45,12 +45,23 @@ export default function BookingInvitation(props) {
     selectedSeats,
     sendInvitations,
     ignore,
-    invitations,
     onSetInvitation,
     onDownloadPDF
   } = props;
 
-  const notValidInvitations = !Object.keys(invitations).length;
+  const [email, setEmail] = useState('');
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    // Создаем объект с одним email для всех мест
+    const invitations = {};
+    selectedSeats.forEach(seat => {
+      invitations[`${convertToAlphabet(seat[0])}-${seat[1]}`] = event.target.value;
+    });
+    onSetInvitation({ target: { value: event.target.value, invitations } });
+  };
+
+  const notValidEmail = !email || !email.includes('@');
 
   return (
     <div className={classes.root}>
@@ -62,8 +73,8 @@ export default function BookingInvitation(props) {
           className={classes.successInfo}
           variant="body1"
           align="center">
-          Вы успешно забронировали свои места. Пожалуйста, заполните электронные адреса ниже,
-          чтобы отправить приглашения вашим друзьям!
+          Вы успешно забронировали свои места. Пожалуйста, введите электронный адрес,
+          чтобы отправить приглашение с билетами!
         </Typography>
         <Box width={1} textAlign="center">
           <Button
@@ -74,34 +85,28 @@ export default function BookingInvitation(props) {
           </Button>
         </Box>
         <Grid className={classes.gridContainer} container spacing={3}>
-          {selectedSeats.map((seat, index) => (
-            <Grid item xs={12} md={6} lg={4} key={'seat-' + index}>
+          <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Email"
-                name={`${convertToAlphabet(seat[0])}-${seat[1]}`}
-                helperText={`Пожалуйста, введите Email для Ряда: ${convertToAlphabet(
-                  seat[0]
-                )} - Места: ${seat[1]}`}
+              name="email"
+              helperText="Пожалуйста, введите Email для отправки билетов"
                 margin="dense"
                 required
-                value={
-                  invitations[`${convertToAlphabet(seat[0])}-${seat[1]}`] || ''
-                }
+              value={email}
                 variant="outlined"
                 className={classes.inputField}
-                onChange={event => onSetInvitation(event)}
+              onChange={handleEmailChange}
               />
             </Grid>
-          ))}
           <Grid item xs={12} container>
             <Grid item>
               <Button
-                disabled={notValidInvitations}
+                disabled={notValidEmail}
                 color="primary"
                 variant="outlined"
                 onClick={() => sendInvitations()}>
-                Отправить приглашения
+                Отправить приглашение
               </Button>
             </Grid>
             <Grid item>

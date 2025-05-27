@@ -70,6 +70,12 @@ function MovieBanner(props) {
             Режиссер: {movie.director}
           </Typography>
           <Typography
+            className={classes.country}
+            variant="h4"
+            color="inherit">
+            Страна: {movie.country}
+          </Typography>
+          <Typography
             className={classes.duration}
             variant="body1"
             color="inherit">

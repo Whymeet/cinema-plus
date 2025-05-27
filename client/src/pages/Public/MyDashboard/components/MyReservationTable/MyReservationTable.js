@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
 import {
+
   Card,
   CardContent,
   Typography,
@@ -63,12 +63,17 @@ class ReservationsTable extends Component {
       deleteDialogOpen: false,
       selectedReservation: null
     });
+
   };
 
-  onFindAttr = (id, list, attr) => {
-    const item = list.find(item => item._id === id);
-    return item ? item[attr] : `Не найдено ${attr}`;
+  const handleCancelReservation = async (reservationId) => {
+    try {
+      await deleteReservation(reservationId);
+    } catch (error) {
+      console.error('Ошибка при отмене бронирования:', error);
+    }
   };
+
 
   render() {
     const { classes, className, reservations, movies, cinemas } = this.props;
@@ -178,6 +183,17 @@ class ReservationsTable extends Component {
       </Portlet>
     );
   }
+
 }
 
-export default withStyles(styles)(ReservationsTable);
+MyReservationTable.propTypes = {
+  classes: PropTypes.object.isRequired,
+  reservations: PropTypes.array.isRequired,
+  movies: PropTypes.array.isRequired,
+  cinemas: PropTypes.array.isRequired,
+  deleteReservation: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = { deleteReservation };
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(MyReservationTable));

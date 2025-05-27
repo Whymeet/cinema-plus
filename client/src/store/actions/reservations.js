@@ -1,12 +1,14 @@
-import { GET_RESERVATIONS, GET_RESERVATION_SUGGESTED_SEATS } from '../types';
+import { GET_RESERVATIONS, GET_RESERVATION_SUGGESTED_SEATS, DELETE_RESERVATION } from '../types';
 import { setAlert } from './alert';
 import api from '../../utils/axios';
 
 export const getReservations = () => async dispatch => {
   try {
+
     const response = await api.get('/reservations');
-    if (response.data) {
+    if (response.data) { 
       dispatch({ type: GET_RESERVATIONS, payload: response.data });
+
     }
   } catch (error) {
     const errorMessage = error.response?.data?.error || error.message || 'Не удалось загрузить бронирования';
@@ -95,9 +97,11 @@ export const removeReservation = id => async dispatch => {
   }
 };
 
+
 export {
   getReservations,
   deleteReservation,
   addReservation,
   getSuggestedReservationSeats
 } from './reservation';
+

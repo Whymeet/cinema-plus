@@ -3,31 +3,15 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
 import { Button } from '@material-ui/core';
-import { SearchInput, ResponsiveDialog } from '../../../../../components';
+import { SearchInput } from '../../../../../components';
 import styles from './styles';
-import AddCinema from '../AddCinema/AddCinema';
 
 class CinemaToolbar extends Component {
-  state = {
-    openAddDialog: false
-  };
-
-  OpenAddDialog() {
-    this.setState({ openAddDialog: true });
-  }
-
-  CloseAddDialog() {
-    this.setState({ openAddDialog: false });
-  }
-
   render() {
-    const { openAddDialog } = this.state;
-    const { classes, className, search, onChangeSearch } = this.props;
-
+    const { classes, className, search, onChangeSearch, onAddClick } = this.props;
     const rootClassName = classNames(classes.root, className);
 
     return (
-      <Fragment>
         <div className={rootClassName}>
           <div className={classes.row}>
             <SearchInput
@@ -37,7 +21,7 @@ class CinemaToolbar extends Component {
               onChange={onChangeSearch}
             />
             <Button
-              onClick={() => this.OpenAddDialog()}
+            onClick={onAddClick}
               color="primary"
               size="small"
               variant="outlined">
@@ -45,20 +29,14 @@ class CinemaToolbar extends Component {
             </Button>
           </div>
         </div>
-        <ResponsiveDialog
-          id="Add-cinema"
-          open={openAddDialog}
-          handleClose={() => this.CloseAddDialog()}>
-          <AddCinema />
-        </ResponsiveDialog>
-      </Fragment>
     );
   }
 }
 
 CinemaToolbar.propTypes = {
   className: PropTypes.string,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  onAddClick: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(CinemaToolbar);

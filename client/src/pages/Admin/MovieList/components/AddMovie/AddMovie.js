@@ -28,6 +28,7 @@ class AddMovie extends Component {
     description: '',
     director: '',
     cast: '',
+    country: '',
     releaseDate: new Date(),
     endDate: new Date()
   };
@@ -42,6 +43,7 @@ class AddMovie extends Component {
         cast,
         description,
         duration,
+        country,
         releaseDate,
         endDate
       } = this.props.edit;
@@ -53,6 +55,7 @@ class AddMovie extends Component {
         cast,
         description,
         duration,
+        country,
         releaseDate,
         endDate
       });
@@ -105,13 +108,14 @@ class AddMovie extends Component {
       description,
       director,
       cast,
+      country,
       releaseDate,
       endDate
     } = this.state;
 
     const rootClassName = classNames(classes.root, className);
-    const subtitle = this.props.edit ? 'Редактировать фильм' : 'Добавить фильм';
-    const submitButton = this.props.edit ? 'Обновить фильм' : 'Сохранить';
+    const subtitle = this.props.edit ? 'Edit Movie' : 'Add Movie';
+    const submitButton = this.props.edit ? 'Update Movie' : 'Save Details';
     const submitAction = this.props.edit
       ? () => this.onUpdateMovie()
       : () => this.onAddMovie();
@@ -125,8 +129,8 @@ class AddMovie extends Component {
           <div className={classes.field}>
             <TextField
               className={classes.textField}
-              helperText="Укажите название фильма"
-              label="Название"
+              helperText="Please specify the title"
+              label="Title"
               margin="dense"
               required
               value={title}
@@ -141,7 +145,7 @@ class AddMovie extends Component {
               multiple
               displayEmpty
               className={classes.textField}
-              label="Жанр"
+              label="Genre"
               margin="dense"
               required
               value={genre}
@@ -161,7 +165,7 @@ class AddMovie extends Component {
               fullWidth
               multiline
               className={classes.textField}
-              label="Описание"
+              label="Description"
               margin="dense"
               required
               variant="outlined"
@@ -175,7 +179,7 @@ class AddMovie extends Component {
             <TextField
               select
               className={classes.textField}
-              label="Язык"
+              label="Language"
               margin="dense"
               required
               value={language}
@@ -192,7 +196,7 @@ class AddMovie extends Component {
 
             <TextField
               className={classes.textField}
-              label="Продолжительность (мин)"
+              label="Duration"
               margin="dense"
               type="number"
               value={duration}
@@ -205,7 +209,7 @@ class AddMovie extends Component {
           <div className={classes.field}>
             <TextField
               className={classes.textField}
-              label="Режиссер"
+              label="Director"
               margin="dense"
               required
               value={director}
@@ -216,7 +220,7 @@ class AddMovie extends Component {
             />
             <TextField
               className={classes.textField}
-              label="В ролях"
+              label="Cast"
               margin="dense"
               required
               value={cast}
@@ -227,13 +231,26 @@ class AddMovie extends Component {
             />
           </div>
           <div className={classes.field}>
+            <TextField
+              className={classes.textField}
+              label="Country"
+              margin="dense"
+              required
+              value={country}
+              variant="outlined"
+              onChange={event =>
+                this.handleFieldChange('country', event.target.value)
+              }
+            />
+          </div>
+          <div className={classes.field}>
             <MuiPickersUtilsProvider utils={MomentUtils}>
               <KeyboardDatePicker
                 className={classes.textField}
                 inputVariant="outlined"
                 margin="normal"
                 id="release-date"
-                label="Дата выхода"
+                label="Release Date"
                 value={releaseDate}
                 onChange={date =>
                   this.handleFieldChange('releaseDate', date._d)
@@ -248,7 +265,7 @@ class AddMovie extends Component {
                 inputVariant="outlined"
                 margin="normal"
                 id="end-date"
-                label="Дата окончания проката"
+                label="End Date"
                 value={endDate}
                 onChange={date => this.handleFieldChange('endDate', date._d)}
                 KeyboardButtonProps={{
@@ -282,7 +299,7 @@ class AddMovie extends Component {
             className={classes.buttonFooter}
             variant="contained"
             onClick={this.onRemoveMovie}>
-            Удалить фильм
+            Delete Movie
           </Button>
         )}
       </div>
