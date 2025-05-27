@@ -181,10 +181,10 @@ class AddCinema extends Component {
     } = this.state;
 
     const rootClassName = classNames(classes.root, className);
-    const mainTitle = this.props.editCinema ? 'Редактировать кинотеатр' : 'Добавить кинотеатр';
+    const mainTitle = this.props.editCinema ? 'Редактировать зал' : 'Добавить зал';
     const submitButton = this.props.editCinema
-      ? 'Обновить кинотеатр'
-      : 'Сохранить';
+      ? 'Обновить зал'
+      : 'Добавить';
     const submitAction = this.props.editCinema
       ? () => this.onSubmitAction('update')
       : () => this.onSubmitAction('create');
@@ -198,7 +198,7 @@ class AddCinema extends Component {
           <div className={classes.field}>
             <TextField
               className={classes.textField}
-              helperText="Пожалуйста, укажите название кинотеатра"
+              helperText="Пожалуйста, укажите название зала"
               label="Название"
               margin="dense"
               required
@@ -261,7 +261,7 @@ class AddCinema extends Component {
             variant="contained"
             onClick={() => this.onSubmitAction('remove')}
           >
-            Удалить кинотеатр
+            Удалить зал
           </Button>
         )}
 

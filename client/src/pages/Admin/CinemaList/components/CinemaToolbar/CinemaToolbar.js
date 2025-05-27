@@ -16,7 +16,7 @@ class CinemaToolbar extends Component {
           <div className={classes.row}>
             <SearchInput
               className={classes.searchInput}
-              placeholder="Поиск кинотеатра"
+              placeholder="Поиск зала"
               value={search}
               onChange={onChangeSearch}
             />

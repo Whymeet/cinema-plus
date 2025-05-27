@@ -161,7 +161,7 @@ class AddShowtime extends Component {
               fullWidth
               select
               className={classes.textField}
-              label="Кинотеатр"
+              label="Зал"
               margin="dense"
               required
               value={cinemaId}

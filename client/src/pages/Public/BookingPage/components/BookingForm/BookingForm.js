@@ -88,7 +88,7 @@ export default function BookingForm(props) {
         alignItems="center"
         justifyContent="center">
         <Typography align="center" variant="h2" color="inherit">
-          Нет доступных кинотеатров.
+          Нет доступных залов.
         </Typography>
       </Box>
     );
@@ -100,7 +100,7 @@ export default function BookingForm(props) {
           fullWidth
           select
           value={selectedCinema}
-          label="Выбрать кинотеатр"
+          label="Выбрать зал"
           variant="outlined"
           className={classes.inputField}
           onChange={onChangeCinema}>
