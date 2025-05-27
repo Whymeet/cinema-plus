@@ -23,8 +23,6 @@ class App extends Component {
       console.error('Failed to load user:', error);
       // Ошибка уже обработана в loadUser action
     }
-    pageCursors();
-
   }
 
   render() {

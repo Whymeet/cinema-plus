@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { withStyles, Button, Typography, Card, CardContent, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { deleteReservation } from '../../../../../actions/reservationActions'; // Импорт по необходимости
+import { deleteReservation } from '../../../../../store/actions';
 import { Portlet, PortletContent } from '../../../../../components';
 import styles from './styles';
 

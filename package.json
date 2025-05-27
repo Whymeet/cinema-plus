@@ -35,6 +35,8 @@
     "prettier": "^1.19.1"
   },
   "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.61",
+    "axios": "^1.9.0",
     "mongodb": "^6.16.0"
   }
 }

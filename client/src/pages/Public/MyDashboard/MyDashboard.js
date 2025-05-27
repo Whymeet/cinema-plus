@@ -8,14 +8,10 @@ import {
   CircularProgress, 
   Snackbar
 } from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
+import Alert from '@material-ui/lab/Alert';
 import { getMovies, getReservations, getCinemas, deleteReservation } from '../../../store/actions';
 import { MyReservationTable } from './components';
 import Account from '../../Admin/Account';
-
-const Alert = (props) => {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-};
 
 const useStyles = makeStyles(theme => ({
   title: {
