@@ -1,5 +1,0 @@
-/* Полностью скроет кастомный курсор */
-.cursor-ring, .custom-cursor, [data-cursor] {
-  display: none !important;
-  opacity: 0 !important;
-}

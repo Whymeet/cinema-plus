@@ -9,7 +9,6 @@ import {
 } from '../types';
 import { setAlert } from './alert';
 import { setAuthHeaders, setUser, removeUser, isLoggedIn } from '../../utils';
-import api from '../../utils/axios';
 
 export const uploadImage = (id, image) => async dispatch => {
   try {
@@ -151,24 +150,22 @@ export const register = ({
 
 // Load user
 export const loadUser = () => async dispatch => {
-  if (!isLoggedIn()) {
-    dispatch({ type: AUTH_ERROR });
-    return;
-  }
-
+  if (!isLoggedIn()) return;
   try {
-    const response = await api.get('/users/me');
-    if (response.data && response.data.user) {
-      setUser(response.data.user);
-      dispatch({ type: USER_LOADED, payload: response.data });
-    } else {
-      removeUser();
-      dispatch({ type: AUTH_ERROR });
+    const url = '/users/me';
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: setAuthHeaders()
+    });
+    const responseData = await response.json();
+    if (response.ok) {
+      const { user } = responseData;
+      user && setUser(user);
+      dispatch({ type: USER_LOADED, payload: responseData });
     }
+    if (!response.ok) dispatch({ type: AUTH_ERROR });
   } catch (error) {
-    removeUser();
     dispatch({ type: AUTH_ERROR });
-    // Не перенаправляем на страницу логина здесь, так как это уже делает axios интерцептор
   }
 };
 
