@@ -54,7 +54,7 @@ function MyReservationTable(props) {
         <TableHead>
           <TableRow>
             <TableCell>Фильм</TableCell>
-            <TableCell>Кинотеатр</TableCell>
+            <TableCell>Зал</TableCell>
             <TableCell>Дата</TableCell>
             <TableCell>Время</TableCell>
             <TableCell>Места</TableCell>

@@ -16,13 +16,18 @@ export const uploadMovieImage = (id, image) => async dispatch => {
     });
     const responseData = await response.json(); 
     if (response.ok) {
-      dispatch(setAlert('Image Uploaded', 'success', 5000));
+      dispatch(setAlert('Изображение загружено', 'success', 5000));
+      // Получаем обновленные данные фильма
+      await dispatch(getMovies());
+      return responseData;
     }
     if (responseData.error) {
       dispatch(setAlert(responseData.error.message, 'error', 5000));
     }
+    return null;
   } catch (error) {
     dispatch(setAlert(error.message, 'error', 5000));
+    return null;
   }
 };
 

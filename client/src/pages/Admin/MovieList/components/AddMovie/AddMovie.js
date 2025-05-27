@@ -14,7 +14,8 @@ import { genreData, languageData } from '../../../../../data/MovieDataService';
 import {
   addMovie,
   updateMovie,
-  removeMovie
+  removeMovie,
+  uploadMovieImage
 } from '../../../../../store/actions';
 import FileUpload from '../../../../../components/FileUpload/FileUpload';
 
@@ -22,6 +23,8 @@ class AddMovie extends Component {
   state = {
     title: '',
     image: null,
+    imagePreview: null,
+    imageUrl: '',
     genre: [],
     language: '',
     duration: '',
@@ -37,6 +40,7 @@ class AddMovie extends Component {
     if (this.props.edit) {
       const {
         title,
+        image,
         language,
         genre,
         director,
@@ -49,6 +53,7 @@ class AddMovie extends Component {
       } = this.props.edit;
       this.setState({
         title,
+        imageUrl: image,
         language,
         genre: genre.split(','),
         director,
@@ -79,22 +84,45 @@ class AddMovie extends Component {
     const newState = { ...this.state };
     newState[field] = value;
     this.setState(newState);
+
+    // Если изменилось изображение, создаем превью
+    if (field === 'image' && value) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        this.setState({
+          imagePreview: reader.result,
+          imageUrl: '' // Очищаем старый URL при выборе нового файла
+        });
+      };
+      reader.readAsDataURL(value);
+    }
   };
 
-  onAddMovie = () => {
+  onAddMovie = async () => {
     const { image, genre, ...rest } = this.state;
     const movie = { ...rest, genre: genre.join(',') };
-    this.props.addMovie(image, movie);
+    await this.props.addMovie(image, movie);
   };
 
-  onUpdateMovie = () => {
+  onUpdateMovie = async () => {
     const { image, genre, ...rest } = this.state;
     const movie = { ...rest, genre: genre.join(',') };
-    // сначала файл, потом данные, потом id
-    this.props.updateMovie(image, movie, this.props.edit._id);
+    // Сначала обновляем основные данные без изображения
+    await this.props.updateMovie(null, movie, this.props.edit._id);
+    
+    // Если есть новое изображение, загружаем его отдельно
+    if (image) {
+      const imageResponse = await this.props.uploadMovieImage(this.props.edit._id, image);
+      if (imageResponse && imageResponse.movie) {
+        this.setState({
+          imageUrl: imageResponse.movie.image,
+          imagePreview: null,
+          image: null // Очищаем выбранный файл
+        });
+      }
+    }
   };
 
-  
   onRemoveMovie = () => this.props.removeMovie(this.props.edit._id);
 
   render() {
@@ -102,6 +130,8 @@ class AddMovie extends Component {
     const {
       title,
       image,
+      imagePreview,
+      imageUrl,
       genre,
       language,
       duration,
@@ -278,6 +308,7 @@ class AddMovie extends Component {
             <FileUpload
               className={classes.upload}
               file={image}
+              preview={imagePreview || imageUrl}
               onUpload={event => {
                 const file = event.target.files[0];
                 this.handleFieldChange('image', file);
@@ -309,15 +340,21 @@ class AddMovie extends Component {
 
 AddMovie.propTypes = {
   className: PropTypes.string,
-  classes: PropTypes.object,
-  movie: PropTypes.object
+  classes: PropTypes.object.isRequired,
+  edit: PropTypes.object,
+  addMovie: PropTypes.func.isRequired,
+  updateMovie: PropTypes.func.isRequired,
+  removeMovie: PropTypes.func.isRequired,
+  uploadMovieImage: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({ movieState }) => ({
-  movies: movieState.movies
-});
-
-const mapDispatchToProps = { addMovie, updateMovie, removeMovie };
+const mapStateToProps = null;
+const mapDispatchToProps = {
+  addMovie,
+  updateMovie,
+  removeMovie,
+  uploadMovieImage
+};
 
 export default connect(
   mapStateToProps,
