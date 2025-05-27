@@ -3,21 +3,24 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  TablePagination
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Grid,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
 } from '@material-ui/core';
-
 import { Portlet, PortletContent } from '../../../../../components';
 import styles from './styles';
 
 class ReservationsTable extends Component {
   state = {
-    rowsPerPage: 10,
-    page: 0
+    deleteDialogOpen: false,
+    selectedReservation: null
   };
 
   static propTypes = {
@@ -27,7 +30,8 @@ class ReservationsTable extends Component {
     onShowDetails: PropTypes.func,
     reservations: PropTypes.array.isRequired,
     movies: PropTypes.array.isRequired,
-    cinemas: PropTypes.array.isRequired
+    cinemas: PropTypes.array.isRequired,
+    onDeleteReservation: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -35,15 +39,30 @@ class ReservationsTable extends Component {
     movies: [],
     cinemas: [],
     onSelect: () => {},
-    onShowDetails: () => {}
+    onShowDetails: () => {},
+    onDeleteReservation: () => {}
   };
 
-  handleChangePage = (event, page) => {
-    this.setState({ page });
+  handleDeleteClick = (reservation) => {
+    this.setState({
+      deleteDialogOpen: true,
+      selectedReservation: reservation
+    });
   };
 
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
+  handleDeleteConfirm = () => {
+    const { selectedReservation } = this.state;
+    if (selectedReservation) {
+      this.props.onDeleteReservation(selectedReservation._id);
+    }
+    this.handleDeleteClose();
+  };
+
+  handleDeleteClose = () => {
+    this.setState({
+      deleteDialogOpen: false,
+      selectedReservation: null
+    });
   };
 
   onFindAttr = (id, list, attr) => {
@@ -53,71 +72,109 @@ class ReservationsTable extends Component {
 
   render() {
     const { classes, className, reservations, movies, cinemas } = this.props;
-    const { rowsPerPage, page } = this.state;
+    const { deleteDialogOpen } = this.state;
     const rootClassName = classNames(classes.root, className);
 
     return (
       <Portlet className={rootClassName}>
         <PortletContent noPadding>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell align="left">Фильм</TableCell>
-                <TableCell align="left">Кинотеатр</TableCell>
-                <TableCell align="left">Дата</TableCell>
-                <TableCell align="left">Начало</TableCell>
-                <TableCell align="left">Цена билета</TableCell>
-                <TableCell align="left">Итого</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {reservations
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(reservation => (
-                  <TableRow
-                    className={classes.tableRow}
-                    hover
-                    key={reservation._id}>
-                    <TableCell className={classes.tableCell}>
-                      {this.onFindAttr(reservation.movieId, movies, 'title')}
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {this.onFindAttr(reservation.cinemaId, cinemas, 'name')}
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {new Date(reservation.date).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {reservation.startAt}
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {reservation.ticketPrice}
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {reservation.total}
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-          <TablePagination
-            backIconButtonProps={{
-              'aria-label': 'Предыдущая страница'
-            }}
-            component="div"
-            count={reservations.length}
-            nextIconButtonProps={{
-              'aria-label': 'Следующая страница'
-            }}
-            onChangePage={this.handleChangePage}
-            onChangeRowsPerPage={this.handleChangeRowsPerPage}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={[5, 10, 25]}
-            labelRowsPerPage="Строк на странице:"
-            labelDisplayedRows={({ from, to, count }) => `${from}-${to} из ${count}`}
-          />
+          <div className={classes.cardsContainer}>
+            {reservations.map(reservation => {
+              const movie = movies.find(m => m._id === reservation.movieId) || {};
+              return (
+                <Card key={reservation._id} className={classes.card}>
+                  <CardContent>
+                    <div className={classes.cardHeader}>
+                      <Typography variant="h6">
+                        Заказ {reservation._id}
+                      </Typography>
+                      <Typography variant="h6" className={classes.total}>
+                        Итого: {reservation.total} руб.
+                      </Typography>
+                    </div>
+                    <div className={classes.cardContent}>
+                      <div className={classes.posterContainer}>
+                        {movie.image && (
+                          <img
+                            src={movie.image}
+                            alt={movie.title}
+                            className={classes.poster}
+                          />
+                        )}
+                      </div>
+                      <div className={classes.infoContainer}>
+                        <Typography variant="h6">
+                          {this.onFindAttr(reservation.movieId, movies, 'title')}
+                        </Typography>
+                        <Typography>
+                          Кинотеатр: {this.onFindAttr(reservation.cinemaId, cinemas, 'name')}
+                        </Typography>
+                        <Typography>
+                          Дата: {new Date(reservation.date).toLocaleDateString()}
+                        </Typography>
+                        <Typography>
+                          Начало: {reservation.startAt}
+                        </Typography>
+                        <Typography>
+                          Места: {reservation.seats.map((seat, index) => {
+                            const seatRow = (seat.row || seat.seatRow || seat[0] || 0) + 1;
+                            const seatNumber = (seat.number || seat.seatNumber || seat[1] || 0) + 1;
+                            return `Ряд ${seatRow}, Место ${seatNumber}${index < reservation.seats.length - 1 ? '; ' : ''}`;
+                          })}
+                        </Typography>
+                      </div>
+                      <div className={classes.qrContainer}>
+                        {reservation.qrCode && (
+                          <img
+                            src={reservation.qrCode}
+                            alt="QR код"
+                            className={classes.qrCode}
+                          />
+                        )}
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => this.handleDeleteClick(reservation)}
+                          className={classes.deleteButton}
+                        >
+                          Отменить бронь
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
         </PortletContent>
+
+        <Dialog
+          open={deleteDialogOpen}
+          onClose={this.handleDeleteClose}
+          aria-labelledby="delete-dialog-title"
+          aria-describedby="delete-dialog-description"
+          disablePortal
+          keepMounted
+        >
+          <DialogTitle id="delete-dialog-title">Подтверждение отмены</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="delete-dialog-description">
+              Действительно ли вы хотите отменить бронь?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleDeleteClose} color="primary">
+              Отмена
+            </Button>
+            <Button 
+              onClick={this.handleDeleteConfirm} 
+              color="secondary" 
+              variant="contained"
+            >
+              Удалить
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Portlet>
     );
   }

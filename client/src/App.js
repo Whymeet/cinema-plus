@@ -17,10 +17,16 @@ import 'typeface-montserrat';
 import { CssBaseline } from '@material-ui/core';
 
 class App extends Component {
-  componentDidMount() {
-    store.dispatch(loadUser());
+  async componentDidMount() {
+    try {
+      await store.dispatch(loadUser());
+    } catch (error) {
+      console.error('Failed to load user:', error);
+      // Ошибка уже обработана в loadUser action
+    }
     pageCursors();
   }
+
   render() {
     return (
       <Provider store={store}>
@@ -28,9 +34,6 @@ class App extends Component {
           <CssBaseline />
           <Alert />
           <Routes />
-          <div className="cursor" id="cursor" />
-          <div className="cursor2" id="cursor2" />
-          <div className="cursor3" id="cursor3" />
         </ThemeProvider>
       </Provider>
     );
