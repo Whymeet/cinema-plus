@@ -1,105 +1,143 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { MainLayout } from './layouts';
-import Home from './pages/Public/Home';
-import Login from './pages/Public/Login';
-import Register from './pages/Public/Register';
-import MovieDetails from './pages/Public/MovieDetails';
-import BookingPage from './pages/Public/BookingPage';
-import AdminLayout from './layouts/AdminLayout/AdminLayout';
-import Dashboard from './pages/Admin/Dashboard';
-import MovieList from './pages/Admin/MovieList';
-import CinemaList from './pages/Admin/CinemaList';
-import ShowtimeList from './pages/Admin/ShowtimeList';
-import ReservationList from './pages/Admin/ReservationList';
-import UserList from './pages/Admin/UserList';
-import AddMovie from './pages/Admin/MovieList/components/AddMovie';
-import AddCinema from './pages/Admin/CinemaList/components/AddCinema';
-import AddShowtime from './pages/Admin/ShowtimeList/components/AddShowtime';
-import ConfigureSeats from './pages/Admin/CinemaList/components/ConfigureSeats/ConfigureSeats';
+import React, { lazy, Suspense } from 'react';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
-const routes = [
-  {
-    path: '/',
-    component: MainLayout,
-    routes: [
-      {
-        path: '/',
-        exact: true,
-        component: Home
-      },
-      {
-        path: '/login',
-        component: Login
-      },
-      {
-        path: '/register',
-        component: Register
-      },
-      {
-        path: '/movie/:id',
-        component: MovieDetails
-      },
-      {
-        path: '/booking/:id',
-        component: BookingPage
-      }
-    ]
-  },
-  {
-    path: '/admin',
-    component: AdminLayout,
-    routes: [
-      {
-        path: '/admin',
-        exact: true,
-        component: () => <Redirect to="/admin/dashboard" />
-      },
-      {
-        path: '/admin/dashboard',
-        component: Dashboard
-      },
-      {
-        path: '/admin/movies',
-        component: MovieList
-      },
-      {
-        path: '/admin/cinemas',
-        component: CinemaList
-      },
-      {
-        path: '/admin/showtimes',
-        component: ShowtimeList
-      },
-      {
-        path: '/admin/reservations',
-        component: ReservationList
-      },
-      {
-        path: '/admin/users',
-        component: UserList
-      },
-      {
-        path: '/admin/add-movie',
-        component: AddMovie
-      },
-      {
-        path: '/admin/add-cinema',
-        component: AddCinema
-      },
-      {
-        path: '/admin/add-showtime',
-        component: AddShowtime
-      },
-      {
-        path: '/admin/cinemas/configure-seats/:id',
-        exact: true,
-        component: ConfigureSeats,
-        auth: true,
-        admin: true
-      }
-    ]
-  }
-];
+import Loading from './components/Loading';
+import { ProtectedRoute, WithLayoutRoute } from './routers';
 
-export default routes; 
+import { AdminLayout, PublicLayout } from './layouts';
+
+// Admin
+const DashboardPage = lazy(() => import('./pages/Admin/Dashboard'));
+const MovieList = lazy(() => import('./pages/Admin/MovieList'));
+const CinemaList = lazy(() => import('./pages/Admin/CinemaList'));
+const ShowtimeList = lazy(() => import('./pages/Admin/ShowtimeList'));
+const ReservationList = lazy(() => import('./pages/Admin/ReservationList'));
+const User = lazy(() => import('./pages/Admin/User'));
+const Account = lazy(() => import('./pages/Admin/Account'));
+const ConfigureSeats = lazy(() => import('./pages/Admin/CinemaList/components/ConfigureSeats/ConfigureSeats'));
+
+// Register - Login
+const Register = lazy(() => import('./pages/Public/Register'));
+const Login = lazy(() => import('./pages/Public/Login'));
+
+// Public
+const HomePage = lazy(() => import('./pages/Public/HomePage'));
+const MoviePage = lazy(() => import('./pages/Public/MoviePage'));
+const MyDashboard = lazy(() => import('./pages/Public/MyDashboard'));
+const MovieCategoryPage = lazy(() =>
+  import('./pages/Public/MovieCategoryPage')
+);
+const CinemasPage = lazy(() => import('./pages/Public/CinemasPage'));
+const BookingPage = lazy(() => import('./pages/Public/BookingPage'));
+
+const Checkin = lazy(() => import('./pages/Public/Checkin'));
+
+const Routes = () => {
+  return (
+    <Suspense fallback={<Loading />}>
+      <Router>
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+
+          <WithLayoutRoute
+            exact
+            path="/checkin/:reservationId"
+            component={Checkin}
+            layout={PublicLayout}
+          />
+
+          <WithLayoutRoute
+            exact
+            path="/"
+            layout={PublicLayout}
+            component={HomePage}
+          />
+          <WithLayoutRoute
+            exact
+            path="/mydashboard"
+            layout={PublicLayout}
+            component={MyDashboard}
+          />
+          <WithLayoutRoute
+            exact
+            path="/cinemas"
+            layout={PublicLayout}
+            component={CinemasPage}
+          />
+          <WithLayoutRoute
+            exact
+            path="/movie/category/:category"
+            layout={PublicLayout}
+            component={MovieCategoryPage}
+          />
+          <WithLayoutRoute
+            exact
+            path="/movie/:id"
+            layout={PublicLayout}
+            layoutProps={{ withFooter: false }}
+            component={MoviePage}
+          />
+          <WithLayoutRoute
+            exact
+            path="/movie/booking/:id"
+            layout={PublicLayout}
+            layoutProps={{ withFooter: false }}
+            component={BookingPage}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/dashboard"
+            layout={AdminLayout}
+            component={DashboardPage}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/users"
+            layout={AdminLayout}
+            component={User}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/showtimes"
+            layout={AdminLayout}
+            component={ShowtimeList}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/reservations"
+            layout={AdminLayout}
+            component={ReservationList}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/cinemas"
+            layout={AdminLayout}
+            component={CinemaList}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/cinemas/configure-seats/:id"
+            layout={AdminLayout}
+            component={ConfigureSeats}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/movies"
+            layout={AdminLayout}
+            component={MovieList}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/account"
+            layout={AdminLayout}
+            component={Account}
+          />
+          <Route path="*" component={() => '404 NOT FOUND'} />
+        </Switch>
+      </Router>
+    </Suspense>
+  );
+};
+
+export default Routes;
