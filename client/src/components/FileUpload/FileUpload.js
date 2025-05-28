@@ -7,14 +7,21 @@ import Paper from '../Paper';
 // Component styles
 const styles = theme => ({
   root: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    backgroundColor: '#0767DB'
   },
   input: {
     display: 'none'
   },
   button: {
     minWidth: 100,
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
+    color: '#ffffff',
+    borderColor: '#ffffff',
+    '&:hover': {
+      borderColor: '#ffffff',
+      backgroundColor: 'rgba(255, 255, 255, 0.1)'
+    }
   },
   preview: {
     marginTop: theme.spacing(2),
@@ -25,6 +32,9 @@ const styles = theme => ({
   previewContainer: {
     marginTop: theme.spacing(2),
     textAlign: 'center'
+  },
+  text: {
+    color: '#ffffff'
   }
 });
 
@@ -54,7 +64,7 @@ const FileUpload = props => {
           {file ? 'Изменить' : 'Загрузить'}
         </Button>
       </label>
-      <span>{file ? file.name : (isFullUrl ? 'Изображение загружено' : 'Файл не выбран')}</span>
+      <span className={classes.text}>{file ? file.name : (isFullUrl ? 'Изображение загружено' : 'Файл не выбран')}</span>
       {preview && (
         <div className={classes.previewContainer}>
           <img 

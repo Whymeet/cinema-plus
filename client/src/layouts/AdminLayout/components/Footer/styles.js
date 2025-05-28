@@ -8,6 +8,14 @@ export default makeStyles(theme => ({
   },
   copyright: {
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(0.5)
+    marginBottom: theme.spacing(0.5),
+    textAlign: 'center'
+  },
+  link: {
+    color: theme.palette.common.white,
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: 'underline'
+    }
   }
 }));
