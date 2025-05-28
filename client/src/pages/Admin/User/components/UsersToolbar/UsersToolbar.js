@@ -24,7 +24,7 @@ const UsersToolbar = props => {
             color="primary"
             size="small"
             variant="outlined">
-            {selectedUsers.length === 1 ? 'Edit' : 'Add'}
+            {selectedUsers.length === 1 ? 'Редактировать' : 'Добавить'}
           </Button>
         </div>
       </div>

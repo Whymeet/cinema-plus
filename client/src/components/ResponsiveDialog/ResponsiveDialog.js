@@ -35,7 +35,7 @@ const ResponsiveDialog = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary" autoFocus>
-          Done
+          Отменить
         </Button>
       </DialogActions>
     </Dialog>

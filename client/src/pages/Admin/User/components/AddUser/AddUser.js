@@ -65,9 +65,13 @@ class AddUser extends Component {
     const { name, username, email, password, role, phone } = this.state;
 
     const rootClassName = classNames(classes.root, className);
-    const title = selectedUser ? 'Edit User' : 'Add User';
-    const submitButton = selectedUser ? 'Update User' : 'Add User';
-    const submitAction = selectedUser
+    const title = this.props.selectedUser
+      ? 'Редактировать пользователя'
+      : 'Добавить пользователя';
+    const submitButton = this.props.selectedUser
+      ? 'Обновить'
+      : 'Сохранить';
+    const submitAction = this.props.selectedUser
       ? () => this.onUpdateUser()
       : () => this.onAddUser();
 
@@ -81,8 +85,8 @@ class AddUser extends Component {
             <TextField
               fullWidth
               className={classes.textField}
-              helperText="Please specify the Full Name"
-              label="Full Name"
+              helperText="Пожалуйста, укажите полное имя"
+              label="Полное имя"
               margin="dense"
               required
               value={name}
@@ -94,7 +98,7 @@ class AddUser extends Component {
             <TextField
               fullWidth
               className={classes.textField}
-              label="Username"
+              label="Имя пользователя"
               margin="dense"
               required
               value={username}
@@ -120,7 +124,7 @@ class AddUser extends Component {
             <TextField
               fullWidth
               className={classes.textField}
-              label="Password"
+              label="Пароль"
               margin="dense"
               required
               value={password}
@@ -134,7 +138,7 @@ class AddUser extends Component {
             <TextField
               fullWidth
               className={classes.textField}
-              label="Phone"
+              label="Телефон"
               margin="dense"
               required
               value={phone}
@@ -147,8 +151,8 @@ class AddUser extends Component {
               fullWidth
               select
               className={classes.textField}
-              helperText="Admin or Guest"
-              label="Role"
+              helperText="Администратор или Гость"
+              label="Роль"
               margin="dense"
               required
               value={role}
@@ -158,7 +162,7 @@ class AddUser extends Component {
               }>
               {['admin', 'guest'].map(role => (
                 <MenuItem key={`role-${role}`} value={role}>
-                  {role}
+                  {role === 'admin' ? 'Администратор' : 'Гость'}
                 </MenuItem>
               ))}
             </TextField>

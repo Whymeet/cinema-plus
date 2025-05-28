@@ -30,6 +30,36 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     flexWrap: 'wrap',
   },
+  resetButton: {
+    height: '56px', // Высота как у TextField и Select
+    marginTop: 0,
+    fontSize: '1.1rem', // Увеличиваем размер текста
+    '& .MuiButton-label': {
+      fontSize: '1.1rem', // Для гарантии применения размера
+    }
+  },
+  select: {
+    '& .MuiSelect-select': {
+      fontSize: '1.1rem',
+    },
+    '& .MuiMenuItem-root': {
+      fontSize: '1.1rem',
+    }
+  },
+  menuItem: {
+    '&:hover': {
+      backgroundColor: '#0767DB !important',
+      color: '#ffffff'
+    },
+    '&.Mui-selected': {
+      backgroundColor: '#0767DB !important',
+      color: '#ffffff',
+      '&:hover': {
+        backgroundColor: '#0767DB !important',
+        color: '#ffffff'
+      }
+    }
+  },
   [theme.breakpoints.down('sm')]: {
     fullWidth: { width: '100%' },
   },
@@ -114,7 +144,7 @@ function MovieCategoryPage(props) {
           </Grid>
           {/* Фильтры */}
           <Grid container spacing={2} className={classes.filterContainer}>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={3}>
               <TextField
                 label="Фильтр по названию фильма"
                 value={titleFilter}
@@ -130,9 +160,22 @@ function MovieCategoryPage(props) {
                 displayEmpty
                 fullWidth
                 variant="outlined"
+                className={classes.select}
+                MenuProps={{
+                  classes: { paper: classes.select },
+                  anchorOrigin: {
+                    vertical: 'bottom',
+                    horizontal: 'left'
+                  },
+                  transformOrigin: {
+                    vertical: 'top',
+                    horizontal: 'left'
+                  },
+                  getContentAnchorEl: null
+                }}
               >
                 {genres.map((genre, index) => (
-                  <MenuItem key={index} value={genre}>
+                  <MenuItem key={index} value={genre} className={classes.menuItem}>
                     {genre || 'Выберите жанр'}
                   </MenuItem>
                 ))}
@@ -145,15 +188,28 @@ function MovieCategoryPage(props) {
                 displayEmpty
                 fullWidth
                 variant="outlined"
+                className={classes.select}
+                MenuProps={{
+                  classes: { paper: classes.select },
+                  anchorOrigin: {
+                    vertical: 'bottom',
+                    horizontal: 'left'
+                  },
+                  transformOrigin: {
+                    vertical: 'top',
+                    horizontal: 'left'
+                  },
+                  getContentAnchorEl: null
+                }}
               >
                 {countries.map((country, index) => (
-                  <MenuItem key={index} value={country}>
+                  <MenuItem key={index} value={country} className={classes.menuItem}>
                     {country || 'Выберите страну'}
                   </MenuItem>
                 ))}
               </Select>
             </Grid>
-            <Grid item xs={12} sm={2}>
+            <Grid item xs={12} sm={3}>
               <Button
                 variant="outlined"
                 color="secondary"
@@ -163,6 +219,7 @@ function MovieCategoryPage(props) {
                   setCountryFilter('Все');
                 }}
                 fullWidth
+                className={classes.resetButton}
               >
                 Сбросить
               </Button>

@@ -42,14 +42,14 @@ class Navbar extends Component {
             </Typography>
           </Link>
           <div className={classes.navLinks}>
-            <Link className={classes.navLink} to="/">
-              Главная
-            </Link>
             <Link className={classes.navLink} to="/movie/category/nowShowing">
               Афиша
             </Link>
             <Link className={classes.navLink} to="/movie/category/comingSoon">
               Скоро в кино
+            </Link>
+            <Link className={classes.navLink} to="/">
+              О нас
             </Link>
             <Link className={classes.navLink} to="/cinemas">
               Залы

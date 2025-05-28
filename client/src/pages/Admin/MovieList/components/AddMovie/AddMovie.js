@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles, Typography, Select } from '@material-ui/core';
+import { withStyles, Typography, Select, FormControl, InputLabel } from '@material-ui/core';
 import { Button, TextField, MenuItem } from '@material-ui/core';
 import {
   MuiPickersUtilsProvider,
@@ -144,8 +144,8 @@ class AddMovie extends Component {
     } = this.state;
 
     const rootClassName = classNames(classes.root, className);
-    const subtitle = this.props.edit ? 'Edit Movie' : 'Add Movie';
-    const submitButton = this.props.edit ? 'Update Movie' : 'Save Details';
+    const subtitle = this.props.edit ? 'Редактировать фильм' : 'Добавить фильм';
+    const submitButton = this.props.edit ? 'Обновить фильм' : 'Сохранить';
     const submitAction = this.props.edit
       ? () => this.onUpdateMovie()
       : () => this.onAddMovie();
@@ -159,8 +159,8 @@ class AddMovie extends Component {
           <div className={classes.field}>
             <TextField
               className={classes.textField}
-              helperText="Please specify the title"
-              label="Title"
+              helperText="Пожалуйста, укажите название фильма"
+              label="Название"
               margin="dense"
               required
               value={title}
@@ -171,31 +171,33 @@ class AddMovie extends Component {
             />
           </div>
           <div className={classes.field}>
-            <Select
-              multiple
-              displayEmpty
-              className={classes.textField}
-              label="Genre"
-              margin="dense"
-              required
-              value={genre}
-              variant="outlined"
-              onChange={event =>
-                this.handleFieldChange('genre', event.target.value)
-              }>
-              {genreData.map((genreItem, index) => (
-                <MenuItem key={genreItem + '-' + index} value={genreItem}>
-                  {genreItem}
-                </MenuItem>
-              ))}
-            </Select>
+            <FormControl variant="outlined" className={classes.textField}>
+              <InputLabel id="genre-label">Жанр*</InputLabel>
+              <Select
+                labelId="genre-label"
+                multiple
+                displayEmpty
+                label="Жанр*"
+                margin="dense"
+                required
+                value={genre}
+                onChange={event =>
+                  this.handleFieldChange('genre', event.target.value)
+                }>
+                {genreData.map((genreItem, index) => (
+                  <MenuItem key={genreItem + '-' + index} value={genreItem}>
+                    {genreItem}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
           <div className={classes.field}>
             <TextField
               fullWidth
               multiline
               className={classes.textField}
-              label="Description"
+              label="Описание"
               margin="dense"
               required
               variant="outlined"
@@ -209,7 +211,7 @@ class AddMovie extends Component {
             <TextField
               select
               className={classes.textField}
-              label="Language"
+              label="Язык"
               margin="dense"
               required
               value={language}
@@ -226,7 +228,7 @@ class AddMovie extends Component {
 
             <TextField
               className={classes.textField}
-              label="Duration"
+              label="Продолжительность"
               margin="dense"
               type="number"
               value={duration}
@@ -239,7 +241,7 @@ class AddMovie extends Component {
           <div className={classes.field}>
             <TextField
               className={classes.textField}
-              label="Director"
+              label="Режиссер"
               margin="dense"
               required
               value={director}
@@ -250,7 +252,7 @@ class AddMovie extends Component {
             />
             <TextField
               className={classes.textField}
-              label="Cast"
+              label="В ролях"
               margin="dense"
               required
               value={cast}
@@ -263,7 +265,7 @@ class AddMovie extends Component {
           <div className={classes.field}>
             <TextField
               className={classes.textField}
-              label="Country"
+              label="Страна"
               margin="dense"
               required
               value={country}
@@ -280,13 +282,13 @@ class AddMovie extends Component {
                 inputVariant="outlined"
                 margin="normal"
                 id="release-date"
-                label="Release Date"
+                label="Дата выхода"
                 value={releaseDate}
                 onChange={date =>
                   this.handleFieldChange('releaseDate', date._d)
                 }
                 KeyboardButtonProps={{
-                  'aria-label': 'change date'
+                  'aria-label': 'изменить дату'
                 }}
               />
 
@@ -295,11 +297,11 @@ class AddMovie extends Component {
                 inputVariant="outlined"
                 margin="normal"
                 id="end-date"
-                label="End Date"
+                label="Дата окончания проката"
                 value={endDate}
                 onChange={date => this.handleFieldChange('endDate', date._d)}
                 KeyboardButtonProps={{
-                  'aria-label': 'change date'
+                  'aria-label': 'изменить дату'
                 }}
               />
             </MuiPickersUtilsProvider>
@@ -330,7 +332,7 @@ class AddMovie extends Component {
             className={classes.buttonFooter}
             variant="contained"
             onClick={this.onRemoveMovie}>
-            Delete Movie
+            Удалить фильм
           </Button>
         )}
       </div>
