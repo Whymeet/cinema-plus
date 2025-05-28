@@ -20,7 +20,11 @@ const port = process.env.PORT || 8080;
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../../client/build')));
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+// Настройка статических путей для загруженных файлов
+app.use('/uploads/movies', express.static(path.join(__dirname, '../uploads/movies')));
+app.use('/uploads/users', express.static(path.join(__dirname, '../uploads/users')));
+app.use('/uploads/cinemas', express.static(path.join(__dirname, '../uploads/cinemas')));
 
 app.use(function(req, res, next) {
   // Website you wish to allow to connect
@@ -59,4 +63,4 @@ app.use(invitationsRouter);
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../../client/build/index.html'));
 });
-app.listen(port, () => console.log(`app is running in PORT: ${port}`));
+app.listen(port, () => console.log(`Server is up on port ${port}`));

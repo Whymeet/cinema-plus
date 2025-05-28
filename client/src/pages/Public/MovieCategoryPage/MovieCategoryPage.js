@@ -26,9 +26,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   moviesContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+    gap: theme.spacing(2),
+    padding: theme.spacing(2),
+    justifyItems: 'center'
   },
   resetButton: {
     height: '56px', // Высота как у TextField и Select

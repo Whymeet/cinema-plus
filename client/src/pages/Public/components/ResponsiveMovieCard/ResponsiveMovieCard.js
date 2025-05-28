@@ -47,7 +47,6 @@ const MovieCard = props => {
               {movie.genre}
             </Typography>
           </header>
-
           <div className={classes.description}>
             <Typography
               className={classes.descriptionText}
@@ -82,6 +81,8 @@ const MovieCard = props => {
 };
 
 MovieCard.propTypes = {
-  movie: PropTypes.object.isRequired
+  movie: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
+
 export default withStyles(styles)(MovieCard);
