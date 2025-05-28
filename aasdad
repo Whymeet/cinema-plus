@@ -1,0 +1,2054 @@
+[33mcommit 832cc00850b2bbe69e6a09953d71c84bd80e5064[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 11cb24d d23c878
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Tue May 27 23:15:00 2025 +0400
+
+    Merge pull request #13 from Whymeet/feature/lk
+    
+    Feature/lk
+
+[33mcommit d23c87881134e58cd09890f174cb731c7fa66306[m[33m ([m[1;31morigin/feature/lk[m[33m)[m
+Merge: 9fb71a1 11cb24d
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Tue May 27 23:14:43 2025 +0400
+
+    Merge branch 'master' into feature/lk
+
+[33mcommit 11cb24d6d9b2625a26d2f3dc3cb8ea6236dcc480[m
+Merge: f9f157d c811c9c
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Tue May 27 23:09:01 2025 +0400
+
+    Merge pull request #14 from Whymeet/fix/countticket
+    
+    Fix/countticket
+
+[33mcommit c811c9c516925bc523a2c48830598f72edaa7410[m[33m ([m[1;31morigin/fix/countticket[m[33m, [m[1;32mfix/countticket[m[33m)[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Tue May 27 23:07:37 2025 +0400
+
+    feat: добавлено отображение превью изображения при загрузке файла в компонент FileUpload и обновлена логика обработки изображений в компоненте AddCinema для улучшения пользовательского опыта
+
+[33mcommit aa675f58a2d7ee84f454b8e041547c1d16483a86[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Tue May 27 22:48:56 2025 +0400
+
+    refactor: заменены все упоминания "кинотеатр" на "зал" в компонентах и страницах приложения для улучшения согласованности терминологии
+
+[33mcommit 9fb71a1ca8c6f8626184fa60f1a379cee9a1ad7f[m
+Merge: 2f93439 f9f157d
+Author: Margo <168222995+Chubarinka@users.noreply.github.com>
+Date:   Tue May 27 16:57:33 2025 +0400
+
+    Merge branch 'master' into feature/lk
+
+[33mcommit 2f934391446e756c50872a92579b0cee8d7f51c6[m
+Author: alina <alina.chubar@mail.ru>
+Date:   Tue May 27 16:07:50 2025 +0400
+
+    доп настройки
+
+[33mcommit f165795d520f6a1677af97aac752e450ebd83b2c[m
+Author: alina <alina.chubar@mail.ru>
+Date:   Tue May 27 15:40:10 2025 +0400
+
+    перестройка отображения забронированных билетов
+
+[33mcommit f9f157d180ed76bae14a23f61fd9bc5bca8593e0[m
+Merge: b16a9cc b39201d
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Tue May 27 13:13:14 2025 +0400
+
+    Merge pull request #12 from Whymeet/fix/countticket
+    
+    feat: добавлено отображение имени пользователя в навигационной панели…
+
+[33mcommit b39201d19363caf3317ec4bfa5f0d245ffee459d[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Tue May 27 13:11:28 2025 +0400
+
+    feat: добавлено отображение имени пользователя в навигационной панели, обновлены стили для улучшения визуального восприятия
+
+[33mcommit b16a9cc4dd31f5360d81bc9118f562afc457c875[m
+Merge: fd014a2 c8c95df
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Tue May 27 10:41:31 2025 +0400
+
+    Merge pull request #11 from Whymeet/fix/countticket
+    
+    fix: исправлены отступы и форматирование в компонентах списка кинотеа…
+
+[33mcommit c8c95df0adc11a7c92e0a299b489a11d1447470f[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Tue May 27 09:33:02 2025 +0400
+
+    fix: исправлены отступы и форматирование в компонентах списка кинотеатров и страницы бронирования, добавлена проверка на максимальное количество билетов
+
+[33mcommit fd014a2441a17a896239cdcd1797f4a154dcd0df[m
+Merge: 87710d0 21b072f
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Tue May 27 01:28:34 2025 +0400
+
+    Merge pull request #10 from Whymeet/feature/fix
+    
+    Feature/fix
+
+[33mcommit 21b072f583d5b9353876167722d80723dc42da60[m[33m ([m[1;31morigin/feature/fix[m[33m)[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Tue May 27 01:24:48 2025 +0400
+
+    feat: добавлена возможность ввода электронного адреса для отправки приглашений на странице бронирования, обновлены стили для компонента MovieInfo и улучшена обработка отображения информации
+
+[33mcommit 8e32431456df755a63c9ab269155882cb441ef8a[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Tue May 27 01:15:00 2025 +0400
+
+    feat: улучшена логика выбора мест на странице бронирования, добавлена проверка занятости мест и обновлены стили для календаря выбора даты
+
+[33mcommit da8806f002af614550354b6fb368497586d9e72d[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Tue May 27 01:07:13 2025 +0400
+
+    feat: улучшена логика бронирования мест на странице, добавлена функция для получения забронированных мест и перерасчет общей стоимости билетов с учетом коэффициентов
+
+[33mcommit 6ef3918b5a4fb8c94ac966939f4a13e6d3156324[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Mon May 26 21:50:04 2025 +0400
+
+    feat: улучшена логика выбора мест на странице бронирования, добавлена обработка VIP мест в функции получения цвета мест, обновлены условия для выбора и отображения мест
+
+[33mcommit 09ee992ceca3e34a1402deb8483ae291bf63980f[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Mon May 26 21:43:25 2025 +0400
+
+    feat: обновлена логика выбора мест на странице бронирования, добавлены коэффициенты для VIP мест, улучшен расчет общей стоимости билетов и обновлены стили для отображения информации о местах
+
+[33mcommit dfc155f855ac2b532833d60a6797896cf84a1c7c[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Mon May 26 21:28:51 2025 +0400
+
+    feat: добавлены фильмы и кинотеатры в компонент списка сеансов, обновлены методы для получения названий фильмов и кинотеатров, улучшена обработка данных на странице бронирования
+
+[33mcommit 122cebfa4686b709f0249cfa65f68d131a432a87[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Mon May 26 19:51:09 2025 +0400
+
+    feat: обновлена логика работы с местами в кинотеатрах, добавлены коэффициенты для мест, изменены маршруты для редиректа и обновлены модели данных
+
+[33mcommit acb6b8195c590be4e02c81c4a5f35e25aff4157f[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Mon May 26 19:28:09 2025 +0400
+
+    feat: добавлены кнопки для редактирования и настройки мест в списке кинотеатров, обновлены стили для кнопок и действий
+
+[33mcommit cf24880f82059e67298d2f621bd0c9d4556bc250[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Mon May 26 19:22:31 2025 +0400
+
+    feat: обновлена логика сохранения конфигурации кинотеатра, добавлена обработка ошибок и улучшен вывод информации в консоль; изменены цвета для VIP мест
+
+[33mcommit 4bef01e9f55065554c9c4109ffe9cfbf0354108a[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Mon May 26 18:59:22 2025 +0400
+
+    feat: добавлена возможность настройки схемы зала для кинотеатров, обновлены маршруты и компоненты для работы с местами
+
+[33mcommit 87710d08ef43b3057ec35931140e6739422fc914[m
+Merge: e36425d acd59ca
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Mon May 26 17:51:15 2025 +0400
+
+    Merge pull request #9 from Whymeet/feature/fix
+    
+    Feature/fix
+
+[33mcommit acd59ca606b30640dd7be6d67927be880783df7e[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Mon May 26 17:31:20 2025 +0400
+
+    feat: добавлена проверка уникальности названия кинотеатра при создании и обновлении, улучшена обработка ошибок
+
+[33mcommit f1319a16905c4dd3bfba5cb5c5ca110b8975bf06[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Mon May 26 16:18:13 2025 +0400
+
+    refactor: удалены поля города и страны из компонента AddCinema, обновлены маршруты и модели для работы без этих полей
+
+[33mcommit 355ad39cceac144f1fb1ce3091dd762285e40746[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Thu May 22 02:10:31 2025 +0400
+
+    feat: добавлена возможность отмены бронирования, обновлены компоненты таблицы бронирований и добавлены новые маршруты для работы с бронированиями на сервере
+
+[33mcommit e36425d87c3f9307135bacfa218e0a11016bbf3f[m
+Merge: 2db0b6a 2ae3c02
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Thu May 22 01:43:39 2025 +0400
+
+    Merge pull request #8 from Whymeet/feauture/coef
+    
+    Feauture/coef
+
+[33mcommit 2ae3c0244ed9a2fc8a3e19162e30cba9572d7e3a[m[33m ([m[1;31morigin/feauture/coef[m[33m)[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Thu May 22 01:40:34 2025 +0400
+
+    refactor: улучшен код компонента AddMovie, исправлены отступы и форматирование, удалены неиспользуемые поля
+
+[33mcommit f450ac84d79e64cdb4395c5d482874488db7b324[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Thu May 22 00:38:32 2025 +0400
+
+    feat: добавлены новые изображения в директории uploads для кино и фильмов, обновлен .gitignore для исключения ненужных папок
+
+[33mcommit 6d70fad6bcb69ca6bb71952b741b42ddab97597c[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Thu May 22 00:36:59 2025 +0400
+
+    chore: обновлен .gitignore, удалены ненужные директории
+
+[33mcommit 9e8da21714266bd1bdfd22d2e522fdc983bb6f71[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Thu May 22 00:34:36 2025 +0400
+
+    feat: добавлены фильтры по странам и обновлены фильтры по жанрам на странице категорий фильмов
+
+[33mcommit 2db0b6a182d339f101b68672d52158f8bcab8112[m
+Merge: d7847c7 a83200f
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Tue May 20 19:43:32 2025 +0400
+
+    Merge pull request #7 from Whymeet/fix-afisha
+    
+    Починил стили
+
+[33mcommit a83200f03910591f02492f3ee591ebb884787dd2[m[33m ([m[1;31morigin/fix-afisha[m[33m)[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Tue May 20 19:39:13 2025 +0400
+
+    Починил стили
+
+[33mcommit d7847c74a15206be370e8c73d914563c771db4e9[m
+Merge: 1d8c781 ca587f0
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Tue May 20 17:29:56 2025 +0400
+
+    Merge pull request #6 from Whymeet/dev-t
+    
+    feat: added film filtration and countries
+
+[33mcommit ca587f0beae2f97698884973b1adba0f06b00a6f[m[33m ([m[1;31morigin/dev-t[m[33m)[m
+Author: taisiia05 <taya.kuptsova@gmail.com>
+Date:   Tue May 20 14:17:29 2025 +0400
+
+    feat: added film countries
+
+[33mcommit a34763ef98e73ee9e309c4a5658117af121472ed[m
+Author: taisiia05 <taya.kuptsova@gmail.com>
+Date:   Tue May 20 12:26:12 2025 +0400
+
+    feat: added film filtration
+
+[33mcommit 1d8c78170790903c3dcf9781a8a22a2ce1565b04[m
+Merge: 4819a42 32f9d0c
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Mon May 19 22:29:17 2025 +0400
+
+    Merge pull request #5 from Whymeet/fix/cursor
+    
+    refactor: remove custom cursor styles and related functionality
+
+[33mcommit 32f9d0cd46a8d5bdbae7ac352e3dba2ffd8db42f[m[33m ([m[1;31morigin/fix/cursor[m[33m)[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Thu May 15 07:34:37 2025 +0400
+
+    refactor: remove custom cursor styles and related functionality
+
+[33mcommit 4819a42364120c6e443970389abb882aeacf19c3[m
+Merge: c90b614 a6803fb
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Thu May 15 07:23:48 2025 +0400
+
+    Merge pull request #3 from Whymeet/chore/new-desighn
+    
+    Chore/new desighn
+
+[33mcommit a6803fbbd78563e04d139d749ed3398aa9db9b29[m[33m ([m[1;31morigin/chore/new-desighn[m[33m, [m[1;32mchore/new-desighn[m[33m)[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Thu May 15 07:22:48 2025 +0400
+
+    refactor: update UI text to Russian for improved localization
+
+[33mcommit 9f7ff15b4a0ab593c0d204fb5973f153b3da6353[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Thu May 15 07:17:38 2025 +0400
+
+    refactor: update booking components for improved localization and UI consistency
+
+[33mcommit 00b69fa71667998676199d3622dfbb7d1443a596[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Thu May 15 07:02:17 2025 +0400
+
+    refactor: update UI components and styles for improved consistency and localization
+
+[33mcommit 350b11e0233a43ce0ccab9b9df31b381dc39692a[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Thu May 15 06:31:59 2025 +0400
+
+    refactor: remove social login options from LoginForm component
+
+[33mcommit d70981d48c3c0c304ac49e2bd107ffeabe88f179[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Thu May 15 06:27:37 2025 +0400
+
+    refactor: rename project to 'Фокус' and update UI text to Russian
+
+[33mcommit 160c28db2632d1a5cd6156ed249748d2893e27ad[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Thu May 15 03:31:45 2025 +0400
+
+    style: update theme colors and backgrounds for improved UI consistency
+
+[33mcommit c90b61414cb700617e5d8080b20ebc3efcccb357[m
+Merge: f383a94 0fd675b
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Wed May 14 17:57:58 2025 +0400
+
+    Merge pull request #2 from Whymeet/dev-whymeet
+    
+    Dev whymeet
+
+[33mcommit 0fd675b1fd4391d22bddea1785c9d295191a07a9[m[33m ([m[1;31morigin/dev-whymeet[m[33m)[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Wed May 14 17:49:05 2025 +0400
+
+    у
+
+[33mcommit 05b6ebfc6fa7fc214ce7a2b550d992208272cdec[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Wed May 14 17:44:28 2025 +0400
+
+    refactor: update movie handling to change parameter order and enhance image upload process
+
+[33mcommit dd12cfe346820bc7d1b0d33115b6ba4279eb0b68[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Wed May 14 14:27:17 2025 +0400
+
+    fix: исправить синтаксис в методе sendFile для корректного формирования пути
+
+[33mcommit f383a9462c54684b0237a4d16692cc106d217889[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Tue May 13 19:29:48 2025 +0400
+
+    chore: update package.json to include cross-env for NODE_OPTIONS and reorganize devDependencies
+
+[33mcommit 42d204562578ee2eb5f3d37b464484f76210ac2e[m
+Merge: 2b42ee9 311d932
+Author: Matu <60068130+Whymeet@users.noreply.github.com>
+Date:   Tue May 13 18:56:51 2025 +0400
+
+    Merge pull request #1 from Whymeet/dev-mt
+    
+    Implement code changes to enhance functionality and improve performance
+
+[33mcommit 311d932399e110719fd6ab5d64f7943991b0b16b[m[33m ([m[1;31morigin/dev-mt[m[33m, [m[1;32mdev-mt[m[33m)[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Tue May 13 18:43:44 2025 +0400
+
+    Implement code changes to enhance functionality and improve performance
+
+[33mcommit 2b42ee9cc4082dde7e4c4162228e29b52a1a10e4[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Tue May 13 14:27:01 2025 +0400
+
+    Обновление README.md: перевод на русский язык и улучшение описания возможностей приложения
+
+[33mcommit 82fb2ae10127e8aceea464ac63ab49e20c4076b6[m
+Author: Whymet <koboc777.mail@gmail.com>
+Date:   Tue May 13 14:26:39 2025 +0400
+
+    РАБОТАЕТ
+
+[33mcommit a121ebea0c39f270e98bf746597c7ccc68674c93[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Jan 24 21:56:57 2021 +0200
+
+    Update package.json
+
+[33mcommit 14b7b373d4b3e54a8f05455cb1a2665bbbce9cb5[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Jan 24 21:55:49 2021 +0200
+
+    Update package.json
+
+[33mcommit 27710dde5551ce18a068e78014e995117a269da2[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Jan 24 21:50:08 2021 +0200
+
+    Delete package-lock.json
+
+[33mcommit dcc83554135f6a8aaeeb3e6ee0b7d7b9f498ea08[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Jan 24 21:49:53 2021 +0200
+
+    Delete package-lock.json
+
+[33mcommit 48133d6e12559d1bc8209bb2d131d402a6e5c50d[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Jan 24 21:45:57 2021 +0200
+
+    Update package.json
+
+[33mcommit 263dc3451fe2eb777da24d14d75f0131e6588a87[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Jan 24 21:42:09 2021 +0200
+
+    Update package.json
+
+[33mcommit 6f0b8ecc11559c29d46940d49080a2e35895f39b[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Jan 24 21:33:04 2021 +0200
+
+    Update package.json
+
+[33mcommit a26c11d5f3403f9e78642df8796c0d4950600b6f[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Jan 24 21:30:01 2021 +0200
+
+    Update package.json
+
+[33mcommit d15cdbe2ddc1c77b6a1fb34a5bdc920798ee2fba[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Jan 24 21:03:44 2021 +0200
+
+    Create codeql-analysis.yml
+
+[33mcommit 25e3185b244e35926a231480c8e7dd4d4fdbedd8[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Jan 24 13:53:41 2021 +0200
+
+    add locks
+
+[33mcommit 512fd0605df39341a6d72ece1e5de36dadaf4646[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Jan 18 11:24:56 2021 +0200
+
+    Update package.json
+
+[33mcommit 1fe0078c851ace287a4349d7048c64af959fe903[m
+Author: georgesimos <admin@georgesimos.com>
+Date:   Mon Jan 18 11:08:31 2021 +0200
+
+    rm locks
+
+[33mcommit e2e9e222acd4bfc8d4eb3141e3f7652d53b7d8e4[m
+Author: georgesimos <admin@georgesimos.com>
+Date:   Mon Jan 18 10:53:58 2021 +0200
+
+    update node engine
+
+[33mcommit 5201d64c88a4920ad3d3d11bcd89c4d06f6fe4a5[m
+Author: georgesimos <admin@georgesimos.com>
+Date:   Mon Jan 18 10:51:50 2021 +0200
+
+    correct pkg
+
+[33mcommit d4fe4ba1b827a20ae0b86c5ea65bef362f80f035[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Jan 18 10:24:36 2021 +0200
+
+    Update package.json
+
+[33mcommit f70cf3da982d9bc3fd801b5a0cf2b98d83d965fd[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Jan 18 10:24:17 2021 +0200
+
+    Update package.json
+
+[33mcommit e68a91b3125daac4077b127c06790dac82632d5f[m
+Merge: 5ded217 04c0d04
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Jan 16 11:19:00 2021 +0200
+
+    Merge pull request #12 from georgesimos/dependabot/npm_and_yarn/server/dot-prop-4.2.1
+    
+    Bump dot-prop from 4.2.0 to 4.2.1 in /server
+
+[33mcommit 04c0d04d98e493f887a0cfe6793506df703e51a8[m
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Fri Jan 1 17:58:22 2021 +0000
+
+    Bump dot-prop from 4.2.0 to 4.2.1 in /server
+    
+    Bumps [dot-prop](https://github.com/sindresorhus/dot-prop) from 4.2.0 to 4.2.1.
+    - [Release notes](https://github.com/sindresorhus/dot-prop/releases)
+    - [Commits](https://github.com/sindresorhus/dot-prop/compare/v4.2.0...v4.2.1)
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+
+[33mcommit 5ded217f42041d26c4936a9573b787ae4f0e3e66[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Fri Jan 1 19:57:49 2021 +0200
+
+    Happy New Year
+
+[33mcommit cf6d99571d576c6d35610443b5d4537e67d0a9f2[m
+Merge: 0e4d094 56979b6
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Sep 13 20:21:43 2020 +0300
+
+    Merge pull request #10 from georgesimos/dependabot/npm_and_yarn/server/node-fetch-2.6.1
+    
+    Bump node-fetch from 2.6.0 to 2.6.1 in /server
+
+[33mcommit 0e4d094ee8def251a7eae25b44b543174fbbdbd1[m
+Merge: 7c58687 cbf17f1
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Sep 13 20:21:25 2020 +0300
+
+    Merge pull request #9 from georgesimos/dependabot/npm_and_yarn/client/http-proxy-1.18.1
+    
+    Bump http-proxy from 1.17.0 to 1.18.1 in /client
+
+[33mcommit 56979b6edf88fd37c84075c2f4afabe7ebab2bcc[m
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Sat Sep 12 12:09:22 2020 +0000
+
+    Bump node-fetch from 2.6.0 to 2.6.1 in /server
+    
+    Bumps [node-fetch](https://github.com/bitinn/node-fetch) from 2.6.0 to 2.6.1.
+    - [Release notes](https://github.com/bitinn/node-fetch/releases)
+    - [Changelog](https://github.com/node-fetch/node-fetch/blob/master/docs/CHANGELOG.md)
+    - [Commits](https://github.com/bitinn/node-fetch/compare/v2.6.0...v2.6.1)
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+
+[33mcommit cbf17f1787f66fa6a13d6198f08d9f1e2d7cfb05[m
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Thu Sep 10 23:22:39 2020 +0000
+
+    Bump http-proxy from 1.17.0 to 1.18.1 in /client
+    
+    Bumps [http-proxy](https://github.com/http-party/node-http-proxy) from 1.17.0 to 1.18.1.
+    - [Release notes](https://github.com/http-party/node-http-proxy/releases)
+    - [Changelog](https://github.com/http-party/node-http-proxy/blob/master/CHANGELOG.md)
+    - [Commits](https://github.com/http-party/node-http-proxy/compare/1.17.0...1.18.1)
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+
+[33mcommit 7c5868758d8f37f3ec4b1045b64f573a881c021a[m
+Merge: b548280 b53326e
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Sep 5 11:45:04 2020 +0300
+
+    Merge pull request #8 from georgesimos/dependabot/npm_and_yarn/server/bl-2.2.1
+    
+    Bump bl from 2.2.0 to 2.2.1 in /server
+
+[33mcommit b53326e1d0c1758e4ad59675fa7b228e4de254e4[m
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Thu Sep 3 20:44:27 2020 +0000
+
+    Bump bl from 2.2.0 to 2.2.1 in /server
+    
+    Bumps [bl](https://github.com/rvagg/bl) from 2.2.0 to 2.2.1.
+    - [Release notes](https://github.com/rvagg/bl/releases)
+    - [Commits](https://github.com/rvagg/bl/compare/v2.2.0...v2.2.1)
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+
+[33mcommit b548280ada08b4ee07f08c068c4225dbade884aa[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Fri Aug 7 09:49:39 2020 +0300
+
+    Create SECURITY.md
+
+[33mcommit 3865e60d62de6a37a7e54a96d9c812012803fbe5[m
+Merge: bc7b01b 9ff5722
+Author: George Simos <admin@georgesimos.com>
+Date:   Fri Aug 7 09:49:04 2020 +0300
+
+    Merge pull request #7 from georgesimos/dependabot/npm_and_yarn/client/elliptic-6.5.3
+    
+    Bump elliptic from 6.4.1 to 6.5.3 in /client
+
+[33mcommit 9ff57222ac4d93df9d507f0010c3f962de65cd52[m
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Sat Aug 1 08:01:03 2020 +0000
+
+    Bump elliptic from 6.4.1 to 6.5.3 in /client
+    
+    Bumps [elliptic](https://github.com/indutny/elliptic) from 6.4.1 to 6.5.3.
+    - [Release notes](https://github.com/indutny/elliptic/releases)
+    - [Commits](https://github.com/indutny/elliptic/compare/v6.4.1...v6.5.3)
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+
+[33mcommit bc7b01b06b70f95a4ea30708ee00505119e7082d[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Jun 22 19:36:14 2020 +0300
+
+    Update README.md
+
+[33mcommit 0270eb075fda18de8b74d63684824ca2320ee6bd[m
+Merge: 835fae2 ffa3f50
+Author: George Simos <admin@georgesimos.com>
+Date:   Thu Jun 11 19:30:20 2020 +0300
+
+    Merge pull request #6 from georgesimos/dependabot/npm_and_yarn/client/websocket-extensions-0.1.4
+    
+    Bump websocket-extensions from 0.1.3 to 0.1.4 in /client
+
+[33mcommit ffa3f50df7fb68699429fc12b7b5c902ca96e18e[m
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Sun Jun 7 15:13:10 2020 +0000
+
+    Bump websocket-extensions from 0.1.3 to 0.1.4 in /client
+    
+    Bumps [websocket-extensions](https://github.com/faye/websocket-extensions-node) from 0.1.3 to 0.1.4.
+    - [Release notes](https://github.com/faye/websocket-extensions-node/releases)
+    - [Changelog](https://github.com/faye/websocket-extensions-node/blob/master/CHANGELOG.md)
+    - [Commits](https://github.com/faye/websocket-extensions-node/compare/0.1.3...0.1.4)
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+
+[33mcommit 835fae22a002cf24bbfe239a11d13010dd1ff642[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Tue May 5 17:48:40 2020 +0300
+
+    Update README.md
+
+[33mcommit 6178eae4a6f6c5c684948b5ff12aef32503cc0bb[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Tue May 5 17:27:41 2020 +0300
+
+    Update users.js
+
+[33mcommit 1678c34d74ea4fb56a4afb91f25ebf2bcbfc0bb4[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Tue May 5 15:01:09 2020 +0300
+
+    Update auth.js
+
+[33mcommit 79d4372cf898c4a3ad3dd1c1629710017191d570[m
+Author: George <admin@georgesimos.com>
+Date:   Tue May 5 14:52:09 2020 +0300
+
+    create auth enhancer
+
+[33mcommit 36a2685a357aac498da429f65c8125082fc8da6a[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Thu Mar 26 22:20:37 2020 +0200
+
+    Update README.md
+
+[33mcommit 86a7e4189cae6187c7f129d3bdd92a099080bedb[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Thu Mar 26 22:17:53 2020 +0200
+
+    Update README.md
+
+[33mcommit a6b52f8be86186afac4bbf2ffafb91753fb57c3c[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Mar 16 19:57:34 2020 +0200
+
+    Delete package-lock.json
+
+[33mcommit a845049630c2d9307e8946139d5bc77cbaf77c37[m
+Author: George <admin@georgesimos.com>
+Date:   Fri Feb 14 19:15:20 2020 +0200
+
+    change dev server port
+
+[33mcommit d902e89f3f59256eb2a5b257994c50e0bdc6df55[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Tue Feb 11 16:00:01 2020 +0200
+
+    Update README.md
+
+[33mcommit 0803626bff3df46cf02ebe68a95a8346528a2806[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Jan 30 19:16:35 2020 +0200
+
+    Footer refactor
+
+[33mcommit f7b14e6eef236946a579b7e36b88d059a1f92fa0[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Jan 30 16:35:27 2020 +0200
+
+    Replace Movie title with ciname title
+
+[33mcommit 9836ceeabf889bca92797a6fe4467516e0063963[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Thu Jan 30 16:28:25 2020 +0200
+
+    Update README.md
+
+[33mcommit 23c464ec6dd05870342e4aee5a778b38cf8cdbb0[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Jan 29 22:48:39 2020 +0200
+
+    tuning :hammer:
+
+[33mcommit 0e5b7b3ea77f0b07a0cc541d4cc5b881f2177d3c[m
+Author: George <admin@georgesimos.com>
+Date:   Tue Dec 31 14:06:20 2019 +0200
+
+    adding eslint and prettier
+
+[33mcommit 76c87b3b0a95c706dddae9ca48eead02cfede378[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Dec 30 01:12:52 2019 +0200
+
+    Update README.md
+
+[33mcommit da792c6bd9849c83323ce5b3bbb52360544b35b2[m
+Merge: d752088 a62e241
+Author: George Simos <admin@georgesimos.com>
+Date:   Wed Dec 25 14:00:31 2019 +0200
+
+    Merge pull request #1 from georgesimos/dependabot/npm_and_yarn/client/lodash.template-4.5.0
+    
+    Bump lodash.template from 4.4.0 to 4.5.0 in /client
+
+[33mcommit a62e2411b08f3545cc2be2031b3d54f0a98350fd[m
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Wed Dec 25 12:00:24 2019 +0000
+
+    Bump lodash.template from 4.4.0 to 4.5.0 in /client
+    
+    Bumps [lodash.template](https://github.com/lodash/lodash) from 4.4.0 to 4.5.0.
+    - [Release notes](https://github.com/lodash/lodash/releases)
+    - [Commits](https://github.com/lodash/lodash/compare/4.4.0...4.5.0)
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+
+[33mcommit d75208859e1daf986afb98470506cefcef7cff2e[m
+Merge: 503ebbf c8d1d21
+Author: George Simos <admin@georgesimos.com>
+Date:   Wed Dec 25 13:59:38 2019 +0200
+
+    Merge pull request #3 from georgesimos/dependabot/npm_and_yarn/client/mixin-deep-1.3.2
+    
+    Bump mixin-deep from 1.3.1 to 1.3.2 in /client
+
+[33mcommit 503ebbf3059f3a9236cb09d4f4365798da52ac88[m
+Merge: a7186bf d5ac907
+Author: George Simos <admin@georgesimos.com>
+Date:   Wed Dec 25 13:59:22 2019 +0200
+
+    Merge pull request #4 from georgesimos/add-license-1
+    
+    Create LICENSE
+
+[33mcommit d5ac90795590ef0daa7171f0d8c0fbab400e0d5b[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Wed Dec 25 13:58:53 2019 +0200
+
+    Create LICENSE
+
+[33mcommit a7186bf189d74209e56d6e6b77b37d3895f84554[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 18:07:05 2019 +0200
+
+    correcting the screenshot urls
+
+[33mcommit 2aa20db603b36f7ff4db1fe1c00a022586f39676[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 17:57:46 2019 +0200
+
+    removing assets
+
+[33mcommit 3b3a3640e6b62bbd08775ed0eb364e9c3b784659[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Dec 14 17:51:52 2019 +0200
+
+    Update README.md
+
+[33mcommit 7c22d471751dffbf540b769bc4c2ea5972e193c0[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 17:47:42 2019 +0200
+
+    adding .env samples
+
+[33mcommit 1353aaf644adc433a19c3242be92e7d3b69daffd[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 16:58:26 2019 +0200
+
+    better ui for small devices
+
+[33mcommit 670b11fbd1dda513a717c8240655b09eed6c705c[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 15:34:47 2019 +0200
+
+    adding screenshots
+
+[33mcommit c174866880aa252818e84d299f58c422ab0491a3[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 15:27:52 2019 +0200
+
+    app screenshots
+
+[33mcommit c8d1d213d1de8cdeabae8e874f3b4324dce0fa38[m
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Sat Dec 14 13:26:36 2019 +0000
+
+    Bump mixin-deep from 1.3.1 to 1.3.2 in /client
+    
+    Bumps [mixin-deep](https://github.com/jonschlinkert/mixin-deep) from 1.3.1 to 1.3.2.
+    - [Release notes](https://github.com/jonschlinkert/mixin-deep/releases)
+    - [Commits](https://github.com/jonschlinkert/mixin-deep/compare/1.3.1...1.3.2)
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+
+[33mcommit 681ac55587f9ab37d6a066601b5d705c6043ebe4[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 15:23:06 2019 +0200
+
+    heroku start script
+
+[33mcommit 24dda5a7951a4d62575b4ecfe9c57319be816b53[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 15:10:03 2019 +0200
+
+    correcting package.json
+
+[33mcommit e466e088a7d83220453867ca968306fa831a6862[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Dec 14 15:00:59 2019 +0200
+
+    ...
+
+[33mcommit a8cee03b7dc9d4b27b472bc18864bc2995395f13[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Dec 14 14:59:41 2019 +0200
+
+    correcting url path
+
+[33mcommit b783bdfa66abf7e8a818b958332ab40bfa8cd7fe[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 14:57:33 2019 +0200
+
+    adding readme assets
+
+[33mcommit f52ec0d92bc3fcc22f372fbcaf3a8da087ce666c[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 14:51:35 2019 +0200
+
+    adding Readme
+
+[33mcommit 4519c7abc9c139714d20edbc5bc05e26123b6e2d[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 12:19:50 2019 +0200
+
+    connect qr url to react app url
+
+[33mcommit b77643c0e814597ab9dca87bf580b50159a8f146[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 12:11:01 2019 +0200
+
+    removing console.log
+
+[33mcommit 822ede37b2065ffb26069e385956fad9fd53dd10[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 12:08:45 2019 +0200
+
+    display checkin in dashboard
+
+[33mcommit 4de453cd218af69879c3cfe3b3f72557e466e901[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 12:01:04 2019 +0200
+
+    adding a page for checkin
+
+[33mcommit 411cb943242d9f2ffb17fa22e348818edc8746f8[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 11:24:19 2019 +0200
+
+    remove warnings
+
+[33mcommit 6935528a186f37470243404877d8911c02661d6f[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Dec 14 11:18:34 2019 +0200
+
+    Pdf with QRCode completed
+
+[33mcommit 835cac4a1eaffd948cdb408b9ab0736659eec1c5[m
+Author: George <admin@georgesimos.com>
+Date:   Fri Dec 13 21:38:54 2019 +0200
+
+    Pdf Generator
+
+[33mcommit 0602a439e188ff337c7c9115ab26cf17e48f5ae2[m
+Author: George <admin@georgesimos.com>
+Date:   Fri Dec 13 20:43:59 2019 +0200
+
+    display an image of QR for demo propose
+
+[33mcommit d0a364caccc7b11428f64e8443c4037cbaee392d[m
+Author: George <admin@georgesimos.com>
+Date:   Fri Dec 13 20:43:38 2019 +0200
+
+    adding QRCode on reservation Create
+
+[33mcommit 739e6547bf0179a792fd293615ee3304d9bea3d3[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Tue Dec 3 21:40:41 2019 +0200
+
+    booking page fix
+
+[33mcommit 9e4e5b9d0058589914468c0d0e37b4c109149f3f[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Tue Dec 3 21:10:40 2019 +0200
+
+    suggested seats
+
+[33mcommit f7f086e29251f0b258f4b51b45f23c6bcee2d038[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Sun Dec 1 21:06:30 2019 +0200
+
+    fix movie suggestion
+
+[33mcommit b4abc4ae84f1f3ba3e52cb37eaca93a59c21803d[m
+Merge: 2a97a7b 9483587
+Author: Marios <mariospatsis@gmail.com>
+Date:   Sun Dec 1 20:16:12 2019 +0200
+
+    Merge branch 'user-modeling' of https://github.com/georgesimos/Movie-app into user-modeling
+
+[33mcommit 2a97a7bb75714f953d768573085402eacc6e0fe3[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Sun Dec 1 19:55:41 2019 +0200
+
+    new seats suggestion route
+
+[33mcommit 948358777ec4e12ffdbeba6bb99bffccf9d39e03[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Nov 30 13:51:23 2019 +0200
+
+    remove user warning on logout
+
+[33mcommit 7e4c71c2117b7f36c2ec33bf7fe03faa28972a2a[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Nov 30 13:50:47 2019 +0200
+
+    correction
+
+[33mcommit 388c72f05b7e9d2f962c199ae15a35007b87073e[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Nov 30 13:37:01 2019 +0200
+
+    correcting result push
+
+[33mcommit 7f34f9ae600c764fbb45db5e31ad385bcfca98f1[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Sat Nov 30 12:04:53 2019 +0200
+
+    multi directors and genre
+
+[33mcommit 78b0add66d64d8ebaac572d2e49bfa7058a72dd9[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Sat Nov 30 11:11:22 2019 +0200
+
+    call getmoviesuggestion when comp update
+
+[33mcommit 8f7a6119033159fdfc11ab5bfbcbda1a71cca019[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Fri Nov 29 22:39:15 2019 +0200
+
+    remove movies with zero rate
+
+[33mcommit 706df96955fe4c4abd8dbede2e81f97313b7d621[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Fri Nov 29 21:14:02 2019 +0200
+
+    front end movie suggestions on home page
+
+[33mcommit 39a0687b30089cd6274fdb2d131f7cef4f61635d[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Fri Nov 29 00:53:27 2019 +0200
+
+    sorted cinema user modeled and completed route
+
+[33mcommit 7c83473f9063c174ca1d0b933bba69cbec796733[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Thu Nov 28 22:55:34 2019 +0200
+
+    moviesNotWatched
+
+[33mcommit ee63be14d03f30cf4367bd1c5c2b2bc9a4c5f5a0[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Nov 28 22:50:46 2019 +0200
+
+    fix on front
+
+[33mcommit 5bed96f1db99ff06f8bff02e4926c6fa9b96630f[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Thu Nov 28 21:35:12 2019 +0200
+
+    movie suggestion route
+
+[33mcommit eed72705de59411ad357365335984b734e04a888[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Thu Nov 28 12:30:23 2019 +0200
+
+    cinemas user modeling
+
+[33mcommit 289e28ad4cff5e492765c356d16efe090ca5ec30[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Nov 30 13:15:08 2019 +0200
+
+    correcting banner genre
+
+[33mcommit 86ebc71f2b14642eb9dd999a8559ed0e3c6a7054[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Nov 30 12:59:47 2019 +0200
+
+    adding goolge login
+
+[33mcommit 89012ad2a6341bf3818ff6ace53d701b00829790[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Nov 30 12:26:00 2019 +0200
+
+    remove unused
+
+[33mcommit 828029d4163aa75b7519a813d582fe83dbf0cf55[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Nov 30 12:25:46 2019 +0200
+
+    add multi genre
+
+[33mcommit 71f1024bac4d8138291a2b24b97242665b3e77af[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Sat Nov 30 12:04:53 2019 +0200
+
+    multi directors and genre
+
+[33mcommit 214546ed4246a0bc866b172a6c97461cd1ca43dc[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Sat Nov 30 11:11:22 2019 +0200
+
+    call getmoviesuggestion when comp update
+
+[33mcommit 85a446fa91fc980091d60c41ff310010fa4a86c5[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Fri Nov 29 22:39:15 2019 +0200
+
+    remove movies with zero rate
+
+[33mcommit 7aa91102786ac940c50e835e6cfcb69ca0c0fbf7[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Fri Nov 29 21:14:02 2019 +0200
+
+    front end movie suggestions on home page
+
+[33mcommit 3a9946d70a8885f7475615aaf9c3e3194a5e4f54[m
+Merge: 63e04ab 51a6afd
+Author: Marios <mariospatsis@gmail.com>
+Date:   Fri Nov 29 01:04:21 2019 +0200
+
+    Merge branch 'user-modeling' of https://github.com/georgesimos/Movie-app into user-modeling
+
+[33mcommit 63e04ab86b775ee815cbb8c6a7a0f2a348348c0b[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Fri Nov 29 00:53:27 2019 +0200
+
+    sorted cinema user modeled and completed route
+
+[33mcommit 51a6afd46ca179a2b26326e05e6b8da8e6c4a181[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Nov 28 22:50:46 2019 +0200
+
+    fix on front
+
+[33mcommit 646b895ef1ceb72026d68f2ac07f8a2a411d98eb[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Thu Nov 28 21:35:12 2019 +0200
+
+    movie suggestion route
+
+[33mcommit b0aa66940a643b929d0cc7442099a43a0c73790c[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Thu Nov 28 12:30:23 2019 +0200
+
+    cinemas user modeling
+
+[33mcommit 6cb3ff2f5e0399a61c6b37bb570a2f00aee3cc3d[m
+Author: George <admin@georgesimos.com>
+Date:   Fri Nov 29 00:06:01 2019 +0200
+
+    adding best movies analytics
+
+[33mcommit b9ccd7dacc62e106f797741481d3294907378da7[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Nov 28 23:02:35 2019 +0200
+
+    adding correct info
+
+[33mcommit 270943d20b9724af97f3a82cbc8a3b7e8d8375d0[m
+Merge: 11713e6 4f0ee66
+Author: Marios <mariospatsis@gmail.com>
+Date:   Thu Nov 28 22:56:28 2019 +0200
+
+    Merge branch 'user-modeling' of https://github.com/georgesimos/Movie-app into user-modeling
+
+[33mcommit 11713e6e2b0f93e2c35c81c82423fff48c8149a4[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Thu Nov 28 22:55:34 2019 +0200
+
+    moviesNotWatched
+
+[33mcommit 4f0ee66c264994e695b75f0bdc859347dcf4d84b[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Nov 28 22:50:46 2019 +0200
+
+    fix on front
+
+[33mcommit de83b6ee00d9c95ea810321155421aa679eb070e[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Thu Nov 28 21:35:12 2019 +0200
+
+    movie suggestion route
+
+[33mcommit 4f391f3a327cfe92153b174f57f75f48b244522e[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Thu Nov 28 12:30:23 2019 +0200
+
+    cinemas user modeling
+
+[33mcommit dfcf8271710092a487fc71a81aa0f18e88eb3cf1[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Nov 24 14:20:11 2019 +0200
+
+    correction on email and booking checkout
+
+[33mcommit d4fe50c8de6d18152ddc2b0eaedb6b85cd76282c[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Nov 24 13:57:45 2019 +0200
+
+    Minor fixes
+
+[33mcommit 16cb605fbcea61e72f407aac96d40cd2dd4148b6[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Nov 24 13:53:28 2019 +0200
+
+    ...
+
+[33mcommit 621055f85da4eb61691fc95268f86c2344c9cc35[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Nov 24 13:52:25 2019 +0200
+
+    send image and correct date
+
+[33mcommit ce66402930351f118cf6e2f35b0228d5db859f43[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Nov 24 13:45:48 2019 +0200
+
+    dummy upload for cinema, movie
+
+[33mcommit ec9bb99771b2fe4242823f5b31eb7a648b936a79[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Wed Nov 13 15:33:09 2019 +0200
+
+    account fixes
+
+[33mcommit 9d578b9055338913d2d2dab62b487d333006da9e[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Wed Nov 13 15:18:38 2019 +0200
+
+    refactoring utils and making less server requests
+
+[33mcommit c853ebd3bce53d59283146fbacae810271acf42b[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Tue Nov 12 20:32:22 2019 +0200
+
+    minor fixes
+
+[33mcommit ea03aa59c171445cd98aaa6766ec51ec9dd676af[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Tue Nov 12 20:23:05 2019 +0200
+
+    Fix selecting cinemas
+
+[33mcommit 2aced0322590251e527cabd90aa949f2151c5a76[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 11 23:15:35 2019 +0200
+
+    filtering cinemas by date
+
+[33mcommit e8acdf425ff8eeeec40bf2f0c889af0b9fa3c7cc[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 11 22:23:07 2019 +0200
+
+    Adding MyDashboard
+
+[33mcommit 33a47448aba0dad30afe05c7dc8b8967d0a83fa2[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 11 13:06:18 2019 +0200
+
+    fix menu issue
+
+[33mcommit f46bc88cb9d7d43d956aa1d8caa929e9373449aa[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 11 12:47:20 2019 +0200
+
+    ...
+
+[33mcommit 2b5a67a5020d920fe5345e2e2effc919e7b2e8f3[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 11 12:39:12 2019 +0200
+
+    ....
+
+[33mcommit c879abf2f984d2a66db7786694130fbea76f80ba[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 11 12:32:00 2019 +0200
+
+    ....
+
+[33mcommit c4618739f1065fd0bbf8bdb7f37ee24a3768dfed[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 11 12:25:50 2019 +0200
+
+    test
+
+[33mcommit f0009633933c278a3dc5fe0ae9d09fc042beb817[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 11 12:20:56 2019 +0200
+
+    ...
+
+[33mcommit da9d0e0304acccc42329a87443ca747f6109bec6[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 11 11:42:13 2019 +0200
+
+    packages lock
+
+[33mcommit d9718215ce79b913c7a1fd0e7a2208f35526d6a6[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 11 11:25:05 2019 +0200
+
+    correcting showtimes folder issues
+
+[33mcommit ce7e4fbc0bb2d3e15495f5db09952c42197d412d[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 11 11:15:51 2019 +0200
+
+    Specifying a Node.js Version
+
+[33mcommit 441ab870bf85a1da000a02cc7a3dcd3f7993aaf5[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 11 11:05:07 2019 +0200
+
+    Adding Logged in User Popover
+
+[33mcommit e32003b90f8e1d1d21edad1765cc7136e8fbe029[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Nov 10 21:25:33 2019 +0200
+
+    clean up with HOC pattern
+
+[33mcommit b559adae6d20e90c0a8726ccd5509a1bec88629f[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Nov 10 20:02:25 2019 +0200
+
+    clean up
+
+[33mcommit 788811cf0fa258665fae058dfe562a9b2d0a7d77[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Nov 9 23:55:43 2019 +0200
+
+    adding footer on home page
+
+[33mcommit d287e7466a3d9daea2f483f6362e8a02450983fe[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Nov 9 23:53:50 2019 +0200
+
+    adding dummy dashboard
+
+[33mcommit 52b75ff4777c488e5ba4de4e223c820dd140127e[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Nov 9 21:17:06 2019 +0200
+
+    show dashboard also to admins
+
+[33mcommit 691b215739654175aab935d94c42932a2bbcb5db[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Nov 9 20:50:01 2019 +0200
+
+    filtering and more....
+
+[33mcommit 25e65aba337aef2c208a821f26813b25da306aa4[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Nov 9 16:27:17 2019 +0200
+
+    Correcting reservations ...
+
+[33mcommit 9c97caead2b27a8aca5cad5030bff5e89366a7d9[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Nov 9 14:27:47 2019 +0200
+
+    Home page panner display a random movie
+
+[33mcommit fccb558696dc1afb146bb478cafe510a5c350f64[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Nov 9 13:57:39 2019 +0200
+
+    file upload done
+
+[33mcommit 5caf3ee1372daf5a7225bcf207b6ec08ac0df535[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Fri Nov 8 22:38:39 2019 +0200
+
+    corrections
+
+[33mcommit 0258f9bd7d03fbf1bec61340baba36990fd3c771[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Fri Nov 8 21:12:47 2019 +0200
+
+    small change
+
+[33mcommit 5070b47078395fb17854372046a9f6e130876765[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Fri Nov 8 21:00:12 2019 +0200
+
+    First try
+
+[33mcommit e9e6250d826c51cae8244b028be4a3ba3bf5ab26[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Thu Nov 7 21:42:18 2019 +0200
+
+    ...
+
+[33mcommit fe2ef472250e06dc438c3e380bb7185ab1075154[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Thu Nov 7 21:33:09 2019 +0200
+
+    fix issues with dotenv
+
+[33mcommit f050a048a3712c509967fcb827fa240f6aa2d5ed[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Thu Nov 7 21:25:10 2019 +0200
+
+    npm packages
+
+[33mcommit e382938a8432cfdf6de50ea3a2fd29e9edfaa1bc[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Thu Nov 7 21:17:55 2019 +0200
+
+    Send correct the emails using Promise.all
+
+[33mcommit 91a03af3383762f957b8f6e9de97c423f7df6aa2[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Thu Nov 7 20:34:42 2019 +0200
+
+    Sending Invitations Mails
+
+[33mcommit 7343666556a56b08585a55c254e5e30ae6292fb0[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Wed Nov 6 20:54:57 2019 +0200
+
+    adding htaccess
+
+[33mcommit 2d3bc9f9531811b5aa7e15c2a14f6ec047b7c30b[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Tue Nov 5 23:22:22 2019 +0200
+
+    adding checkout into redux
+
+[33mcommit ff763c44b65a6ee1b0ab671e3c32c6104361a43d[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Tue Nov 5 22:50:07 2019 +0200
+
+    update packages
+
+[33mcommit d2224da38f62d0718576bac4c653dbb4497a5b08[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Tue Nov 5 22:35:47 2019 +0200
+
+    User Dashboard Done
+
+[33mcommit eea12f22d74cdf64bef4d1e478cf4e5da3cfe583[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Tue Nov 5 14:14:19 2019 +0200
+
+    Seperating Booking Components
+
+[33mcommit 37fc9a124d8794a60d562d0212ef2ee181bf61d2[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Tue Nov 5 08:23:10 2019 +0200
+
+    show cinema seats availability based on reservations
+
+[33mcommit ab56287b68e2a7bc883e90b560f7a300120be89b[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 4 18:44:57 2019 +0200
+
+    removing PropTypes Errors
+
+[33mcommit bf9385b2148c03fc3e38bcb3761c67fd576e4331[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 4 15:35:52 2019 +0200
+
+    add getCinema() in redux actions
+
+[33mcommit 036c8b4a4b989d31e111917c3f8535f951095270[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Nov 4 11:20:48 2019 +0200
+
+    Better Naming structure on Public Pages
+
+[33mcommit 051aa9634abb33cdb8185da887ff79df98b664a0[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Nov 3 20:15:05 2019 +0200
+
+    add login in Booking Page
+
+[33mcommit 8b018a9e638ca2197c71d3461fdf3b6be92c3a74[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Nov 2 14:39:19 2019 +0200
+
+    Change AddCinema And AddMovie layout
+
+[33mcommit ba70fb86091aae7638bd66e51a3a9c20b08424bb[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Nov 2 14:29:08 2019 +0200
+
+    only logged in user can checkout v1
+
+[33mcommit d137fa139963370edea0ab68d3b082ca1244a295[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Nov 2 14:05:39 2019 +0200
+
+    try 1
+
+[33mcommit 5817cc419019a8e3ad85ab141952f9a8fd648f39[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Nov 2 13:07:41 2019 +0200
+
+    ShowTimes on Redux
+
+[33mcommit 26da7caf7e7fa920ae40c790185ccf24124c6813[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Thu Oct 31 23:11:10 2019 +0200
+
+    Show Showtimes
+
+[33mcommit 65861893292f1e82374f5ad53c889b87d9505078[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Thu Oct 31 22:15:24 2019 +0200
+
+    adding Movies on Redux and adding Demo Calendar
+
+[33mcommit 8b6436738e5d80e673056a533fb44dc2c0aa602f[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Wed Oct 23 23:40:29 2019 +0300
+
+    show cinema and cinema condition
+
+[33mcommit 794873b09e7c810d55cbda3ac83940075cbdc19f[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Wed Oct 23 23:29:12 2019 +0300
+
+    reduce font size for nav links
+
+[33mcommit 5ea9a8c0eb8d09e8d9a217f89f43aad64a1ad2fd[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Wed Oct 23 23:24:09 2019 +0300
+
+    adding MovieList logic
+
+[33mcommit 28b562e3b569c2014f56f787abd89597897201ab[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Oct 21 22:31:32 2019 +0300
+
+    making filter even better...
+
+[33mcommit 808a1f1002febbc5e2f186e9fe939258f4affbe4[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Oct 21 21:32:28 2019 +0300
+
+    filtering cinemas on booking page
+
+[33mcommit 07970e47d1bd39249aef1363ffd6990ab869d0ad[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Oct 19 20:50:07 2019 +0300
+
+    Adding Cinemas on Admin Page
+
+[33mcommit 5cea151f767b62824b72b927ffb940debbe0e708[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Oct 19 18:17:32 2019 +0300
+
+    making darkmode app
+
+[33mcommit 7cd78080609e29d0f3160f2b468f41c46ede208f[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Oct 19 15:12:35 2019 +0300
+
+    adding Cinemas On redux, router
+
+[33mcommit 6f639dfa31a3e163cb4a910fe94b108b98c58804[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Oct 19 14:39:17 2019 +0300
+
+    restructure folders
+
+[33mcommit 617e8d535df4c2f4d6403b09163dde9a4e9357fc[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Fri Oct 18 21:46:53 2019 +0300
+
+    adding movies on redux and Latest movies Page
+
+[33mcommit 9ee90df12b4f35db446e823aafc3be7f7ea8a9f4[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Thu Oct 17 22:00:44 2019 +0300
+
+    Layout css changes, and adding LatestMovies route
+
+[33mcommit c997ddf0cdf210b70aba459bd07ae1d453b5cf6a[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Thu Oct 17 20:33:29 2019 +0300
+
+    crerating .env
+
+[33mcommit 45b9e949e55ad7dfc240cc06a2e1e590ecc48b72[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Wed Oct 16 19:43:05 2019 +0300
+
+    menu links display functionality
+
+[33mcommit cb6b88ddb3dfee501903be455f6f58c7d7ef0446[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Wed Oct 16 19:24:07 2019 +0300
+
+    Implementing Role based Authorization
+
+[33mcommit 7b0f4594578b295246519abe7c6d13cdb3056617[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Tue Oct 15 22:11:08 2019 +0300
+
+    Modify user model
+
+[33mcommit 03a41a253722ff645399473acd664a0344fd52f2[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Tue Oct 15 21:57:22 2019 +0300
+
+    adding login with facebook server & client
+
+[33mcommit 140b17a56ad25163cfed24582286b268dca3cda8[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Mon Oct 14 21:28:55 2019 +0300
+
+    testing login on client
+
+[33mcommit 718e7ea8f4db98b0104d816afee12f141d596e6d[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Oct 13 00:25:02 2019 +0300
+
+    small ui changes
+
+[33mcommit 0d4aca944d959bf033cd7f8bc34c7de506584284[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Oct 12 21:53:27 2019 +0300
+
+    change responsive settings
+
+[33mcommit 293416867d59fbae4857220cb7834ee3dd12a29a[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Oct 12 21:41:41 2019 +0300
+
+    change Movie Card to MU Card
+
+[33mcommit 253ecde8d077aab74ae1b16938801a470a829a29[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Oct 12 14:53:40 2019 +0300
+
+    adding slick carousel
+
+[33mcommit abd0e656b7ffe661bdd75b1b674170de4fec549e[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Fri Oct 11 23:15:26 2019 +0300
+
+    adding reservations table on Admin
+
+[33mcommit 97f57094220409fe4e945a532a50e2ed2c3e065e[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Fri Oct 11 22:39:55 2019 +0300
+
+    add booking checkout logic and connection with our server
+
+[33mcommit a489b1f9b7bd0e018913ce62fe6d291da2e97f14[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Sep 29 22:05:25 2019 +0300
+
+    code Splitting using lazy
+
+[33mcommit 2d3b8d80c370a8f5e0062581354fa3cb98cef755[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Sep 29 21:07:12 2019 +0300
+
+    removing footer action
+
+[33mcommit decded25bdaa3550bc75ae96b831e2bdaa80ec3d[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Sep 29 14:00:57 2019 +0300
+
+    using hashRouting
+
+[33mcommit ae03e340cb3af69fb25a1ea2c878b453f02bcf69[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Sep 29 13:43:33 2019 +0300
+
+    movieBackground to responsive
+
+[33mcommit 4ca6cffb97204c4664a12354e81ca2d535dd335c[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Sep 29 12:36:49 2019 +0300
+
+    layout stylinng improvments
+
+[33mcommit d948d795c41430c890a72e3b78e752fa9298118d[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sun Sep 29 00:49:34 2019 +0300
+
+    fixes & adding booking page
+
+[33mcommit 41269ada5b0c925ad1d2488cc876236fde937237[m
+Author: George Simos <admin@georgesimos.com>
+Date:   Sat Sep 28 13:24:48 2019 +0300
+
+    change header on single movie
+
+[33mcommit 2696e7b5e5551c9ba9e4643ce2f8453669649fd2[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Sep 26 11:39:30 2019 +0300
+
+    hot-fix-zIndex
+
+[33mcommit 87bf43ba296d17456ec9969475b2153f26a1a662[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Sep 26 11:26:12 2019 +0300
+
+    improvments
+
+[33mcommit d8332698cd07e1337e3cde20c34bea81a6daaa9f[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Sep 26 11:06:01 2019 +0300
+
+    remove main navbar, remove user info from dash
+
+[33mcommit 807addea5ee4e6806dd517e016b1d075e10f04b6[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Sep 25 23:26:41 2019 +0300
+
+    removing localhost
+
+[33mcommit b777efa0bf16f78e5126dcdd20b74f6c3568ede4[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Sep 25 23:18:04 2019 +0300
+
+    ddd
+
+[33mcommit c3f2e40c9041bbfb4165e3a2c0c80e93377ce780[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Sep 25 23:08:07 2019 +0300
+
+    s
+
+[33mcommit 7fe19568f2318f6cb9246a610f3428f638e6bd31[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Sep 25 23:07:09 2019 +0300
+
+    another test
+
+[33mcommit 3153963eb7d653f6d11b79956d311e9b91846340[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Sep 25 22:56:57 2019 +0300
+
+    lol another
+
+[33mcommit f0e4f9775f4a87932d50546c30305d00ca3424dd[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Sep 25 22:52:06 2019 +0300
+
+    test
+
+[33mcommit 49685e275a04807b7b96a2bc394e3af5d5c703cc[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Sep 25 22:46:46 2019 +0300
+
+    another one
+
+[33mcommit f95aab3384ea17388c83876a59f8a0869e0e309d[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Sep 25 22:26:19 2019 +0300
+
+    another try
+
+[33mcommit 79cb46131b7b1539a13635d83d8f457722cf5966[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Sep 25 22:18:11 2019 +0300
+
+    try with path
+
+[33mcommit e86b8dc7ff346770c771dc6ae0b46817f2b7a09f[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Sep 25 22:05:31 2019 +0300
+
+    fix a typo
+
+[33mcommit 0add1342dfa63346e98f5c029ca1cedf335a6b2b[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Sep 25 21:37:20 2019 +0300
+
+    fix package scripts
+
+[33mcommit 0e7b5d61ff5ff77094f2e11efbd726a62999bced[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Sep 25 21:26:45 2019 +0300
+
+    getting ready for deploy to heroku
+
+[33mcommit 1a3cde4f6bd7b2287ddf6f1a9e552554436d32ad[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Sep 8 22:23:50 2019 +0300
+
+    Removing image preview from MovieCard
+
+[33mcommit 793b41dc6b76caeae2e96e9b584cf44dbfae0955[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Sun Sep 8 22:11:30 2019 +0300
+
+    remove movie functionality on admin>movies
+
+[33mcommit 00cd1919543ec71e2b633387a323d47b20e7f6ac[m
+Merge: a146e05 91440f6
+Author: Marios <mariospatsis@gmail.com>
+Date:   Sun Sep 8 21:40:01 2019 +0300
+
+    fixed conflicts on package-lock
+
+[33mcommit a146e05a2537fdb3696f315593805b4171087126[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Sun Sep 8 21:23:16 2019 +0300
+
+    Edit movie details functionality in admin>movies, backend fix on update movie
+
+[33mcommit 91440f6c93cef2591fcfe98408bf0925766039df[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Sep 8 19:13:04 2019 +0300
+
+    concurrently npm scripts
+
+[33mcommit cfd0ef81b897da5345512c005891aadf3584ac5a[m
+Author: Marios <mariospatsis@gmail.com>
+Date:   Sun Sep 8 13:29:49 2019 +0300
+
+    Admin Dashboard movies image fix ,git ignore vscode
+
+[33mcommit bf8e26ffb12a6bbb94537de087476651d33833a4[m
+Author: George <admin@georgesimos.com>
+Date:   Fri Sep 6 19:45:59 2019 +0300
+
+    adding movie image url
+
+[33mcommit 3a33203e6ef85a2c839236372ee7239e10de5d99[m
+Author: George <admin@georgesimos.com>
+Date:   Wed Sep 4 21:43:29 2019 +0300
+
+    single movie route and fetch
+
+[33mcommit 085b269df54b212dce939d55cccb9dba53e5dc63[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Jul 13 19:56:01 2019 +0300
+
+    Responsive Movie Cards done!
+
+[33mcommit 8e56df26ce6ba9350a0ccb9226c44bde512f31a7[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Jul 13 13:28:04 2019 +0300
+
+    correcting style in register
+
+[33mcommit 7b5f32e7ca03f985fce1d8d12bc488a237fa9f06[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Jul 13 13:25:17 2019 +0300
+
+    refactoring the structure
+
+[33mcommit fa9540f98cf4fe460325cfa622f656791e71d5a5[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Jul 13 13:25:14 2019 +0300
+
+    refactoring the structure
+
+[33mcommit a48c8ccc0ac607e422e734bc878a22bed7be6dc6[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Jul 13 13:16:16 2019 +0300
+
+    building MoviePage
+
+[33mcommit 2f84cc13c2e167480c6c5631b88971bc97441ffa[m
+Author: George <admin@georgesimos.com>
+Date:   Tue Jul 2 19:52:59 2019 +0300
+
+    deprications
+
+[33mcommit 43c6b242f9e2d3f759bec06a3cb79ed276dec9a1[m
+Author: George <admin@georgesimos.com>
+Date:   Tue Jul 2 19:52:50 2019 +0300
+
+    replace deprications
+
+[33mcommit 9867229b50bdbfdcc60e03f704c948fa54e58f15[m
+Author: George <admin@georgesimos.com>
+Date:   Mon Jul 1 22:26:16 2019 +0300
+
+    adding better style animation and demo menu
+
+[33mcommit 9f8797ad4eb7a1d1f779b6342b0a085a7c8e85b2[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Jun 30 21:12:55 2019 +0300
+
+    adding awesome styles from navBar
+
+[33mcommit 71d6f9f19c1b2aa76f03e915679c8e6895076c48[m
+Author: George <admin@georgesimos.com>
+Date:   Sat Jun 29 16:19:16 2019 +0300
+
+    finish adding a movie
+
+[33mcommit 46d4f50b4365a3e4984d1a3e6fdb2b6701f1a455[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Jun 27 21:38:00 2019 +0300
+
+    add Movie
+
+[33mcommit fb3ca923e528bdd10a5cbd92ab69d6bd049fffc5[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Jun 27 13:04:09 2019 +0300
+
+    starting movie  popup
+
+[33mcommit b9efd680751b055209dde3a546f625a7b48ba4ea[m
+Author: George <admin@georgesimos.com>
+Date:   Mon Jun 24 23:36:40 2019 +0300
+
+    huge commit
+
+[33mcommit e64cdaec5a0004eff0d936d6b980a32cdacc145b[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Jun 6 22:06:54 2019 +0300
+
+    remove consoles
+
+[33mcommit 53172b7b5a0cdb8bc46a1577d0e9117711868705[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Jun 6 22:04:30 2019 +0300
+
+    fix auth
+
+[33mcommit a267c80bb339f0938e98e4897ee6f468c21c9d15[m
+Author: George <admin@georgesimos.com>
+Date:   Thu Jun 6 21:13:25 2019 +0300
+
+    adding more functionality, views and components
+
+[33mcommit 4a18fc0f83c122beeaf9da589083163e49fdf44c[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Jun 2 19:33:21 2019 +0300
+
+    adding Sign in and Sign up
+
+[33mcommit 531a2ce4f49fdda1e063787388074af5e49b80ce[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Jun 2 18:28:01 2019 +0300
+
+    adding admin dashboard and loading users
+
+[33mcommit 34d5f8c8450fab171415d0fb7a9a595ce8338565[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 15 20:21:07 2019 +0300
+
+    adding another gitignore
+
+[33mcommit 0e8756cd75b206f76e552efc962f8d9327736a0c[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 15 20:17:57 2019 +0300
+
+    fixes
+
+[33mcommit e530dc15381f2cd1922fa78a89285363451ef5e9[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 15 19:30:49 2019 +0300
+
+    adding reservation router
+
+[33mcommit 4c1f1c6510a6cc124da5ed2373a2357d0ac4fd3b[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 15 19:28:38 2019 +0300
+
+    adding showtime router
+
+[33mcommit 1efecf29332a6a044b1041b800d905c8a1745495[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 15 19:26:09 2019 +0300
+
+    adding cinema router
+
+[33mcommit 5d060645e9647728f3b771f1edab68e1f163ab75[m
+Author: George <admin@georgesimos.com>
+Date:   Mon May 13 22:31:04 2019 +0300
+
+    creating the rest schemas
+
+[33mcommit ee81ce708a9bb09525c877f6f0759e566fccb6c2[m
+Author: George <admin@georgesimos.com>
+Date:   Mon May 13 21:40:24 2019 +0300
+
+    adding react router
+
+[33mcommit 90b3b3cbd09133441234a75eb0983badf7205373[m
+Author: George <admin@georgesimos.com>
+Date:   Mon May 6 23:15:17 2019 +0300
+
+    Set up log in using axios
+
+[33mcommit e9067c51ce024ba2d75ad7f08aa9121ba8701448[m
+Author: George <admin@georgesimos.com>
+Date:   Mon May 6 22:49:59 2019 +0300
+
+    adding reactJs and Login page
+
+[33mcommit eae48b1904cb6cf52c15fb6420d493802f910bac[m
+Author: George <admin@georgesimos.com>
+Date:   Mon May 6 20:55:29 2019 +0300
+
+    Get/Update/Delete  Movies
+
+[33mcommit d59a5b2f1fa4d5f1144dea537cbb8e34e42a22e7[m
+Author: George <admin@georgesimos.com>
+Date:   Mon May 6 20:33:34 2019 +0300
+
+    Adding Movie Routes
+
+[33mcommit 00f7303e8ee6c023885d0e13f7274871694f256d[m
+Author: George <admin@georgesimos.com>
+Date:   Mon May 6 20:33:20 2019 +0300
+
+    Creating movie model
+
+[33mcommit 9b28a35f6a616df0fbb72e0762185195fb2cbbf4[m
+Author: George <admin@georgesimos.com>
+Date:   Mon May 6 20:13:56 2019 +0300
+
+    disable server info
+
+[33mcommit f74c5c83b30f1c121dd621f347104efd38c3c172[m
+Author: George <admin@georgesimos.com>
+Date:   Fri May 3 22:31:28 2019 +0300
+
+    Delete routes
+
+[33mcommit 2c2cb457c47b13baa18c1fe18aa872ba8c506d88[m
+Author: George <admin@georgesimos.com>
+Date:   Fri May 3 22:25:30 2019 +0300
+
+    get user by id and update user
+
+[33mcommit a5af8fb1b7feeaf7fe1f1ee06091731055ed0f44[m
+Author: George <admin@georgesimos.com>
+Date:   Fri May 3 22:17:47 2019 +0300
+
+    see user infos route
+
+[33mcommit 40909e378135556d506d5cb7cabaa875311e5be7[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 1 19:53:28 2019 +0300
+
+    only admin can see all users and only me can create an admin
+
+[33mcommit 940e27833f7b9761137be538c4a1878c4facb0a1[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 1 19:43:21 2019 +0300
+
+    logout / remove all tokens from a specific user
+
+[33mcommit c8ec1a5a5e81908f9ab26f2d9bac68ac17266495[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 1 19:41:28 2019 +0300
+
+    login and logout
+
+[33mcommit db9ef09fe8915ed5ee1250943ecc0f1b8011ede4[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 1 19:28:09 2019 +0300
+
+    creating auth using jwt
+
+[33mcommit dcd70b578215f11cca93ab1f4193b037a0080208[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 1 19:16:57 2019 +0300
+
+    creating static fn for login user by username
+
+[33mcommit 7f77a97b9730ee9ffd30e9757a7a5e282793e689[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 1 19:15:42 2019 +0300
+
+    save the hashed password
+
+[33mcommit 2b08808b74f1511e999474ed5f892e73353a0e30[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 1 19:06:51 2019 +0300
+
+    return only public user info
+
+[33mcommit 33a24a52578dc616b285a81c4aabfbc3b59d3cf2[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 1 18:59:25 2019 +0300
+
+    make user model simple
+
+[33mcommit 44f9162f5d68c1540502dbf925be359a9015adf0[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 1 17:43:32 2019 +0300
+
+    get all users
+
+[33mcommit 8940e5efda6d1f409e9092d9c87443cf75a32b8a[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 1 17:38:02 2019 +0300
+
+    Create User with full details
+
+[33mcommit 1632bb2121c60cf289e5b50f914be6a09ea4de42[m
+Author: George <admin@georgesimos.com>
+Date:   Wed May 1 17:13:18 2019 +0300
+
+    adding user meta model
+
+[33mcommit e2e50fa6e854c392a56acc4e26ddd3d17a34ec09[m
+Author: George <admin@georgesimos.com>
+Date:   Mon Apr 29 21:54:17 2019 +0300
+
+    creating address and user Schema
+
+[33mcommit a4713d991d90365c5b358e5fde4b97e640efbc67[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Apr 28 11:48:47 2019 +0300
+
+    adding mongoose for localhost connection
+
+[33mcommit aecb931efe31087af57364280387dc501da05ad0[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Apr 28 11:42:30 2019 +0300
+
+    setup express
+
+[33mcommit 7784c3588ca21bf0a8e4a203389c0d7b7e3398bb[m
+Author: George <admin@georgesimos.com>
+Date:   Sun Apr 28 11:33:41 2019 +0300
+
+    Initial Commit

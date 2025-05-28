@@ -45,10 +45,6 @@ const reservationSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  qrCode: {
-    type: String,
-    required: true,
-  },
 });
 
 const Reservation = mongoose.model('Reservation', reservationSchema);

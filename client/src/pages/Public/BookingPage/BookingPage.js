@@ -403,22 +403,36 @@ class BookingPage extends Component {
       cinema,
       selectedDate,
       selectedTime,
-      invitations
+      invitations,
+      selectedSeats
     } = this.props;
 
-    const invArray = Object.keys(invitations)
-      .map(key => ({
-        to: invitations[key],
-        host: user.name,
-        movie: movie.title,
-        time: selectedTime,
-        date: new Date(selectedDate).toDateString(),
-        cinema: cinema.name,
-        image: cinema.image,
-        seat: key
-      }))
-      .filter(inv => inv.to !== '');
-    return invArray;
+    console.log('Формирование приглашений:', { user, invitations, selectedSeats });
+
+    // Преобразуем выбранные места в формат "ряд-место"
+    const convertToAlphabet = value => (value + 10).toString(36).toUpperCase();
+    
+    const formattedSeats = selectedSeats.map(seat => 
+      `${convertToAlphabet(seat[0])}-${seat[1] + 1}`
+    );
+
+    console.log('Отформатированные места:', formattedSeats);
+
+    // Создаем одно приглашение со всеми местами
+    const invitation = {
+      to: Object.values(invitations)[0], // берем первый введенный email
+      host: user.name,
+      movie: movie.title,
+      time: selectedTime,
+      date: new Date(selectedDate).toDateString(),
+      cinema: cinema.name,
+      image: cinema.image,
+      seat: formattedSeats.join(', ') // объединяем все места через запятую
+    };
+
+    console.log('Готовое приглашение:', invitation);
+
+    return [invitation]; // возвращаем массив с одним приглашением
   };
 
   setSuggestionSeats = (seats, suggestedSeats) => {

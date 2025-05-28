@@ -24,7 +24,6 @@ class App extends Component {
       // Ошибка уже обработана в loadUser action
     }
   }
-
   render() {
     return (
       <Provider store={store}>
