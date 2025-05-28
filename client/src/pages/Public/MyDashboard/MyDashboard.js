@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { makeStyles, Grid, Typography, Container } from '@material-ui/core';
+import { makeStyles, Grid, Typography, Container, CircularProgress } from '@material-ui/core';
 import { getMovies, getReservations, getCinemas } from '../../../store/actions';
 import { MyReservationTable } from './components';
 import Account from '../../Admin/Account';
@@ -13,6 +13,12 @@ const useStyles = makeStyles(theme => ({
     textTransform: 'capitalize',
     marginTop: theme.spacing(15),
     marginBottom: theme.spacing(3)
+  },
+  loadingContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '200px'
   },
   [theme.breakpoints.down('sm')]: {
     fullWidth: { width: '100%' }
@@ -27,7 +33,8 @@ function MyDashboard(props) {
     cinemas,
     getMovies,
     getReservations,
-    getCinemas
+    getCinemas,
+    loading
   } = props;
 
   useEffect(() => {
@@ -38,11 +45,19 @@ function MyDashboard(props) {
 
   const classes = useStyles(props);
 
+  if (loading || !user) {
+    return (
+      <Container>
+        <div className={classes.loadingContainer}>
+          <CircularProgress />
+        </div>
+      </Container>
+    );
+  }
+
   const myReservations = reservations.filter(
     reservation => reservation.username === user.username
   );
-
-  console.log(myReservations);
 
   return (
     <Container>
@@ -86,6 +101,7 @@ const mapStateToProps = ({
   cinemaState
 }) => ({
   user: authState.user,
+  loading: authState.loading,
   movies: movieState.movies,
   reservations: reservationState.reservations,
   cinemas: cinemaState.cinemas
