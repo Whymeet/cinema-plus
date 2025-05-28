@@ -15,7 +15,7 @@ import styles from './styles';
 
 class AccountProfile extends Component {
   render() {
-    const { user, classes, className, file, onUpload } = this.props;
+    const { user, classes, className, file, imagePreview, onUpload } = this.props;
     const rootClassName = classNames(classes.root, className);
 
     if (!user) {
@@ -43,7 +43,7 @@ class AccountProfile extends Component {
             </div>
             <Avatar
               className={classes.avatar}
-              src={user.imageurl ? user.imageurl : '/images/avatars/avatar.png'}
+              src={imagePreview || '/images/avatars/avatar.png'}
             />
           </div>
         </PortletContent>
@@ -61,7 +61,7 @@ class AccountProfile extends Component {
               component="span"
               color="primary"
               variant="text">
-              Загрузить фото
+              {file ? 'Изменить фото' : 'Загрузить фото'}
             </Button>
           </label>
           <span>{file && file.name}</span>
@@ -74,7 +74,10 @@ class AccountProfile extends Component {
 AccountProfile.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  file: PropTypes.object,
+  imagePreview: PropTypes.string,
+  onUpload: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(AccountProfile);

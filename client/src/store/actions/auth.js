@@ -12,16 +12,25 @@ import { setAuthHeaders, setUser, removeUser, isLoggedIn } from '../../utils';
 
 export const uploadImage = (id, image) => async dispatch => {
   try {
+    const token = localStorage.getItem('jwtToken');
     const data = new FormData();
     data.append('file', image);
     const url = '/users/photo/' + id;
     const response = await fetch(url, {
       method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
       body: data
     });
     const responseData = await response.json();
     if (response.ok) {
-      dispatch(setAlert('Image Uploaded', 'success', 5000));
+      const { user } = responseData;
+      if (user) {
+        setUser(user);
+        dispatch({ type: USER_LOADED, payload: { user } });
+      }
+      dispatch(setAlert('Фото успешно загружено', 'success', 5000));
     }
     if (responseData.error) {
       dispatch(setAlert(responseData.error.message, 'error', 5000));

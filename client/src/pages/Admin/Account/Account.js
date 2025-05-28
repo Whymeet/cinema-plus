@@ -14,34 +14,51 @@ const styles = theme => ({
 });
 
 class Account extends Component {
-  state = { image: null };
-
-  static propTypes = {
-    user: PropTypes.object.isRequired,
-    classes: PropTypes.object.isRequired
+  state = { 
+    image: null,
+    imagePreview: null
   };
 
+  handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      this.setState({ 
+        image: file,
+        imagePreview: URL.createObjectURL(file)
+      });
+      
+      // Сразу загружаем фото при выборе
+      if (this.props.user && this.props.user._id) {
+        this.props.uploadImage(this.props.user._id, file);
+      }
+    }
+  };
+
+  componentWillUnmount() {
+    // Очищаем URL превью при размонтировании компонента
+    if (this.state.imagePreview) {
+      URL.revokeObjectURL(this.state.imagePreview);
+    }
+  }
+
   render() {
-    const { image } = this.state;
-    const { classes, user, uploadImage } = this.props;
+    const { image, imagePreview } = this.state;
+    const { classes, user } = this.props;
+    
     return (
       <div className={classes.root}>
         <Grid container spacing={4}>
           <Grid item lg={4} md={6} xl={4} xs={12}>
             <AccountProfile
               file={image}
+              imagePreview={imagePreview || (user && user.imageurl)}
               user={user}
-              onUpload={event => {
-                const file = event.target.files[0];
-                this.setState({ image: file });
-              }}
+              onUpload={this.handleImageUpload}
             />
           </Grid>
           <Grid item lg={8} md={6} xl={8} xs={12}>
             <AccountDetails
-              file={image}
               user={user}
-              uploadImage={uploadImage}
             />
           </Grid>
         </Grid>
@@ -51,12 +68,15 @@ class Account extends Component {
 }
 
 Account.propTypes = {
-  classes: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  uploadImage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ authState }) => ({
   user: authState.user
 });
+
 export default connect(mapStateToProps, { uploadImage })(
   withStyles(styles)(Account)
 );
