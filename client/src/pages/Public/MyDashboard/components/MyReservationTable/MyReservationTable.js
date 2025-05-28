@@ -77,8 +77,16 @@ const styles = theme => ({
     marginTop: theme.spacing(2)
   },
   seatChip: {
-    backgroundColor: theme.palette.primary.light,
-    color: theme.palette.primary.contrastText
+    backgroundColor: theme.palette.primary.dark,
+    color: '#fff',
+    '& .MuiChip-label': {
+      color: '#fff',
+      fontWeight: 500
+    },
+    boxShadow: '0 2px 4px rgba(0,0,0,0.15)',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main
+    }
   },
   statusChip: {
     position: 'absolute',
@@ -164,14 +172,18 @@ function MyReservationTable(props) {
                   </div>
 
                   <div className={classes.seats}>
-                    {reservation.seats.map((seat, index) => (
-                      <Chip
-                        key={index}
-                        label={`Ряд ${seat.row}, Место ${seat.col}`}
-                        className={classes.seatChip}
-                        size="small"
-                      />
-                    ))}
+                    {reservation.seats.map((seat, index) => {
+                      const row = Array.isArray(seat) ? seat[0] + 1 : seat.row;
+                      const seatNumber = Array.isArray(seat) ? seat[1] + 1 : seat.number;
+                      return (
+                        <Chip
+                          key={index}
+                          label={`Ряд ${row}, Место ${seatNumber}`}
+                          className={classes.seatChip}
+                          size="small"
+                        />
+                      );
+                    })}
                   </div>
 
                   <Typography variant="h6" className={classes.price}>
