@@ -104,7 +104,9 @@ const styles = theme => ({
     marginTop: theme.spacing(2)
   },
   cancelButton: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    width: '100%',
+    fontSize: '0.8rem'
   }
 });
 
@@ -220,17 +222,6 @@ function MyReservationTable(props) {
                     <Typography variant="h6" className={classes.price}>
                       {reservation.total} ₽
                     </Typography>
-
-                    {!reservation.checkin && (
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        className={classes.cancelButton}
-                        onClick={() => handleCancelClick(reservation._id)}
-                      >
-                        Отменить бронирование
-                      </Button>
-                    )}
                   </div>
 
                   <div className={classes.qrContainer}>
@@ -244,6 +235,15 @@ function MyReservationTable(props) {
                         <Typography variant="caption" align="center">
                           QR код для входа
                         </Typography>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          size="small"
+                          className={classes.cancelButton}
+                          onClick={() => handleCancelClick(reservation._id)}
+                        >
+                          Отменить бронирование
+                        </Button>
                       </>
                     )}
                   </div>
