@@ -56,7 +56,16 @@ export default function BookingInvitation(props) {
     // Создаем объект с одним email для всех мест
     const invitations = {};
     selectedSeats.forEach(seat => {
-      invitations[`${convertToAlphabet(seat[0])}-${seat[1]}`] = event.target.value;
+      const rowLetter = convertToAlphabet(seat[0]);
+      const seatNumber = seat[1];
+      const seatKey = `${rowLetter}-${seatNumber}`;
+      console.log('Конвертация места:', { 
+        originalRow: seat[0], 
+        rowLetter, 
+        seatNumber, 
+        seatKey 
+      });
+      invitations[seatKey] = event.target.value;
     });
     onSetInvitation({ target: { value: event.target.value, invitations } });
   };

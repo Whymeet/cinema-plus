@@ -6,15 +6,20 @@ const router = new express.Router();
 
 const createMailOptions = (data) => {
   const { to, host, movie, date, time, cinema, image, seat } = data;
+  
+  console.log('Данные для билета:', { to, host, movie, date, time, cinema, seat });
+
+  // Форматируем место, убеждаемся что оно существует
+  const formattedSeat = seat || 'Место не указано';
 
   const htmlContent = `
-    <h1><strong>Приглашение на фильм</strong></h1>
-    <p>Здравствуйте! Вас пригласил ${host}</p>
+    <h1><strong>Ваш билет в кино</strong></h1>
+    <p>${host}, вот ваш билет:</p>
     <p>Название фильма: ${movie}</p>
     <p>Дата: ${date}</p>
     <p>Время: ${time}</p>
     <p>Кинотеатр: ${cinema}</p>
-    <p>Место: ${seat}</p>
+    <p>Ваше место: <strong>${formattedSeat}</strong></p>
     <img src="${image}" alt="Изображение кинотеатра"/>
     <br/>
   `;
@@ -22,7 +27,7 @@ const createMailOptions = (data) => {
   return {
     from: process.env.GMAIL_USER,
     to,
-    subject: 'Cinema + Приглашение',
+    subject: 'Cinema + Ваш билет',
     html: htmlContent,
   };
 };
