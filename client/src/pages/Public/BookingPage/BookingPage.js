@@ -418,21 +418,21 @@ class BookingPage extends Component {
 
     console.log('Отформатированные места:', formattedSeats);
 
-    // Создаем массив приглашений для каждого места
-    const invArray = formattedSeats.map(seat => ({
-      to: invitations[seat] || Object.values(invitations)[0], // берем email из invitations
+    // Создаем одно приглашение со всеми местами
+    const invitation = {
+      to: Object.values(invitations)[0], // берем первый введенный email
       host: user.name,
       movie: movie.title,
       time: selectedTime,
       date: new Date(selectedDate).toDateString(),
       cinema: cinema.name,
       image: cinema.image,
-      seat: seat // используем отформатированное место
-    })).filter(inv => inv.to && inv.to !== '');
+      seat: formattedSeats.join(', ') // объединяем все места через запятую
+    };
 
-    console.log('Готовые приглашения:', invArray);
+    console.log('Готовое приглашение:', invitation);
 
-    return invArray;
+    return [invitation]; // возвращаем массив с одним приглашением
   };
 
   setSuggestionSeats = (seats, suggestedSeats) => {

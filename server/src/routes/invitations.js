@@ -9,8 +9,9 @@ const createMailOptions = (data) => {
   
   console.log('Данные для билета:', { to, host, movie, date, time, cinema, seat });
 
-  // Форматируем место, убеждаемся что оно существует
+  // Форматируем места
   const formattedSeat = seat || 'Место не указано';
+  const seatsDisplay = formattedSeat.includes(',') ? 'Ваши места' : 'Ваше место';
 
   const htmlContent = `
     <h1><strong>Ваш билет в кино</strong></h1>
@@ -19,7 +20,7 @@ const createMailOptions = (data) => {
     <p>Дата: ${date}</p>
     <p>Время: ${time}</p>
     <p>Кинотеатр: ${cinema}</p>
-    <p>Ваше место: <strong>${formattedSeat}</strong></p>
+    <p>${seatsDisplay}: <strong>${formattedSeat}</strong></p>
     <img src="${image}" alt="Изображение кинотеатра"/>
     <br/>
   `;
