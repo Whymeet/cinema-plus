@@ -19,7 +19,8 @@ class Account extends Component {
     name: '',
     email: '',
     phone: '',
-    password: ''
+    password: '',
+    phoneError: ''
   };
 
   componentDidMount() {
@@ -27,15 +28,35 @@ class Account extends Component {
     this.setState({ name, email, phone });
   }
 
+  validatePhoneNumber = (phone) => {
+    const phoneRegex = /^\+7\d{10}$/;
+    return phoneRegex.test(phone);
+  };
+
   handleFieldChange = (field, value) => {
     const newState = { ...this.state };
     newState[field] = value;
+    
+    // Очищаем ошибку при изменении номера
+    if (field === 'phone') {
+      newState.phoneError = '';
+    }
+    
     this.setState(newState);
   };
 
   onUpdateUser = async () => {
     try {
       const { name, email, phone, password } = this.state;
+
+      // Проверяем формат телефона перед отправкой
+      if (phone && !this.validatePhoneNumber(phone)) {
+        this.setState({ 
+          phoneError: 'Введите номер в формате +7XXXXXXXXXX' 
+        });
+        return;
+      }
+
       const token = localStorage.getItem('jwtToken');
       let body = { name, email, phone };
       if (password) body = { ...body, password };
@@ -103,9 +124,12 @@ class Account extends Component {
                 className={classes.textField}
                 label="Номер телефона"
                 margin="dense"
-                type="number"
+                type="text"
                 value={phone}
                 variant="outlined"
+                placeholder="+7XXXXXXXXXX"
+                error={!!this.state.phoneError}
+                helperText={this.state.phoneError || "Введите номер в формате +7XXXXXXXXXX"}
                 onChange={event =>
                   this.handleFieldChange('phone', event.target.value)
                 }
