@@ -2,30 +2,97 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Button,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
   Typography,
-  Paper
+  Button,
+  Chip,
+  Box,
+  Divider
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { deleteReservation } from '../../../../../store/actions';
 import moment from 'moment';
+import { EventSeat, AccessTime, LocationOn } from '@material-ui/icons';
 
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing(3),
-    overflowX: 'auto'
+    marginTop: theme.spacing(3)
   },
-  table: {
-    minWidth: 650
+  card: {
+    marginBottom: theme.spacing(2),
+    position: 'relative',
+    overflow: 'visible'
   },
-  button: {
-    margin: theme.spacing(1)
+  cardContent: {
+    display: 'flex',
+    padding: theme.spacing(3)
+  },
+  posterContainer: {
+    width: 140,
+    marginRight: theme.spacing(3)
+  },
+  poster: {
+    width: '100%',
+    height: 200,
+    borderRadius: theme.spacing(1),
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+  },
+  infoContainer: {
+    flex: 1
+  },
+  qrContainer: {
+    width: 120,
+    marginLeft: theme.spacing(3),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  qrCode: {
+    width: '100%',
+    height: 120,
+    marginBottom: theme.spacing(1)
+  },
+  movieTitle: {
+    fontSize: '1.5rem',
+    fontWeight: 600,
+    marginBottom: theme.spacing(2)
+  },
+  infoRow: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: theme.spacing(1)
+  },
+  icon: {
+    marginRight: theme.spacing(1),
+    color: theme.palette.text.secondary
+  },
+  seats: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: theme.spacing(1),
+    marginTop: theme.spacing(2)
+  },
+  seatChip: {
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.primary.contrastText
+  },
+  statusChip: {
+    position: 'absolute',
+    top: theme.spacing(2),
+    right: theme.spacing(2)
+  },
+  price: {
+    fontSize: '1.25rem',
+    fontWeight: 500,
+    color: theme.palette.success.main,
+    marginTop: theme.spacing(2)
+  },
+  cancelButton: {
+    marginTop: theme.spacing(2)
   }
 });
 
@@ -49,61 +116,100 @@ function MyReservationTable(props) {
   };
 
   return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Фильм</TableCell>
-            <TableCell>Зал</TableCell>
-            <TableCell>Дата</TableCell>
-            <TableCell>Время</TableCell>
-            <TableCell>Места</TableCell>
-            <TableCell>Сумма</TableCell>
-            <TableCell>Статус</TableCell>
-            <TableCell>Действия</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {reservations.map(reservation => {
-            const movie = findMovie(reservation.movieId);
-            const cinema = findCinema(reservation.cinemaId);
-            return (
-              <TableRow key={reservation._id}>
-                <TableCell>{movie ? movie.title : 'Загрузка...'}</TableCell>
-                <TableCell>{cinema ? cinema.name : 'Загрузка...'}</TableCell>
-                <TableCell>
-                  {moment(reservation.date).format('DD.MM.YYYY')}
-                </TableCell>
-                <TableCell>{reservation.startAt}</TableCell>
-                <TableCell>
-                  {reservation.seats.map(seat => `${seat.row}-${seat.col}`).join(', ')}
-                </TableCell>
-                <TableCell>{reservation.total} ₽</TableCell>
-                <TableCell>
-                  {reservation.checkin ? (
-                    <Typography color="primary">Использовано</Typography>
-                  ) : (
-                    <Typography color="secondary">Активно</Typography>
-                  )}
-                </TableCell>
-                <TableCell>
+    <Grid container className={classes.root} spacing={3}>
+      {reservations.map(reservation => {
+        const movie = findMovie(reservation.movieId);
+        const cinema = findCinema(reservation.cinemaId);
+        
+        return (
+          <Grid item xs={12} key={reservation._id}>
+            <Card className={classes.card} elevation={2}>
+              <Chip
+                label={reservation.checkin ? "Использовано" : "Активно"}
+                color={reservation.checkin ? "default" : "secondary"}
+                className={classes.statusChip}
+              />
+              <CardContent className={classes.cardContent}>
+                <div className={classes.posterContainer}>
+                  <CardMedia
+                    component="img"
+                    className={classes.poster}
+                    image={movie ? movie.image : 'https://via.placeholder.com/140x200?text=Постер'}
+                    title={movie ? movie.title : 'Загрузка...'}
+                  />
+                </div>
+
+                <div className={classes.infoContainer}>
+                  <Typography variant="h5" className={classes.movieTitle}>
+                    {movie ? movie.title : 'Загрузка...'}
+                  </Typography>
+
+                  <div className={classes.infoRow}>
+                    <LocationOn className={classes.icon} />
+                    <Typography variant="body1">
+                      {cinema ? cinema.name : 'Загрузка...'}
+                    </Typography>
+                  </div>
+
+                  <div className={classes.infoRow}>
+                    <AccessTime className={classes.icon} />
+                    <Typography variant="body1">
+                      {moment(reservation.date).format('DD.MM.YYYY')} в {reservation.startAt}
+                    </Typography>
+                  </div>
+
+                  <div className={classes.infoRow}>
+                    <EventSeat className={classes.icon} />
+                    <Typography variant="body1">Места:</Typography>
+                  </div>
+
+                  <div className={classes.seats}>
+                    {reservation.seats.map((seat, index) => (
+                      <Chip
+                        key={index}
+                        label={`Ряд ${seat.row}, Место ${seat.col}`}
+                        className={classes.seatChip}
+                        size="small"
+                      />
+                    ))}
+                  </div>
+
+                  <Typography variant="h6" className={classes.price}>
+                    {reservation.total} ₽
+                  </Typography>
+
                   {!reservation.checkin && (
                     <Button
                       variant="contained"
                       color="secondary"
-                      className={classes.button}
+                      className={classes.cancelButton}
                       onClick={() => handleCancelReservation(reservation._id)}
                     >
-                      Отменить
+                      Отменить бронирование
                     </Button>
                   )}
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </Paper>
+                </div>
+
+                <div className={classes.qrContainer}>
+                  {!reservation.checkin && (
+                    <>
+                      <img
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${reservation._id}`}
+                        alt="QR код билета"
+                        className={classes.qrCode}
+                      />
+                      <Typography variant="caption" align="center">
+                        QR код для входа
+                      </Typography>
+                    </>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
+        );
+      })}
+    </Grid>
   );
 }
 
