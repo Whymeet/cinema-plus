@@ -1,9 +1,8 @@
 const express = require('express');
 const path = require('path');
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config({ path: path.join(__dirname, '../.env') });
-}
+// Загружаем переменные окружения
+require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 require('./db/mongoose');
 
