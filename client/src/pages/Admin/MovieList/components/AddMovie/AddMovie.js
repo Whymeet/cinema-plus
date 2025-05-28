@@ -134,18 +134,26 @@ class AddMovie extends Component {
       return;
     }
 
-    const { image, genre, ...rest } = this.state;
-    const movie = { ...rest, genre: genre.join(',') };
-    await this.props.updateMovie(null, movie, this.props.edit._id);
+    const { image, genre, imagePreview, imageUrl, errors, ...rest } = this.state;
+    const movie = { 
+      ...rest, 
+      genre: Array.isArray(genre) ? genre.join(',') : genre 
+    };
+
+    console.log('Отправляемые данные:', movie);
+
+    const result = await this.props.updateMovie(null, movie, this.props.edit._id);
     
-    if (image) {
-      const imageResponse = await this.props.uploadMovieImage(this.props.edit._id, image);
-      if (imageResponse && imageResponse.movie) {
-        this.setState({
-          imageUrl: imageResponse.movie.image,
-          imagePreview: null,
-          image: null
-        });
+    if (result && result.status === 'success') {
+      if (image) {
+        const imageResponse = await this.props.uploadMovieImage(this.props.edit._id, image);
+        if (imageResponse && imageResponse.movie) {
+          this.setState({
+            imageUrl: imageResponse.movie.image,
+            imagePreview: null,
+            image: null
+          });
+        }
       }
     }
   };
