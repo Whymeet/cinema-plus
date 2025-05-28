@@ -3,7 +3,8 @@ export default theme => ({
   title: { marginLeft: theme.spacing(3) },
   field: {
     margin: theme.spacing(3),
-    display: 'flex'
+    display: 'flex',
+    flexDirection: 'column'
   },
   textField: {
     textTransform: 'capitalize',
@@ -25,5 +26,10 @@ export default theme => ({
   },
   infoMessage: {
     marginLeft: theme.spacing(3)
+  },
+  errorText: {
+    marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(1),
+    color: theme.palette.error.main
   }
 });

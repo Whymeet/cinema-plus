@@ -19,7 +19,7 @@ class Account extends Component {
     imagePreview: null
   };
 
-  handleImageUpload = (event) => {
+  handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
       this.setState({ 
@@ -29,7 +29,15 @@ class Account extends Component {
       
       // Сразу загружаем фото при выборе
       if (this.props.user && this.props.user._id) {
-        this.props.uploadImage(this.props.user._id, file);
+        try {
+          await this.props.uploadImage(this.props.user._id, file);
+          // После успешной загрузки очищаем состояние
+          this.setState({
+            image: null
+          });
+        } catch (error) {
+          console.error('Ошибка при загрузке фото:', error);
+        }
       }
     }
   };
@@ -45,13 +53,17 @@ class Account extends Component {
     const { image, imagePreview } = this.state;
     const { classes, user } = this.props;
     
+    if (!user) {
+      return <div>Загрузка...</div>;
+    }
+    
     return (
       <div className={classes.root}>
         <Grid container spacing={4}>
           <Grid item lg={4} md={6} xl={4} xs={12}>
             <AccountProfile
               file={image}
-              imagePreview={imagePreview || (user && user.imageurl)}
+              imagePreview={imagePreview}
               user={user}
               onUpload={this.handleImageUpload}
             />

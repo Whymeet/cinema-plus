@@ -98,7 +98,7 @@ export const addMovie = (image, newMovie) => async dispatch => {
     });
     const movie = await response.json();
     if (response.ok) {
-      dispatch(setAlert('Movie have been saved!', 'success', 5000));
+      dispatch(setAlert('Фильм успешно сохранен!', 'success', 5000));
       if (image) dispatch(uploadMovieImage(movie._id, image));
       dispatch(getMovies());
     }

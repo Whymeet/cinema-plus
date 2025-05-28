@@ -14,6 +14,13 @@ import {
 import styles from './styles';
 
 class AccountProfile extends Component {
+  componentDidUpdate(prevProps) {
+    // Если пользователь изменился, обновляем состояние
+    if (prevProps.user !== this.props.user) {
+      this.forceUpdate();
+    }
+  }
+
   render() {
     const { user, classes, className, file, imagePreview, onUpload } = this.props;
     const rootClassName = classNames(classes.root, className);
@@ -28,22 +35,30 @@ class AccountProfile extends Component {
       );
     }
 
+    const userName = user.name || 'Без имени';
+    const userEmail = user.email || 'Email не указан';
+    const registrationDate = user.createdAt 
+      ? moment(user.createdAt).format('DD.MM.YYYY')
+      : 'Не указана';
+
     return (
       <Portlet className={rootClassName}>
         <PortletContent>
           <div className={classes.details}>
             <div className={classes.info}>
-              <Typography variant="h2">{user.name || 'Без имени'}</Typography>
+              <Typography className={classes.nameText} variant="h1">
+                {userName}
+              </Typography>
               <Typography className={classes.emailText} variant="body1">
-                {user.email || 'Email не указан'}
+                {userEmail}
               </Typography>
               <Typography className={classes.dateText} variant="body1">
-                Дата регистрации: {user.createdAt ? moment(user.createdAt).format('DD/MM/YYYY') : 'Не указана'}
+                Дата регистрации: {registrationDate}
               </Typography>
             </div>
             <Avatar
               className={classes.avatar}
-              src={imagePreview || '/images/avatars/avatar.png'}
+              src={imagePreview || (user.imageurl ? user.imageurl : '/images/avatars/avatar.png')}
             />
           </div>
         </PortletContent>

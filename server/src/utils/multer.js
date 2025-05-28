@@ -11,6 +11,9 @@ const storage = path =>
 const upload = path =>
   multer({
     storage: storage(path),
+    limits: {
+      fileSize: 50 * 1024 * 1024 // 50 MB в байтах
+    },
     fileFilter: (req, file, cb) => {
       if (
         file.mimetype === 'image/png' ||
@@ -20,7 +23,7 @@ const upload = path =>
         cb(null, true);
       } else {
         cb(null, false);
-        return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        return cb(new Error('Разрешены только форматы .png, .jpg и .jpeg!'));
       }
     },
   });

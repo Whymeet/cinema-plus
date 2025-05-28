@@ -27,7 +27,7 @@ router.post(
     const movieId = req.params.id;
     try {
       if (!file) {
-        const error = new Error('Please upload a file');
+        const error = new Error('Пожалуйста, загрузите файл');
         error.httpStatusCode = 400;
         return next(error);
       }
@@ -38,7 +38,20 @@ router.post(
       res.send({ movie, file });
     } catch (e) {
       console.log(e);
-      res.sendStatus(400).send(e);
+      res.status(400).send(e);
+    }
+  },
+  (error, req, res, next) => {
+    if (error) {
+      if (error.code === 'LIMIT_FILE_SIZE') {
+        res.status(413).json({
+          error: 'Размер файла превышает допустимый (50 МБ)'
+        });
+      } else {
+        res.status(400).json({
+          error: error.message
+        });
+      }
     }
   }
 );

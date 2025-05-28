@@ -15,7 +15,8 @@ import {
   addMovie,
   updateMovie,
   removeMovie,
-  uploadMovieImage
+  uploadMovieImage,
+  setAlert
 } from '../../../../../store/actions';
 import FileUpload from '../../../../../components/FileUpload/FileUpload';
 
@@ -33,7 +34,8 @@ class AddMovie extends Component {
     cast: '',
     country: '',
     releaseDate: new Date(),
-    endDate: new Date()
+    endDate: new Date(),
+    errors: {}
   };
 
   componentDidMount() {
@@ -98,26 +100,51 @@ class AddMovie extends Component {
     }
   };
 
+  validateFields = () => {
+    const { title, genre, language, description, director, cast, country, duration } = this.state;
+    const errors = {};
+    
+    if (!title) errors.title = 'Обязательное поле';
+    if (!genre || genre.length === 0) errors.genre = 'Выберите хотя бы один жанр';
+    if (!language) errors.language = 'Обязательное поле';
+    if (!description) errors.description = 'Обязательное поле';
+    if (!director) errors.director = 'Обязательное поле';
+    if (!cast) errors.cast = 'Обязательное поле';
+    if (!country) errors.country = 'Обязательное поле';
+    if (!duration) errors.duration = 'Обязательное поле';
+
+    this.setState({ errors });
+    return Object.keys(errors).length === 0;
+  };
+
   onAddMovie = async () => {
+    if (!this.validateFields()) {
+      this.props.setAlert('Пожалуйста, заполните все обязательные поля', 'error', 5000);
+      return;
+    }
+
     const { image, genre, ...rest } = this.state;
     const movie = { ...rest, genre: genre.join(',') };
     await this.props.addMovie(image, movie);
   };
 
   onUpdateMovie = async () => {
+    if (!this.validateFields()) {
+      this.props.setAlert('Пожалуйста, заполните все обязательные поля', 'error', 5000);
+      return;
+    }
+
     const { image, genre, ...rest } = this.state;
     const movie = { ...rest, genre: genre.join(',') };
-    // Сначала обновляем основные данные без изображения
     await this.props.updateMovie(null, movie, this.props.edit._id);
     
-    // Если есть новое изображение, загружаем его отдельно
     if (image) {
       const imageResponse = await this.props.uploadMovieImage(this.props.edit._id, image);
       if (imageResponse && imageResponse.movie) {
         this.setState({
           imageUrl: imageResponse.movie.image,
           imagePreview: null,
-          image: null // Очищаем выбранный файл
+          image: null
         });
       }
     }
@@ -140,12 +167,13 @@ class AddMovie extends Component {
       cast,
       country,
       releaseDate,
-      endDate
+      endDate,
+      errors
     } = this.state;
 
     const rootClassName = classNames(classes.root, className);
-    const subtitle = this.props.edit ? 'Edit Movie' : 'Add Movie';
-    const submitButton = this.props.edit ? 'Update Movie' : 'Save Details';
+    const subtitle = this.props.edit ? 'Редактировать фильм' : 'Добавить фильм';
+    const submitButton = this.props.edit ? 'Обновить фильм' : 'Сохранить';
     const submitAction = this.props.edit
       ? () => this.onUpdateMovie()
       : () => this.onAddMovie();
@@ -155,16 +183,17 @@ class AddMovie extends Component {
         <Typography variant="h4" className={classes.title}>
           {subtitle}
         </Typography>
-        <form autoComplete="off" noValidate>
+        <form className={classes.form}>
           <div className={classes.field}>
             <TextField
               className={classes.textField}
-              helperText="Please specify the title"
-              label="Title"
+              label="Название фильма"
               margin="dense"
               required
               value={title}
               variant="outlined"
+              error={!!errors.title}
+              helperText={errors.title}
               onChange={event =>
                 this.handleFieldChange('title', event.target.value)
               }
@@ -175,11 +204,12 @@ class AddMovie extends Component {
               multiple
               displayEmpty
               className={classes.textField}
-              label="Genre"
+              label="Жанр"
               margin="dense"
               required
               value={genre}
               variant="outlined"
+              error={!!errors.genre}
               onChange={event =>
                 this.handleFieldChange('genre', event.target.value)
               }>
@@ -189,17 +219,24 @@ class AddMovie extends Component {
                 </MenuItem>
               ))}
             </Select>
+            {errors.genre && (
+              <Typography color="error" variant="caption" className={classes.errorText}>
+                {errors.genre}
+              </Typography>
+            )}
           </div>
           <div className={classes.field}>
             <TextField
               fullWidth
               multiline
               className={classes.textField}
-              label="Description"
+              label="Описание"
               margin="dense"
               required
               variant="outlined"
               value={description}
+              error={!!errors.description}
+              helperText={errors.description}
               onChange={event =>
                 this.handleFieldChange('description', event.target.value)
               }
@@ -209,11 +246,13 @@ class AddMovie extends Component {
             <TextField
               select
               className={classes.textField}
-              label="Language"
+              label="Язык"
               margin="dense"
               required
               value={language}
               variant="outlined"
+              error={!!errors.language}
+              helperText={errors.language}
               onChange={event =>
                 this.handleFieldChange('language', event.target.value)
               }>
@@ -226,11 +265,13 @@ class AddMovie extends Component {
 
             <TextField
               className={classes.textField}
-              label="Duration"
+              label="Продолжительность (мин)"
               margin="dense"
               type="number"
               value={duration}
               variant="outlined"
+              error={!!errors.duration}
+              helperText={errors.duration}
               onChange={event =>
                 this.handleFieldChange('duration', event.target.value)
               }
@@ -239,22 +280,26 @@ class AddMovie extends Component {
           <div className={classes.field}>
             <TextField
               className={classes.textField}
-              label="Director"
+              label="Режиссер"
               margin="dense"
               required
               value={director}
               variant="outlined"
+              error={!!errors.director}
+              helperText={errors.director}
               onChange={event =>
                 this.handleFieldChange('director', event.target.value)
               }
             />
             <TextField
               className={classes.textField}
-              label="Cast"
+              label="В ролях"
               margin="dense"
               required
               value={cast}
               variant="outlined"
+              error={!!errors.cast}
+              helperText={errors.cast}
               onChange={event =>
                 this.handleFieldChange('cast', event.target.value)
               }
@@ -263,11 +308,13 @@ class AddMovie extends Component {
           <div className={classes.field}>
             <TextField
               className={classes.textField}
-              label="Country"
+              label="Страна"
               margin="dense"
               required
               value={country}
               variant="outlined"
+              error={!!errors.country}
+              helperText={errors.country}
               onChange={event =>
                 this.handleFieldChange('country', event.target.value)
               }
@@ -280,13 +327,13 @@ class AddMovie extends Component {
                 inputVariant="outlined"
                 margin="normal"
                 id="release-date"
-                label="Release Date"
+                label="Дата выхода"
                 value={releaseDate}
                 onChange={date =>
                   this.handleFieldChange('releaseDate', date._d)
                 }
                 KeyboardButtonProps={{
-                  'aria-label': 'change date'
+                  'aria-label': 'изменить дату'
                 }}
               />
 
@@ -295,11 +342,11 @@ class AddMovie extends Component {
                 inputVariant="outlined"
                 margin="normal"
                 id="end-date"
-                label="End Date"
+                label="Дата окончания проката"
                 value={endDate}
                 onChange={date => this.handleFieldChange('endDate', date._d)}
                 KeyboardButtonProps={{
-                  'aria-label': 'change date'
+                  'aria-label': 'изменить дату'
                 }}
               />
             </MuiPickersUtilsProvider>
@@ -330,7 +377,7 @@ class AddMovie extends Component {
             className={classes.buttonFooter}
             variant="contained"
             onClick={this.onRemoveMovie}>
-            Delete Movie
+            Удалить фильм
           </Button>
         )}
       </div>
@@ -345,7 +392,8 @@ AddMovie.propTypes = {
   addMovie: PropTypes.func.isRequired,
   updateMovie: PropTypes.func.isRequired,
   removeMovie: PropTypes.func.isRequired,
-  uploadMovieImage: PropTypes.func.isRequired
+  uploadMovieImage: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired
 };
 
 const mapStateToProps = null;
@@ -353,7 +401,8 @@ const mapDispatchToProps = {
   addMovie,
   updateMovie,
   removeMovie,
-  uploadMovieImage
+  uploadMovieImage,
+  setAlert
 };
 
 export default connect(

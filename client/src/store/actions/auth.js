@@ -27,10 +27,10 @@ export const uploadImage = (id, image) => async dispatch => {
     if (response.ok) {
       const { user } = responseData;
       if (user) {
-        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
         dispatch({ type: USER_LOADED, payload: { user } });
+        dispatch(setAlert('Фото успешно загружено', 'success', 5000));
       }
-      dispatch(setAlert('Фото успешно загружено', 'success', 5000));
     }
     if (responseData.error) {
       dispatch(setAlert(responseData.error.message, 'error', 5000));
@@ -168,12 +168,18 @@ export const loadUser = () => async dispatch => {
     });
     const responseData = await response.json();
     if (response.ok) {
-      const { user } = responseData;
-      user && setUser(user);
-      dispatch({ type: USER_LOADED, payload: responseData });
+      localStorage.setItem('user', JSON.stringify(responseData));
+      dispatch({ 
+        type: USER_LOADED, 
+        payload: { user: responseData }
+      });
     }
-    if (!response.ok) dispatch({ type: AUTH_ERROR });
+    if (!response.ok) {
+      localStorage.removeItem('user');
+      dispatch({ type: AUTH_ERROR });
+    }
   } catch (error) {
+    localStorage.removeItem('user');
     dispatch({ type: AUTH_ERROR });
   }
 };

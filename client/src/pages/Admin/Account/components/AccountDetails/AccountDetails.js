@@ -97,7 +97,6 @@ class Account extends Component {
             <div className={classes.field}>
               <TextField
                 className={classes.textField}
-                helperText="Пожалуйста, укажите полное имя"
                 label="Полное имя"
                 margin="dense"
                 required
@@ -152,6 +151,7 @@ class Account extends Component {
           <Button
             color="primary"
             variant="contained"
+            className={classes.buttonFooter}
             onClick={this.onUpdateUser}>
             Сохранить
           </Button>
