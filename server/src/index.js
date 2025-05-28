@@ -40,7 +40,11 @@ app.use(function(req, res, next) {
   // Pass to next layer of middleware
   next();
 });
-app.use(express.json());
+
+// Увеличиваем лимит размера данных для JSON и URL-encoded данных
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb', extended: true}));
+
 app.use(userRouter);
 app.use(movieRouter);
 app.use(cinemaRouter);

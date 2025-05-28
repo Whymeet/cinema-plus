@@ -15,7 +15,8 @@ import {
   addMovie,
   updateMovie,
   removeMovie,
-  uploadMovieImage
+  uploadMovieImage,
+  setAlert
 } from '../../../../../store/actions';
 import FileUpload from '../../../../../components/FileUpload/FileUpload';
 
@@ -33,7 +34,8 @@ class AddMovie extends Component {
     cast: '',
     country: '',
     releaseDate: new Date(),
-    endDate: new Date()
+    endDate: new Date(),
+    errors: {}
   };
 
   componentDidMount() {
@@ -68,9 +70,28 @@ class AddMovie extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.movie !== this.props.movie) {
+    if (prevProps.movie !== this.props.movie && this.props.movie) {
       const { title, genre, language } = this.props.movie;
       this.setState({ title, genre, language });
+    }
+    
+    if (prevProps.movie && !this.props.movie) {
+      this.setState({
+        title: '',
+        image: null,
+        imagePreview: null,
+        imageUrl: '',
+        genre: [],
+        language: '',
+        duration: '',
+        description: '',
+        director: '',
+        cast: '',
+        country: '',
+        releaseDate: new Date(),
+        endDate: new Date(),
+        errors: {}
+      });
     }
   }
 
@@ -98,27 +119,63 @@ class AddMovie extends Component {
     }
   };
 
+  validateFields = () => {
+    const { title, genre, language, description, director, cast, country, duration } = this.state;
+    const errors = {};
+    
+    if (!title) errors.title = 'Обязательное поле';
+    if (!genre || genre.length === 0) errors.genre = 'Выберите хотя бы один жанр';
+    if (!language) errors.language = 'Обязательное поле';
+    if (!description) errors.description = 'Обязательное поле';
+    if (!director) errors.director = 'Обязательное поле';
+    if (!cast) errors.cast = 'Обязательное поле';
+    if (!country) errors.country = 'Обязательное поле';
+    if (!duration) errors.duration = 'Обязательное поле';
+
+    this.setState({ errors });
+    return Object.keys(errors).length === 0;
+  };
+
   onAddMovie = async () => {
+    if (!this.validateFields()) {
+      this.props.setAlert('Пожалуйста, заполните все обязательные поля', 'error', 5000);
+      return;
+    }
+
     const { image, genre, ...rest } = this.state;
     const movie = { ...rest, genre: genre.join(',') };
     await this.props.addMovie(image, movie);
   };
 
   onUpdateMovie = async () => {
-    const { image, genre, ...rest } = this.state;
-    const movie = { ...rest, genre: genre.join(',') };
-    // Сначала обновляем основные данные без изображения
-    await this.props.updateMovie(null, movie, this.props.edit._id);
+    if (!this.validateFields()) {
+      this.props.setAlert('Пожалуйста, заполните все обязательные поля', 'error', 5000);
+      return;
+    }
+
+    if (!this.props.edit) {
+      this.props.setAlert('Ошибка: Фильм для редактирования не найден', 'error', 5000);
+      return;
+    }
+
+    const { image, genre, imagePreview, imageUrl, errors, ...rest } = this.state;
+    const movie = { 
+      ...rest, 
+      genre: Array.isArray(genre) ? genre.join(',') : genre 
+    };
+
+    console.log('Отправляемые данные:', movie);
+
+    const result = await this.props.updateMovie(image, movie, this.props.edit._id);
     
-    // Если есть новое изображение, загружаем его отдельно
-    if (image) {
-      const imageResponse = await this.props.uploadMovieImage(this.props.edit._id, image);
-      if (imageResponse && imageResponse.movie) {
-        this.setState({
-          imageUrl: imageResponse.movie.image,
-          imagePreview: null,
-          image: null // Очищаем выбранный файл
-        });
+    if (result && result.status === 'success') {
+      this.setState({
+        imageUrl: result.data.image || imageUrl,
+        imagePreview: null,
+        image: null
+      });
+      if (this.props.onClose) {
+        this.props.onClose();
       }
     }
   };
@@ -140,7 +197,8 @@ class AddMovie extends Component {
       cast,
       country,
       releaseDate,
-      endDate
+      endDate,
+      errors
     } = this.state;
 
     const rootClassName = classNames(classes.root, className);
@@ -155,42 +213,51 @@ class AddMovie extends Component {
         <Typography variant="h4" className={classes.title}>
           {subtitle}
         </Typography>
-        <form autoComplete="off" noValidate>
+        <form className={classes.form}>
           <div className={classes.field}>
             <TextField
               className={classes.textField}
-              helperText="Пожалуйста, укажите название фильма"
-              label="Название"
+
+              label="Название фильма"
+
               margin="dense"
               required
               value={title}
               variant="outlined"
+              error={!!errors.title}
+              helperText={errors.title}
               onChange={event =>
                 this.handleFieldChange('title', event.target.value)
               }
             />
           </div>
           <div className={classes.field}>
-            <FormControl variant="outlined" className={classes.textField}>
-              <InputLabel id="genre-label">Жанр*</InputLabel>
-              <Select
-                labelId="genre-label"
-                multiple
-                displayEmpty
-                label="Жанр*"
-                margin="dense"
-                required
-                value={genre}
-                onChange={event =>
-                  this.handleFieldChange('genre', event.target.value)
-                }>
-                {genreData.map((genreItem, index) => (
-                  <MenuItem key={genreItem + '-' + index} value={genreItem}>
-                    {genreItem}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+
+            <Select
+              multiple
+              displayEmpty
+              className={classes.textField}
+              label="Жанр"
+              margin="dense"
+              required
+              value={genre}
+              variant="outlined"
+              error={!!errors.genre}
+              onChange={event =>
+                this.handleFieldChange('genre', event.target.value)
+              }>
+              {genreData.map((genreItem, index) => (
+                <MenuItem key={genreItem + '-' + index} value={genreItem}>
+                  {genreItem}
+                </MenuItem>
+              ))}
+            </Select>
+            {errors.genre && (
+              <Typography color="error" variant="caption" className={classes.errorText}>
+                {errors.genre}
+              </Typography>
+            )}
+
           </div>
           <div className={classes.field}>
             <TextField
@@ -202,6 +269,8 @@ class AddMovie extends Component {
               required
               variant="outlined"
               value={description}
+              error={!!errors.description}
+              helperText={errors.description}
               onChange={event =>
                 this.handleFieldChange('description', event.target.value)
               }
@@ -216,6 +285,8 @@ class AddMovie extends Component {
               required
               value={language}
               variant="outlined"
+              error={!!errors.language}
+              helperText={errors.language}
               onChange={event =>
                 this.handleFieldChange('language', event.target.value)
               }>
@@ -228,11 +299,15 @@ class AddMovie extends Component {
 
             <TextField
               className={classes.textField}
-              label="Продолжительность"
+
+              label="Продолжительность (мин)"
+
               margin="dense"
               type="number"
               value={duration}
               variant="outlined"
+              error={!!errors.duration}
+              helperText={errors.duration}
               onChange={event =>
                 this.handleFieldChange('duration', event.target.value)
               }
@@ -246,6 +321,8 @@ class AddMovie extends Component {
               required
               value={director}
               variant="outlined"
+              error={!!errors.director}
+              helperText={errors.director}
               onChange={event =>
                 this.handleFieldChange('director', event.target.value)
               }
@@ -257,6 +334,8 @@ class AddMovie extends Component {
               required
               value={cast}
               variant="outlined"
+              error={!!errors.cast}
+              helperText={errors.cast}
               onChange={event =>
                 this.handleFieldChange('cast', event.target.value)
               }
@@ -270,6 +349,8 @@ class AddMovie extends Component {
               required
               value={country}
               variant="outlined"
+              error={!!errors.country}
+              helperText={errors.country}
               onChange={event =>
                 this.handleFieldChange('country', event.target.value)
               }
@@ -347,15 +428,20 @@ AddMovie.propTypes = {
   addMovie: PropTypes.func.isRequired,
   updateMovie: PropTypes.func.isRequired,
   removeMovie: PropTypes.func.isRequired,
-  uploadMovieImage: PropTypes.func.isRequired
+  uploadMovieImage: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
+  onClose: PropTypes.func
 };
 
-const mapStateToProps = null;
+const mapStateToProps = state => ({
+  movie: state.movieState.selectedMovie
+});
 const mapDispatchToProps = {
   addMovie,
   updateMovie,
   removeMovie,
-  uploadMovieImage
+  uploadMovieImage,
+  setAlert
 };
 
 export default connect(

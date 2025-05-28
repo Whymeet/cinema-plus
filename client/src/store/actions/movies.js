@@ -98,7 +98,7 @@ export const addMovie = (image, newMovie) => async dispatch => {
     });
     const movie = await response.json();
     if (response.ok) {
-      dispatch(setAlert('Movie have been saved!', 'success', 5000));
+      dispatch(setAlert('Фильм успешно сохранен!', 'success', 5000));
       if (image) dispatch(uploadMovieImage(movie._id, image));
       dispatch(getMovies());
     }
@@ -119,14 +119,26 @@ export const updateMovie = (image, movie, movieId) => async dispatch => {
       },
       body: JSON.stringify(movie)
     });
+    
+    const data = await response.json();
+    
     if (response.ok) {
+      if (image) {
+        await dispatch(uploadMovieImage(movieId, image));
+      }
+      await dispatch(getMovies());
       dispatch(onSelectMovie(null));
-      dispatch(setAlert('Movie have been saved!', 'success', 5000));
-      if (image) dispatch(uploadMovieImage(movieId, image));
-      dispatch(getMovies());
+      dispatch(setAlert('Фильм успешно обновлен!', 'success', 5000));
+      return { status: 'success', data };
+    } else {
+      const errorMessage = data.error || 'Не удалось обновить фильм. Пожалуйста, проверьте данные.';
+      dispatch(setAlert(errorMessage, 'error', 5000));
+      return { status: 'error', message: errorMessage };
     }
   } catch (error) {
-    dispatch(setAlert(error.message, 'error', 5000));
+    const errorMessage = 'Ошибка при обновлении фильма: ' + (error.message || 'Неизвестная ошибка');
+    dispatch(setAlert(errorMessage, 'error', 5000));
+    return { status: 'error', message: errorMessage };
   }
 };
 

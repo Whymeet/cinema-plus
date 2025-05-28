@@ -2,7 +2,7 @@ export default theme => ({
   movieCard: {
     position: 'relative',
     height: '100%',
-    minHeight: 350,
+    minHeight: 400,
     width: '100%',
     color: theme.palette.common.white,
     backgroundColor: theme.palette.background.dark,
@@ -22,25 +22,32 @@ export default theme => ({
     background: 'linear-gradient(to right, #0d0d0c 50%, transparent 100%)',
     zIndex: 2,
     borderRadius: 10,
-    padding: theme.spacing(2)
+    padding: theme.spacing(3)
   },
   movieHeader: {
     position: 'relative',
     padding: theme.spacing(2),
-    height: '40%',
+    height: 'auto',
     width: '60%'
   },
   movieTitle: {
     fontSize: '25px',
     fontWeight: 400,
     textTransform: 'capitalize',
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(2)
   },
   director: {
     color: '#9ac7fa',
     fontWeight: '500',
     fontSize: '16px',
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(1)
+  },
+  country: {
+    color: '#9ac7fa',
+    fontWeight: '500',
+    fontSize: '16px',
+    marginBottom: theme.spacing(1)
   },
   duration: {
     display: 'inline-block',
@@ -55,16 +62,20 @@ export default theme => ({
   },
   description: {
     padding: theme.spacing(2),
-    height: '50%',
-    width: '50%'
+    marginTop: theme.spacing(2),
+    height: 'auto',
+    width: '60%'
   },
   descriptionText: {
-    color: '#cfd6e1'
+    color: '#cfd6e1',
+    fontSize: '14px',
+    lineHeight: '1.5'
   },
   footer: {
-    height: '10%',
+    height: 'auto',
     paddingLeft: theme.spacing(2),
-    paddingBottom: theme.spacing(3)
+    paddingBottom: theme.spacing(3),
+    marginTop: theme.spacing(2)
   },
   icons: {
     display: 'inline-block',
@@ -88,18 +99,18 @@ export default theme => ({
     backgroundSize: 'cover !important',
     borderRadius: 11,
     width: '80%',
-    backgroundPosition: '-100% 10% !important'
+    backgroundPosition: 'center center !important'
   },
 
   [theme.breakpoints.down('sm')]: {
     movieCard: {
       width: '100%',
       margin: '0 auto',
-      minHeight: 350
+      minHeight: 450
     },
     blurBackground: {
       width: '100%',
-      backgroundPosition: '50% 50% !important'
+      backgroundPosition: 'center center !important'
     },
     movieHeader: {
       width: '100%',
@@ -109,7 +120,7 @@ export default theme => ({
       width: '100%'
     },
     infoSection: {
-      background: 'linear-gradient(to top, rgb(20, 20, 19) 50%, transparent 100%)',
+      background: 'linear-gradient(to top, rgb(20, 20, 19) 80%, transparent 100%)',
       zIndex: 2,
       borderRadius: 10
     }

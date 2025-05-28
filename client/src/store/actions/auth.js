@@ -12,16 +12,25 @@ import { setAuthHeaders, setUser, removeUser, isLoggedIn } from '../../utils';
 
 export const uploadImage = (id, image) => async dispatch => {
   try {
+    const token = localStorage.getItem('jwtToken');
     const data = new FormData();
     data.append('file', image);
     const url = '/users/photo/' + id;
     const response = await fetch(url, {
       method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
       body: data
     });
     const responseData = await response.json();
     if (response.ok) {
-      dispatch(setAlert('Image Uploaded', 'success', 5000));
+      const { user } = responseData;
+      if (user) {
+        localStorage.setItem('user', JSON.stringify(user));
+        dispatch({ type: USER_LOADED, payload: { user } });
+        dispatch(setAlert('Фото успешно загружено', 'success', 5000));
+      }
     }
     if (responseData.error) {
       dispatch(setAlert(responseData.error.message, 'error', 5000));
@@ -159,12 +168,18 @@ export const loadUser = () => async dispatch => {
     });
     const responseData = await response.json();
     if (response.ok) {
-      const { user } = responseData;
-      user && setUser(user);
-      dispatch({ type: USER_LOADED, payload: responseData });
+      localStorage.setItem('user', JSON.stringify(responseData));
+      dispatch({ 
+        type: USER_LOADED, 
+        payload: { user: responseData }
+      });
     }
-    if (!response.ok) dispatch({ type: AUTH_ERROR });
+    if (!response.ok) {
+      localStorage.removeItem('user');
+      dispatch({ type: AUTH_ERROR });
+    }
   } catch (error) {
+    localStorage.removeItem('user');
     dispatch({ type: AUTH_ERROR });
   }
 };
