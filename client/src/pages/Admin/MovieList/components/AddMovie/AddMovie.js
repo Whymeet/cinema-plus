@@ -70,9 +70,28 @@ class AddMovie extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.movie !== this.props.movie) {
+    if (prevProps.movie !== this.props.movie && this.props.movie) {
       const { title, genre, language } = this.props.movie;
       this.setState({ title, genre, language });
+    }
+    
+    if (prevProps.movie && !this.props.movie) {
+      this.setState({
+        title: '',
+        image: null,
+        imagePreview: null,
+        imageUrl: '',
+        genre: [],
+        language: '',
+        duration: '',
+        description: '',
+        director: '',
+        cast: '',
+        country: '',
+        releaseDate: new Date(),
+        endDate: new Date(),
+        errors: {}
+      });
     }
   }
 
@@ -134,6 +153,11 @@ class AddMovie extends Component {
       return;
     }
 
+    if (!this.props.edit) {
+      this.props.setAlert('Ошибка: Фильм для редактирования не найден', 'error', 5000);
+      return;
+    }
+
     const { image, genre, imagePreview, imageUrl, errors, ...rest } = this.state;
     const movie = { 
       ...rest, 
@@ -142,18 +166,16 @@ class AddMovie extends Component {
 
     console.log('Отправляемые данные:', movie);
 
-    const result = await this.props.updateMovie(null, movie, this.props.edit._id);
+    const result = await this.props.updateMovie(image, movie, this.props.edit._id);
     
     if (result && result.status === 'success') {
-      if (image) {
-        const imageResponse = await this.props.uploadMovieImage(this.props.edit._id, image);
-        if (imageResponse && imageResponse.movie) {
-          this.setState({
-            imageUrl: imageResponse.movie.image,
-            imagePreview: null,
-            image: null
-          });
-        }
+      this.setState({
+        imageUrl: result.data.image || imageUrl,
+        imagePreview: null,
+        image: null
+      });
+      if (this.props.onClose) {
+        this.props.onClose();
       }
     }
   };
@@ -401,10 +423,13 @@ AddMovie.propTypes = {
   updateMovie: PropTypes.func.isRequired,
   removeMovie: PropTypes.func.isRequired,
   uploadMovieImage: PropTypes.func.isRequired,
-  setAlert: PropTypes.func.isRequired
+  setAlert: PropTypes.func.isRequired,
+  onClose: PropTypes.func
 };
 
-const mapStateToProps = null;
+const mapStateToProps = state => ({
+  movie: state.movieState.selectedMovie
+});
 const mapDispatchToProps = {
   addMovie,
   updateMovie,

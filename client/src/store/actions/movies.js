@@ -123,10 +123,12 @@ export const updateMovie = (image, movie, movieId) => async dispatch => {
     const data = await response.json();
     
     if (response.ok) {
+      if (image) {
+        await dispatch(uploadMovieImage(movieId, image));
+      }
+      await dispatch(getMovies());
       dispatch(onSelectMovie(null));
       dispatch(setAlert('Фильм успешно обновлен!', 'success', 5000));
-      if (image) dispatch(uploadMovieImage(movieId, image));
-      dispatch(getMovies());
       return { status: 'success', data };
     } else {
       const errorMessage = data.error || 'Не удалось обновить фильм. Пожалуйста, проверьте данные.';

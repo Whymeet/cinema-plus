@@ -58,7 +58,10 @@ class MovieList extends Component {
           id="Edit-movie"
           open={Boolean(selectedMovie)}
           handleClose={() => this.props.onSelectMovie(null)}>
-          <AddMovie edit={selectedMovie} />
+          <AddMovie 
+            edit={selectedMovie} 
+            onClose={() => this.props.onSelectMovie(null)}
+          />
         </ResponsiveDialog>
       </div>
     );
