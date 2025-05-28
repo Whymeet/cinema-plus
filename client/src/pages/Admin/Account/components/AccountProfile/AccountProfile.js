@@ -18,17 +18,27 @@ class AccountProfile extends Component {
     const { user, classes, className, file, onUpload } = this.props;
     const rootClassName = classNames(classes.root, className);
 
+    if (!user) {
+      return (
+        <Portlet className={rootClassName}>
+          <PortletContent>
+            <Typography variant="body1">Загрузка данных...</Typography>
+          </PortletContent>
+        </Portlet>
+      );
+    }
+
     return (
       <Portlet className={rootClassName}>
         <PortletContent>
           <div className={classes.details}>
             <div className={classes.info}>
-              <Typography variant="h2">{user.name}</Typography>
+              <Typography variant="h2">{user.name || 'Без имени'}</Typography>
               <Typography className={classes.emailText} variant="body1">
-                {user.email}
+                {user.email || 'Email не указан'}
               </Typography>
               <Typography className={classes.dateText} variant="body1">
-                Дата регистрации: {moment(user.createdAt).format('DD/MM/YYYY')}
+                Дата регистрации: {user.createdAt ? moment(user.createdAt).format('DD/MM/YYYY') : 'Не указана'}
               </Typography>
             </div>
             <Avatar
