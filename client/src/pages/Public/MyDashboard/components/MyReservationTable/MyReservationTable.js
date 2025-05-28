@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
+import moment from 'moment';
 import {
   Table,
   TableBody,
@@ -13,7 +14,6 @@ import {
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { deleteReservation } from '../../../../../store/actions';
-import { Portlet, PortletContent } from '../../../../../components';
 import styles from './styles';
 
 class MyReservationTable extends Component {
@@ -45,84 +45,84 @@ class MyReservationTable extends Component {
     this.handleDeleteClose();
   };
 
-  const findCinema = cinemaId => {
-    return cinemas.find(cinema => cinema._id === cinemaId);
+  findCinema = (cinemaId) => {
+    return this.props.cinemas.find(cinema => cinema._id === cinemaId);
   };
 
-  const handleCancelReservation = async (reservationId) => {
+  findMovie = (movieId) => {
+    return this.props.movies.find(movie => movie._id === movieId);
+  };
+
+  handleCancelReservation = async (reservationId) => {
     try {
-      await deleteReservation(reservationId);
+      await this.props.deleteReservation(reservationId);
     } catch (error) {
       console.error('Ошибка при отмене бронирования:', error);
     }
   };
 
-  return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Фильм</TableCell>
-            <TableCell>Зал</TableCell>
-            <TableCell>Дата</TableCell>
-            <TableCell>Время</TableCell>
-            <TableCell>Места</TableCell>
-            <TableCell>Сумма</TableCell>
-            <TableCell>Статус</TableCell>
-            <TableCell>Действия</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {reservations.map(reservation => {
-            const movie = findMovie(reservation.movieId);
-            const cinema = findCinema(reservation.cinemaId);
-            return (
-              <TableRow key={reservation._id}>
-                <TableCell>{movie ? movie.title : 'Загрузка...'}</TableCell>
-                <TableCell>{cinema ? cinema.name : 'Загрузка...'}</TableCell>
-                <TableCell>
-                  {moment(reservation.date).format('DD.MM.YYYY')}
-                </TableCell>
-                <TableCell>{reservation.startAt}</TableCell>
-                <TableCell>
-                  {reservation.seats.map(seat => `${seat.row}-${seat.col}`).join(', ')}
-                </TableCell>
-                <TableCell>{reservation.total} ₽</TableCell>
-                <TableCell>
-                  {reservation.checkin ? (
-                    <Typography color="primary">Использовано</Typography>
-                  ) : (
-                    <Typography color="secondary">Активно</Typography>
-                  )}
-                </TableCell>
-                <TableCell>
-                  {!reservation.checkin && (
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      className={classes.button}
-                      onClick={() => handleCancelReservation(reservation._id)}
-                    >
-                      Отменить
-                    </Button>
-                  )}
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </Paper>
-  );
-}
+  render() {
+    const { classes, reservations } = this.props;
 
-MyReservationTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-  reservations: PropTypes.array.isRequired,
-  movies: PropTypes.array.isRequired,
-  cinemas: PropTypes.array.isRequired,
-  deleteReservation: PropTypes.func.isRequired
-};
+    return (
+      <Paper className={classes.root}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Фильм</TableCell>
+              <TableCell>Зал</TableCell>
+              <TableCell>Дата</TableCell>
+              <TableCell>Время</TableCell>
+              <TableCell>Места</TableCell>
+              <TableCell>Сумма</TableCell>
+              <TableCell>Статус</TableCell>
+              <TableCell>Действия</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {reservations.map(reservation => {
+              const movie = this.findMovie(reservation.movieId);
+              const cinema = this.findCinema(reservation.cinemaId);
+              return (
+                <TableRow key={reservation._id}>
+                  <TableCell>{movie ? movie.title : 'Загрузка...'}</TableCell>
+                  <TableCell>{cinema ? cinema.name : 'Загрузка...'}</TableCell>
+                  <TableCell>
+                    {moment(reservation.date).format('DD.MM.YYYY')}
+                  </TableCell>
+                  <TableCell>{reservation.startAt}</TableCell>
+                  <TableCell>
+                    {reservation.seats.map(seat => `${seat.row}-${seat.col}`).join(', ')}
+                  </TableCell>
+                  <TableCell>{reservation.total} ₽</TableCell>
+                  <TableCell>
+                    {reservation.checkin ? (
+                      <Typography color="primary">Использовано</Typography>
+                    ) : (
+                      <Typography color="secondary">Активно</Typography>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {!reservation.checkin && (
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        className={classes.button}
+                        onClick={() => this.handleCancelReservation(reservation._id)}
+                      >
+                        Отменить
+                      </Button>
+                    )}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </Paper>
+    );
+  }
+}
 
 const mapDispatchToProps = { deleteReservation };
 
