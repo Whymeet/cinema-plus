@@ -332,7 +332,7 @@ class AddMovie extends Component {
             className={classes.buttonFooter}
             variant="contained"
             onClick={this.onRemoveMovie}>
-            Delete Movie
+            Удалить фильм
           </Button>
         )}
       </div>
