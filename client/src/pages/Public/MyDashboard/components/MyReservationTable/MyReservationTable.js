@@ -92,11 +92,6 @@ const styles = theme => ({
       backgroundColor: theme.palette.primary.main
     }
   },
-  statusChip: {
-    position: 'absolute',
-    top: theme.spacing(2),
-    right: theme.spacing(2)
-  },
   price: {
     fontSize: '1.25rem',
     fontWeight: 500,
@@ -165,11 +160,6 @@ function MyReservationTable(props) {
           return (
             <Grid item xs={12} key={reservation._id}>
               <Card className={classes.card} elevation={2}>
-                <Chip
-                  label={reservation.checkin ? "Использовано" : "Активно"}
-                  color={reservation.checkin ? "default" : "secondary"}
-                  className={classes.statusChip}
-                />
                 <CardContent className={classes.cardContent}>
                   <div className={classes.posterContainer}>
                     <CardMedia
