@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Snackbar } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 import {
   Portlet,
   PortletHeader,
@@ -20,7 +21,13 @@ class Account extends Component {
     email: '',
     phone: '',
     password: '',
-    phoneError: ''
+    phoneError: '',
+    emailError: '',
+    alert: {
+      open: false,
+      message: '',
+      severity: 'success'
+    }
   };
 
   componentDidMount() {
@@ -43,6 +50,25 @@ class Account extends Component {
     }
     
     this.setState(newState);
+  };
+
+  handleCloseAlert = () => {
+    this.setState({
+      alert: {
+        ...this.state.alert,
+        open: false
+      }
+    });
+  };
+
+  showAlert = (message, severity = 'success') => {
+    this.setState({
+      alert: {
+        open: true,
+        message,
+        severity
+      }
+    });
   };
 
   onUpdateUser = async () => {
@@ -69,18 +95,33 @@ class Account extends Component {
         },
         body: JSON.stringify(body)
       });
+      
       if (response.ok) {
         const user = await response.json();
         if (this.props.file) this.props.uploadImage(user._id, this.props.file);
+        this.showAlert('Профиль успешно обновлен', 'success');
+        // Очищаем ошибки
+        this.setState({ emailError: '', phoneError: '' });
+      } else {
+        const errorData = await response.json();
+        if (errorData.error) {
+          if (errorData.error.includes('Email')) {
+            this.setState({ emailError: errorData.error });
+            this.showAlert(errorData.error, 'error');
+          } else {
+            this.showAlert(errorData.error, 'error');
+          }
+        }
       }
     } catch (error) {
       console.log(error);
+      this.showAlert('Произошла ошибка при обновлении профиля', 'error');
     }
   };
 
   render() {
     const { classes, className } = this.props;
-    const { name, phone, email, password } = this.state;
+    const { name, phone, email, password, alert } = this.state;
 
     const rootClassName = classNames(classes.root, className);
 
@@ -113,6 +154,8 @@ class Account extends Component {
                 required
                 value={email}
                 variant="outlined"
+                error={!!this.state.emailError}
+                helperText={this.state.emailError}
                 onChange={event =>
                   this.handleFieldChange('email', event.target.value)
                 }
@@ -156,6 +199,20 @@ class Account extends Component {
             Сохранить
           </Button>
         </PortletFooter>
+        <Snackbar 
+          open={alert.open} 
+          autoHideDuration={6000} 
+          onClose={this.handleCloseAlert}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+          <MuiAlert 
+            onClose={this.handleCloseAlert} 
+            severity={alert.severity}
+            variant="filled"
+          >
+            {alert.message}
+          </MuiAlert>
+        </Snackbar>
       </Portlet>
     );
   }
