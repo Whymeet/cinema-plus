@@ -41,7 +41,6 @@ class Navbar extends Component {
           return 'Пользователь';
       }
     };
-
     return (
       <Fragment>
         <nav
@@ -50,21 +49,23 @@ class Navbar extends Component {
             [classes.navbarColor]: scrollPos > 50
           })}>
           <Link className={classes.logoLink} to="/">
-            <span className={classes.logo}>Cinema Plus</span>
+            <Typography className={classes.logo} variant="h2">
+              Фокус
+            </Typography>
           </Link>
-
           <div className={classes.navLinks}>
+           
+            <Link className={classes.navLink} to="/movie/category/nowShowing">
+              Афиша
+            </Link>
+            <Link className={classes.navLink} to="/movie/category/comingSoon">
+              Скоро в кино
+            </Link>
             <Link className={classes.navLink} to="/">
-              Главная
-            </Link>
-            <Link className={classes.navLink} to="/movie/list/now">
-              Сейчас в кино
-            </Link>
-            <Link className={classes.navLink} to="/movie/list/soon">
-              Скоро на экранах
+              О нас
             </Link>
             <Link className={classes.navLink} to="/cinemas">
-              Кинотеатры
+              Залы
             </Link>
           </div>
 
