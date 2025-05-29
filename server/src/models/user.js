@@ -54,12 +54,29 @@ const userSchema = Schema(
     phone: {
       type: String,
       unique: true,
+      sparse: true,
       trim: true,
-      validate(value) {
-        if (!validator.isMobilePhone(value)) {
-          throw new Error('Phone is invalid');
+      validate: {
+        validator: function(value) {
+          console.log('Validating phone number:', value);
+          if (!value) {
+            console.log('Empty phone number, validation passed');
+            return true;
+          }
+          
+          const cleanedNumber = value.replace(/\D/g, '');
+          console.log('Cleaned number:', cleanedNumber);
+          
+          const isValid = cleanedNumber.length === 11 && cleanedNumber.startsWith('7');
+          console.log('Phone validation result:', { original: value, cleaned: cleanedNumber, isValid });
+          
+          return isValid;
+        },
+        message: props => {
+          console.log('Validation failed for phone:', props.value);
+          return 'Неверный формат номера телефона. Используйте формат: +7XXXXXXXXXX';
         }
-      },
+      }
     },
     imageurl: {
       type: String,
@@ -92,29 +109,71 @@ userSchema.methods.toJSON = function() {
 };
 
 userSchema.methods.generateAuthToken = async function() {
-  const user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, 'mySecret');
-  user.tokens = user.tokens.concat({ token });
-  await user.save();
-  return token;
+  try {
+    console.log('Generating auth token for user:', this._id);
+    const token = jwt.sign({ _id: this._id.toString() }, 'mySecret');
+    
+    // Проверяем существующие токены
+    this.tokens = this.tokens.filter(tokenObj => {
+      try {
+        jwt.verify(tokenObj.token, 'mySecret');
+        return true;
+      } catch (e) {
+        console.log('Removing expired token');
+        return false;
+      }
+    });
+    
+    this.tokens = this.tokens.concat({ token });
+    console.log('Token added to user, total tokens:', this.tokens.length);
+    
+    await this.save();
+    return token;
+  } catch (e) {
+    console.error('Error generating auth token:', e);
+    throw new Error('Ошибка при создании токена авторизации');
+  }
 };
 
 userSchema.statics.findByCredentials = async (username, password) => {
-  const user = await User.findOne({ username });
-  if (!user) throw new Error('Unable to login');
+  try {
+    console.log('Finding user by credentials:', { username });
+    const user = await User.findOne({ username });
+    
+    if (!user) {
+      console.log('User not found:', username);
+      throw new Error('Неверное имя пользователя или пароль');
+    }
 
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) throw new Error('Unable to login');
+    console.log('Comparing passwords');
+    const isMatch = await bcrypt.compare(password, user.password);
+    
+    if (!isMatch) {
+      console.log('Password mismatch for user:', username);
+      throw new Error('Неверное имя пользователя или пароль');
+    }
 
-  return user;
+    console.log('User authenticated successfully');
+    return user;
+  } catch (e) {
+    console.error('Error in findByCredentials:', e);
+    throw e;
+  }
 };
 
 // Hash the plain text password before save
 userSchema.pre('save', async function(next) {
   const user = this;
+  console.log('Pre-save hook triggered');
+  
   if (user.isModified('password')) {
+    console.log('Password was modified, hashing...');
     user.password = await bcrypt.hash(user.password, 8);
+    console.log('Password hashed successfully');
+  } else {
+    console.log('Password was not modified');
   }
+  
   next();
 });
 

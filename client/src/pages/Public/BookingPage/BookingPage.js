@@ -292,13 +292,22 @@ class BookingPage extends Component {
     const { reservations, cinema, selectedDate, selectedTime } = this.props;
 
     // Проверяем наличие необходимых данных
-    if (!cinema || !cinema.seats || !Array.isArray(cinema.seats)) return [];
-    if (!reservations || !Array.isArray(reservations)) return [];
-    if (!selectedDate || !selectedTime) return cinema.seats;
-
-    const newSeats = JSON.parse(JSON.stringify(cinema.seats));
+    if (!cinema || !cinema.seats || !Array.isArray(cinema.seats)) {
+      console.log('Missing cinema data:', { cinema });
+      return [];
+    }
+    if (!reservations || !Array.isArray(reservations)) {
+      console.log('Missing reservations:', { reservations });
+      return [];
+    }
+    if (!selectedDate || !selectedTime) {
+      console.log('Missing date or time:', { selectedDate, selectedTime });
+      return cinema.seats;
+    }
 
     try {
+      const newSeats = JSON.parse(JSON.stringify(cinema.seats));
+
       const filteredReservations = reservations.filter(
         reservation =>
           reservation &&
@@ -316,7 +325,7 @@ class BookingPage extends Component {
           .reduce((a, b) => a.concat(b), []);
 
         reservedSeats.forEach(([row, seat]) => {
-          if (newSeats[row] && typeof seat === 'number') {
+          if (newSeats[row] && typeof seat === 'number' && newSeats[row][seat] !== undefined) {
             // Сохраняем информацию о VIP-месте при маркировке как забронированного
             const isVIP = typeof newSeats[row][seat] === 'object' && 
                          newSeats[row][seat].coefficient === 2.0;

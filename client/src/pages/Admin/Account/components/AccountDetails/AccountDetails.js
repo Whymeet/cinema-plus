@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core';
 import { Button, TextField } from '@material-ui/core';
+import { setAlert } from '../../../../../store/actions';
 import {
   Portlet,
   PortletHeader,
@@ -29,8 +31,15 @@ class Account extends Component {
   }
 
   validatePhoneNumber = (phone) => {
-    const phoneRegex = /^\+7\d{10}$/;
-    return phoneRegex.test(phone);
+    if (!phone) return true; // Разрешаем пустое значение
+    
+    // Очищаем номер от всех символов кроме цифр
+    const cleanedNumber = phone.replace(/\D/g, '');
+    
+    // Проверяем базовые требования:
+    // - Начинается с 7
+    // - Имеет 11 цифр в общей сложности
+    return cleanedNumber.length === 11 && cleanedNumber.startsWith('7');
   };
 
   handleFieldChange = (field, value) => {
@@ -39,7 +48,11 @@ class Account extends Component {
     
     // Очищаем ошибку при изменении номера
     if (field === 'phone') {
-      newState.phoneError = '';
+      if (value && !this.validatePhoneNumber(value)) {
+        newState.phoneError = 'Неверный формат номера телефона. Используйте формат: +7XXXXXXXXXX';
+      } else {
+        newState.phoneError = '';
+      }
     }
     
     this.setState(newState);
@@ -52,7 +65,7 @@ class Account extends Component {
       // Проверяем формат телефона перед отправкой
       if (phone && !this.validatePhoneNumber(phone)) {
         this.setState({ 
-          phoneError: 'Введите номер в формате +7XXXXXXXXXX' 
+          phoneError: 'Неверный формат номера телефона. Используйте формат: +7XXXXXXXXXX' 
         });
         return;
       }
@@ -72,15 +85,20 @@ class Account extends Component {
       if (response.ok) {
         const user = await response.json();
         if (this.props.file) this.props.uploadImage(user._id, this.props.file);
+        this.props.setAlert('Профиль успешно обновлен', 'success', 5000);
+      } else {
+        const error = await response.json();
+        this.props.setAlert(error.message || 'Ошибка при обновлении профиля', 'error', 5000);
       }
     } catch (error) {
       console.log(error);
+      this.props.setAlert('Ошибка при обновлении профиля', 'error', 5000);
     }
   };
 
   render() {
     const { classes, className } = this.props;
-    const { name, phone, email, password } = this.state;
+    const { name, phone, email, password, phoneError } = this.state;
 
     const rootClassName = classNames(classes.root, className);
 
@@ -127,8 +145,8 @@ class Account extends Component {
                 value={phone}
                 variant="outlined"
                 placeholder="+7XXXXXXXXXX"
-                error={!!this.state.phoneError}
-                helperText={this.state.phoneError || "Введите номер в формате +7XXXXXXXXXX"}
+                error={!!phoneError}
+                helperText={phoneError || "Неверный формат номера телефона. Используйте формат: +7XXXXXXXXXX"}
                 onChange={event =>
                   this.handleFieldChange('phone', event.target.value)
                 }
@@ -164,7 +182,12 @@ class Account extends Component {
 Account.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  setAlert: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(Account);
+const mapDispatchToProps = {
+  setAlert
+};
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(Account));
