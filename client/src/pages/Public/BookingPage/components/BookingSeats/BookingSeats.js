@@ -17,6 +17,13 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 600,
     '&:hover': {
       background: 'rgb(120, 205, 4)'
+    },
+    '&.reserved': {
+      cursor: 'not-allowed',
+      opacity: 0.7,
+      '&:hover': {
+        background: 'rgb(65, 66, 70)'
+      }
     }
   },
   seatInfoContainer: {
@@ -52,7 +59,9 @@ export default function BookingSeats(props) {
 
   const getSeatColor = (seat) => {
     // Если место занято
-    if (seat === 1) return 'rgb(65, 66, 70)';
+    if (seat === 1 || (typeof seat === 'object' && seat.reserved)) {
+      return 'rgb(65, 66, 70)';
+    }
     
     // Если место выбрано
     if (seat === 2 || (typeof seat === 'object' && seat.selected)) {
@@ -60,7 +69,9 @@ export default function BookingSeats(props) {
     }
     
     // Если место рекомендовано
-    if (seat === 3) return 'rgb(14, 151, 218)';
+    if (seat === 3) {
+      return 'rgb(14, 151, 218)';
+    }
     
     // Проверяем тип места
     if (typeof seat === 'object' && seat !== null) {
@@ -77,15 +88,18 @@ export default function BookingSeats(props) {
         {seats.length > 0 &&
           seats.map((seatRows, indexRow) => (
             <div key={indexRow} className={classes.row}>
-              {seatRows.map((seat, index) => (
-                <Box
-                  key={`seat-${index}`}
-                  onClick={() => onSelectSeat(indexRow, index)}
-                  className={classes.seat}
-                  bgcolor={getSeatColor(seat)}>
-                  {index + 1}
-                </Box>
-              ))}
+              {seatRows.map((seat, index) => {
+                const isReserved = seat === 1 || (typeof seat === 'object' && seat.reserved);
+                return (
+                  <Box
+                    key={`seat-${index}`}
+                    onClick={() => !isReserved && onSelectSeat(indexRow, index)}
+                    className={`${classes.seat} ${isReserved ? 'reserved' : ''}`}
+                    bgcolor={getSeatColor(seat)}>
+                    {index + 1}
+                  </Box>
+                );
+              })}
             </div>
           ))}
       </Box>

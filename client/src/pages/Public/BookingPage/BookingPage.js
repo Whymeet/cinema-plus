@@ -101,17 +101,24 @@ class BookingPage extends Component {
     // Получаем текущие данные места
     const currentSeat = seats[row][seat];
     
-    // Если место занято (значение 1), ничего не делаем
-    if (currentSeat === 1) {
+    // Проверяем, является ли место занятым
+    const isReserved = currentSeat === 1 || 
+      (typeof currentSeat === 'object' && currentSeat.reserved);
+    
+    // Если место занято, показываем сообщение и прерываем выполнение
+    if (isReserved) {
+      this.props.setAlert('Это место уже забронировано', 'error', 3000);
       return;
     }
     
     // Проверяем количество уже выбранных мест
     const selectedSeatsCount = selectedSeats.length;
-    const isSeatSelected = currentSeat === 2 || (typeof currentSeat === 'object' && currentSeat.selected);
+    const isSeatSelected = currentSeat === 2 || 
+      (typeof currentSeat === 'object' && currentSeat.selected);
     
     // Если пытаемся выбрать новое место и уже выбрано 10 мест, не позволяем выбрать еще
     if (!isSeatSelected && selectedSeatsCount >= 10) {
+      this.props.setAlert('Вы не можете выбрать больше 10 мест', 'warning', 3000);
       return;
     }
     
@@ -151,12 +158,14 @@ class BookingPage extends Component {
 
     if (!selectedSeats || selectedSeats.length === 0) return [];
 
-    // Собираем все выбранные места
+    // Собираем все выбранные места, исключая уже забронированные
     const bookedSeats = seats.map((row, rowIndex) => {
       return row.map((seat, seatIndex) => {
-        // Проверяем, выбрано ли место (значение 2 или объект с selected: true)
+        // Проверяем, что место выбрано и НЕ забронировано
         const isSelected = seat === 2 || (typeof seat === 'object' && seat.selected);
-        return isSelected ? [rowIndex, seatIndex] : null;
+        const isReserved = seat === 1 || (typeof seat === 'object' && seat.reserved);
+        
+        return (isSelected && !isReserved) ? [rowIndex, seatIndex] : null;
       }).filter(seat => seat !== null);
     }).flat();
 
@@ -176,14 +185,29 @@ class BookingPage extends Component {
       addReservation,
       toggleLoginPopup,
       showInvitationForm,
-      setQRCode
+      setQRCode,
+      setAlert
     } = this.props;
 
     if (!selectedSeats || selectedSeats.length === 0) return;
     if (!isAuth) return toggleLoginPopup();
 
+    // Проверяем, нет ли среди выбранных мест уже забронированных
+    const hasReservedSeats = selectedSeats.some(([row, seat]) => {
+      const seatData = cinema.seats[row][seat];
+      return seatData === 1 || (typeof seatData === 'object' && seatData.reserved);
+    });
+
+    if (hasReservedSeats) {
+      setAlert('Некоторые из выбранных мест уже забронированы', 'error', 5000);
+      return;
+    }
+
     const bookedSeats = this.bookSeats();
-    if (bookedSeats.length === 0) return;
+    if (bookedSeats.length === 0) {
+      setAlert('Не удалось забронировать места', 'error', 5000);
+      return;
+    }
 
     // Рассчитываем общую стоимость с учетом коэффициентов
     const total = bookedSeats.reduce((sum, [row, seat]) => {
@@ -203,6 +227,7 @@ class BookingPage extends Component {
       username: user.username,
       phone: user.phone
     });
+    
     if (response.status === 'success') {
       const { data } = response;
       setQRCode(data.QRCode);
@@ -292,7 +317,15 @@ class BookingPage extends Component {
 
         reservedSeats.forEach(([row, seat]) => {
           if (newSeats[row] && typeof seat === 'number') {
-            newSeats[row][seat] = 1;
+            // Сохраняем информацию о VIP-месте при маркировке как забронированного
+            const isVIP = typeof newSeats[row][seat] === 'object' && 
+                         newSeats[row][seat].coefficient === 2.0;
+            
+            newSeats[row][seat] = {
+              number: seat + 1,
+              coefficient: isVIP ? 2.0 : 1.0,
+              reserved: true
+            };
           }
         });
       }
