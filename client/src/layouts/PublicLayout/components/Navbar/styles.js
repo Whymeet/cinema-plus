@@ -72,54 +72,39 @@ export default theme => ({
     display: 'flex',
     alignItems: 'center'
   },
-  userInfo: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: theme.spacing(1)
-  },
-  userStatus: {
-    color: theme.palette.primary.light,
-    fontSize: '0.9rem',
-    fontWeight: 500,
-    padding: '2px 8px',
-    borderRadius: '4px',
-    backgroundColor: 'rgba(255,255,255,0.1)'
-  },
   username: {
     color: theme.palette.common.white,
+    marginRight: theme.spacing(2),
     fontSize: '1rem',
     fontWeight: 500
   },
-  navMobile: { 
-    marginRight: theme.spacing(1) 
-  },
+  navMobile: { marginRight: theme.spacing(1) },
   navIcon: {
     display: 'none',
-    width: '25px',
-    height: '20px',
+    height: '30px',
+    width: '30px',
     position: 'relative',
-    cursor: 'pointer',
     zIndex: 2,
-    '@media (max-width: 992px)': {
-      display: 'block'
+    cursor: 'pointer',
+    '&:hover $navIconLine__left, &:hover $navIconLine__right': {
+      width: '30px'
     }
   },
   navIconLine: {
     height: '2px',
-    width: '100%',
+    width: '30px',
+    display: 'block',
     backgroundColor: theme.palette.common.white,
-    position: 'absolute',
-    transition: 'all 300ms linear',
-    '&:first-child': {
-      top: 0
-    },
-    '&:nth-child(2)': {
-      top: '50%',
-      transform: 'translateY(-50%)'
-    },
-    '&:last-child': {
-      bottom: 0
-    }
+    marginBottom: '7px',
+    transition: ' transform .2s ease, background-color .5s ease'
+  },
+  navIconLine__left: {
+    width: '20px',
+    transition: 'all 200ms linear'
+  },
+  navIconLine__right: {
+    width: '20px',
+    transition: 'all 200ms linear'
   },
 
   nav: {
