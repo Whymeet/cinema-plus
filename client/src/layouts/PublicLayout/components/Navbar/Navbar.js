@@ -29,38 +29,55 @@ class Navbar extends Component {
   render() {
     const { showMenu, scrollPos } = this.state;
     const { classes, isAuth, user, logout } = this.props;
+
+    // Определяем статус пользователя
+    const getUserStatus = (role) => {
+      switch (role) {
+        case 'admin':
+          return 'Администратор';
+        case 'superadmin':
+          return 'Администратор';
+        default:
+          return 'Пользователь';
+      }
+    };
+
     return (
       <Fragment>
         <nav
           className={classnames({
             [classes.navbar]: true,
-            [classes.navbarColor]: scrollPos > 30
+            [classes.navbarColor]: scrollPos > 50
           })}>
           <Link className={classes.logoLink} to="/">
-            <Typography className={classes.logo} variant="h2">
-              Фокус
-            </Typography>
+            <span className={classes.logo}>Cinema Plus</span>
           </Link>
+
           <div className={classes.navLinks}>
-            <Link className={classes.navLink} to="/movie/category/nowShowing">
-              Афиша
-            </Link>
-            <Link className={classes.navLink} to="/movie/category/comingSoon">
-              Скоро в кино
-            </Link>
             <Link className={classes.navLink} to="/">
-              О нас
+              Главная
+            </Link>
+            <Link className={classes.navLink} to="/movie/list/now">
+              Сейчас в кино
+            </Link>
+            <Link className={classes.navLink} to="/movie/list/soon">
+              Скоро на экранах
             </Link>
             <Link className={classes.navLink} to="/cinemas">
-              Залы
+              Кинотеатры
             </Link>
           </div>
 
           <div className={classes.navAccount}>
             {isAuth && user && (
-              <Typography className={classes.username}>
-                {user.username}
-              </Typography>
+              <div className={classes.userInfo}>
+                <Typography className={classes.userStatus}>
+                  {getUserStatus(user.role)}
+                </Typography>
+                <Typography className={classes.username}>
+                  {user.username}
+                </Typography>
+              </div>
             )}
             <UserPopover logout={logout}>
               <List component="nav">

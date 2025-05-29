@@ -102,6 +102,16 @@ const styles = theme => ({
     marginTop: theme.spacing(2),
     width: '100%',
     fontSize: '0.8rem'
+  },
+  noReservations: {
+    textAlign: 'center',
+    padding: theme.spacing(3),
+    color: theme.palette.text.secondary,
+    fontSize: '1.1rem',
+    fontWeight: 500,
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.spacing(1),
+    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
   }
 });
 
@@ -149,6 +159,18 @@ function MyReservationTable(props) {
       reservationId: null
     });
   };
+
+  if (!reservations.length) {
+    return (
+      <Grid container className={classes.root}>
+        <Grid item xs={12}>
+          <Typography className={classes.noReservations}>
+            Нет действительных броней
+          </Typography>
+        </Grid>
+      </Grid>
+    );
+  }
 
   return (
     <>
