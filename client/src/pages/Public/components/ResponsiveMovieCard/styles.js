@@ -21,12 +21,15 @@ export default theme => ({
     background: 'linear-gradient(to right, rgba(0,0,0,0.9) 50%, rgba(0,0,0,0.5) 100%)',
     zIndex: 2,
     borderRadius: 10,
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column'
   },
   movieHeader: {
     position: 'relative',
     padding: theme.spacing(1),
-    height: 'auto'
+    height: 'auto',
+    marginBottom: theme.spacing(1)
   },
   movieTitle: {
     fontSize: '20px',
@@ -63,23 +66,24 @@ export default theme => ({
   },
   description: {
     padding: theme.spacing(1),
-    marginTop: theme.spacing(2),
-    height: 80,
+    marginTop: 'auto',
+    height: '80px',
     overflow: 'hidden'
   },
   descriptionText: {
     color: '#cfd6e1',
     fontSize: '14px',
     lineHeight: '1.4',
-    height: '100%',
+    display: '-webkit-box',
+    '-webkit-line-clamp': 4,
+    '-webkit-box-orient': 'vertical',
     overflow: 'hidden',
     textOverflow: 'ellipsis'
   },
   footer: {
-    height: 'auto',
     paddingLeft: theme.spacing(2),
     paddingBottom: theme.spacing(3),
-    marginTop: theme.spacing(2)
+    marginTop: 'auto'
   },
   icons: {
     display: 'inline-block',
@@ -119,7 +123,8 @@ export default theme => ({
       width: '100%'
     },
     description: {
-      width: '100%'
+      width: '100%',
+      height: '60px'
     },
     infoSection: {
       background: 'linear-gradient(to top, rgba(0,0,0,0.9) 80%, rgba(0,0,0,0.6) 100%)'
