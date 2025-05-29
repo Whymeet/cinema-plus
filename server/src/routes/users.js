@@ -178,6 +178,52 @@ router.patch('/users/me', auth.simple, async (req, res) => {
     return res.status(400).send({ error: 'Invalid updates!' });
   }
 
+  // Валидация email с подробными предупреждениями
+  if (req.body.email) {
+    const email = req.body.email;
+    const emailErrors = {
+      noAt: 'Email должен содержать символ "@"',
+      noDomain: 'После символа "@" должен быть указан домен',
+      noTld: 'Email должен заканчиваться доменной зоной (например .com, .ru)',
+      invalidFormat: 'Неверный формат email. Допустимые символы: буквы, цифры, точки, дефисы и подчеркивания',
+      example: 'Пример правильного email: user@domain.com'
+    };
+
+    // Проверка наличия @
+    if (!email.includes('@')) {
+      return res.status(400).send({
+        error: emailErrors.noAt,
+        example: emailErrors.example
+      });
+    }
+
+    // Проверка домена после @
+    const [localPart, domain] = email.split('@');
+    if (!domain) {
+      return res.status(400).send({
+        error: emailErrors.noDomain,
+        example: emailErrors.example
+      });
+    }
+
+    // Проверка доменной зоны
+    if (!domain.includes('.') || domain.split('.')[1].length < 2) {
+      return res.status(400).send({
+        error: emailErrors.noTld,
+        example: emailErrors.example
+      });
+    }
+
+    // Полная проверка формата
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).send({
+        error: emailErrors.invalidFormat,
+        example: emailErrors.example
+      });
+    }
+  }
+
   try {
     const { user } = req;
     console.log('Current user before update:', user);
