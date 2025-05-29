@@ -168,19 +168,31 @@ router.get('/users/:id', auth.enhance, async (req, res) => {
 
 // Edit/Update user
 router.patch('/users/me', auth.simple, async (req, res) => {
-  console.log(req.body);
+  console.log('Update request body:', req.body);
   const updates = Object.keys(req.body);
   const allowedUpdates = ['name', 'phone', 'username', 'email', 'password'];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
-  if (!isValidOperation) return res.status(400).send({ error: 'Invalid updates!' });
+  
+  if (!isValidOperation) {
+    console.log('Invalid operation detected:', updates);
+    return res.status(400).send({ error: 'Invalid updates!' });
+  }
 
   try {
     const { user } = req;
-    updates.forEach((update) => (user[update] = req.body[update]));
+    console.log('Current user before update:', user);
+    
+    updates.forEach((update) => {
+      user[update] = req.body[update];
+    });
+    
+    console.log('User after applying updates:', user);
     await user.save();
+    console.log('User successfully saved');
     res.send(user);
   } catch (e) {
-    res.status(400).send(e);
+    console.error('Error updating user:', e);
+    res.status(400).send({ error: e.message });
   }
 });
 
