@@ -48,8 +48,8 @@ class Register extends Component {
     
     // Валидация длины имени пользователя
     if (field === 'username') {
-      if (value.length < 4) {
-        newState.usernameError = 'Имя пользователя должно содержать минимум 4 символа';
+      if (value.length < 3) {
+        newState.usernameError = 'Имя пользователя должно содержать минимум 3 символа';
       } else if (value.length > 10) {
         newState.usernameError = 'Имя пользователя не должно превышать 10 символов';
       } else {
@@ -59,8 +59,8 @@ class Register extends Component {
 
     // Валидация длины пароля
     if (field === 'password') {
-      if (value.length < 7) {
-        newState.passwordError = 'Пароль должен содержать минимум 7 символов';
+      if (value.length < 5) {
+        newState.passwordError = 'Пароль должен содержать минимум 5 символов';
       } else if (value.length > 15) {
         newState.passwordError = 'Пароль не должен превышать 15 символов';
       } else {

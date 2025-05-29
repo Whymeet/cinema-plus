@@ -83,8 +83,8 @@ function LoginForm(props) {
     const { name, value } = e.target;
     
     if (name === 'username') {
-      if (value.length < 4) {
-        setUsernameError('Имя пользователя должно содержать минимум 4 символа');
+      if (value.length < 3) {
+        setUsernameError('Имя пользователя должно содержать минимум 3 символа');
       } else if (value.length > 10) {
         setUsernameError('Имя пользователя не должно превышать 10 символов');
       } else {
@@ -93,8 +93,8 @@ function LoginForm(props) {
     }
 
     if (name === 'password') {
-      if (value.length < 7) {
-        setPasswordError('Пароль должен содержать минимум 7 символов');
+      if (value.length < 5) {
+        setPasswordError('Пароль должен содержать минимум 5 символов');
       } else if (value.length > 15) {
         setPasswordError('Пароль не должен превышать 15 символов');
       } else {

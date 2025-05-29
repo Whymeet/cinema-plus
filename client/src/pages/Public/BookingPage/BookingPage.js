@@ -266,23 +266,42 @@ class BookingPage extends Component {
   onGetReservedSeats = () => {
     const { reservations, cinema, selectedDate, selectedTime } = this.props;
 
-    if (!cinema) return [];
-    const newSeats = [...cinema.seats];
+    // Проверяем наличие необходимых данных
+    if (!cinema || !cinema.seats || !Array.isArray(cinema.seats)) return [];
+    if (!reservations || !Array.isArray(reservations)) return [];
+    if (!selectedDate || !selectedTime) return cinema.seats;
 
-    const filteredReservations = reservations.filter(
-      reservation =>
-        new Date(reservation.date).toLocaleDateString() ===
-          new Date(selectedDate).toLocaleDateString() &&
-        reservation.startAt === selectedTime
-    );
-    if (filteredReservations.length && selectedDate && selectedTime) {
-      const reservedSeats = filteredReservations
-        .map(reservation => reservation.seats)
-        .reduce((a, b) => a.concat(b));
-      reservedSeats.forEach(([row, seat]) => (newSeats[row][seat] = 1));
+    const newSeats = JSON.parse(JSON.stringify(cinema.seats));
+
+    try {
+      const filteredReservations = reservations.filter(
+        reservation =>
+          reservation &&
+          reservation.date &&
+          reservation.startAt &&
+          new Date(reservation.date).toLocaleDateString() ===
+            new Date(selectedDate).toLocaleDateString() &&
+          reservation.startAt === selectedTime
+      );
+
+      if (filteredReservations.length > 0) {
+        const reservedSeats = filteredReservations
+          .map(reservation => reservation.seats)
+          .filter(seats => Array.isArray(seats))
+          .reduce((a, b) => a.concat(b), []);
+
+        reservedSeats.forEach(([row, seat]) => {
+          if (newSeats[row] && typeof seat === 'number') {
+            newSeats[row][seat] = 1;
+          }
+        });
+      }
+
       return newSeats;
+    } catch (error) {
+      console.error('Error in onGetReservedSeats:', error);
+      return cinema.seats;
     }
-    return newSeats;
   };
 
   onGetSuggestedSeats = (seats, suggestedSeats) => {

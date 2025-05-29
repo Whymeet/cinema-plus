@@ -43,12 +43,48 @@ router.post('/users/photo/:id', upload('users').single('file'), async (req, res,
 // Login User
 router.post('/users/login', async (req, res) => {
   try {
-    const user = await User.findByCredentials(req.body.username, req.body.password);
+    console.log('Login request body:', req.body);
+    const { username, password } = req.body;
+    
+    // Проверяем длину имени пользователя
+    if (!username || username.length < 3) {
+      console.log('Username validation failed: too short');
+      return res.status(400).send({
+        error: { message: 'Имя пользователя должно содержать минимум 3 символа' }
+      });
+    }
+    
+    if (username.length > 10) {
+      console.log('Username validation failed: too long');
+      return res.status(400).send({
+        error: { message: 'Имя пользователя не должно превышать 10 символов' }
+      });
+    }
+    
+    // Проверяем длину пароля
+    if (!password || password.length < 5) {
+      console.log('Password validation failed: too short');
+      return res.status(400).send({
+        error: { message: 'Пароль должен содержать минимум 5 символов' }
+      });
+    }
+    
+    if (password.length > 15) {
+      console.log('Password validation failed: too long');
+      return res.status(400).send({
+        error: { message: 'Пароль не должен превышать 15 символов' }
+      });
+    }
+
+    console.log('Attempting to find user by credentials...');
+    const user = await User.findByCredentials(username, password);
+    console.log('Found user:', user);
     const token = await user.generateAuthToken();
     res.send({ user, token });
   } catch (e) {
+    console.error('Login error:', e);
     res.status(400).send({
-      error: { message: 'You have entered an invalid username or password' },
+      error: { message: 'Вы ввели неверное имя пользователя или пароль' }
     });
   }
 });
