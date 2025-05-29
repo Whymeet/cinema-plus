@@ -50,6 +50,8 @@ const movieSchema = new Schema({
   duration: {
     type: Number,
     required: true,
+    min: [30, 'Длительность фильма должна быть не менее 30 минут'],
+    max: [300, 'Длительность фильма не должна превышать 300 минут'],
   },
   releaseDate: {
     type: Date,

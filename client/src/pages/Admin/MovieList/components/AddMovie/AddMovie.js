@@ -104,6 +104,20 @@ class AddMovie extends Component {
   handleFieldChange = (field, value) => {
     const newState = { ...this.state };
     newState[field] = value;
+
+    // Валидация длительности при вводе
+    if (field === 'duration') {
+      const durationNum = Number(value);
+      if (durationNum < 30) {
+        newState.errors = { ...newState.errors, duration: 'Длительность фильма должна быть не менее 30 минут' };
+      } else if (durationNum > 300) {
+        newState.errors = { ...newState.errors, duration: 'Длительность фильма не должна превышать 300 минут' };
+      } else {
+        const { duration, ...restErrors } = newState.errors || {};
+        newState.errors = restErrors;
+      }
+    }
+
     this.setState(newState);
 
     // Если изменилось изображение, создаем превью
@@ -130,7 +144,16 @@ class AddMovie extends Component {
     if (!director) errors.director = 'Обязательное поле';
     if (!cast) errors.cast = 'Обязательное поле';
     if (!country) errors.country = 'Обязательное поле';
-    if (!duration) errors.duration = 'Обязательное поле';
+    if (!duration) {
+      errors.duration = 'Обязательное поле';
+    } else {
+      const durationNum = Number(duration);
+      if (durationNum < 30) {
+        errors.duration = 'Длительность фильма должна быть не менее 30 минут';
+      } else if (durationNum > 300) {
+        errors.duration = 'Длительность фильма не должна превышать 300 минут';
+      }
+    }
 
     this.setState({ errors });
     return Object.keys(errors).length === 0;
