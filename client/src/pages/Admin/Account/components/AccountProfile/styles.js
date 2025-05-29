@@ -1,39 +1,49 @@
 export default theme => ({
-  root: {},
+  root: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
   details: {
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(2)
   },
   info: {
-    paddingRight: theme.spacing(3)
+    marginRight: 'auto',
+    textAlign: 'left'
   },
   nameText: {
-    fontSize: '2rem',
-    fontWeight: 500,
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(1)
   },
   emailText: {
-    marginTop: theme.spacing(1),
-    color: theme.palette.text.secondary,
-    fontSize: '1.25rem'
+    marginBottom: theme.spacing(1)
   },
   dateText: {
-    marginTop: theme.spacing(1),
-    color: theme.palette.text.secondary,
-    fontSize: '1.1rem'
+    color: theme.palette.text.secondary
   },
   avatar: {
-    marginLeft: 'auto',
-    height: '130px',
-    width: '130px',
-    flexShrink: 0,
-    flexGrow: 0
+    height: '100px',
+    width: '100px',
+    marginLeft: theme.spacing(2)
   },
-  progressWrapper: {
-    marginTop: theme.spacing(2)
+  actions: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch'
   },
-  input: { display: 'none' },
   uploadButton: {
-    marginRight: theme.spacing(2),
-    fontSize: '1.1rem'
+    marginBottom: theme.spacing(2)
+  },
+  toggleButton: {
+    width: '100%',
+    maxWidth: '300px',
+    height: 'auto',
+    cursor: 'pointer',
+    transition: 'transform 0.3s ease',
+    margin: '0 auto',
+    '&:hover': {
+      transform: 'scale(1.02)'
+    }
   }
 });

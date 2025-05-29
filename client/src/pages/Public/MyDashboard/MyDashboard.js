@@ -1,41 +1,18 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { makeStyles, Grid, Typography, Container, CircularProgress } from '@material-ui/core';
-import { getMovies, getReservations, getCinemas } from '../../../store/actions';
-import { MyReservationTable } from './components';
+import { makeStyles } from '@material-ui/core';
 import Account from '../../Admin/Account';
+import { getReservations, getMovies, getCinemas } from '../../../store/actions';
 
 const useStyles = makeStyles(theme => ({
-  title: {
-    fontSize: '3rem',
-    lineHeight: '3rem',
-    textAlign: 'center',
-    textTransform: 'capitalize',
-    marginTop: theme.spacing(15),
-    marginBottom: theme.spacing(3)
-  },
-  loadingContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '200px'
-  },
-  [theme.breakpoints.down('sm')]: {
-    fullWidth: { width: '100%' }
+  root: {
+    paddingTop: theme.spacing(10),
+    paddingBottom: theme.spacing(4)
   }
 }));
 
-function MyDashboard(props) {
-  const {
-    user,
-    reservations,
-    movies,
-    cinemas,
-    getMovies,
-    getReservations,
-    getCinemas,
-    loading
-  } = props;
+function MyDashboard({ getReservations, getMovies, getCinemas }) {
+  const classes = useStyles();
 
   useEffect(() => {
     getMovies();
@@ -43,73 +20,13 @@ function MyDashboard(props) {
     getCinemas();
   }, [getMovies, getReservations, getCinemas]);
 
-  const classes = useStyles(props);
-
-  if (loading || !user) {
-    return (
-      <Container>
-        <div className={classes.loadingContainer}>
-          <CircularProgress />
-        </div>
-      </Container>
-    );
-  }
-
-  const myReservations = reservations.filter(
-    reservation => reservation.username === user.username
-  );
-
   return (
-    <Container>
-      <Grid container spacing={2}>
-        {!!myReservations.length && (
-          <>
-            <Grid item xs={12}>
-              <Typography
-                className={classes.title}
-                variant="h2"
-                color="inherit">
-                Мои бронирования
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <MyReservationTable
-                reservations={myReservations}
-                movies={movies}
-                cinemas={cinemas}
-              />
-            </Grid>
-          </>
-        )}
-        <Grid item xs={12}>
-          <Typography className={classes.title} variant="h2" color="inherit">
-            Мой аккаунт
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Account />
-        </Grid>
-      </Grid>
-    </Container>
+    <div className={classes.root}>
+      <Account />
+    </div>
   );
 }
 
-const mapStateToProps = ({
-  authState,
-  movieState,
-  reservationState,
-  cinemaState
-}) => ({
-  user: authState.user,
-  loading: authState.loading,
-  movies: movieState.movies,
-  reservations: reservationState.reservations,
-  cinemas: cinemaState.cinemas
-});
-
 const mapDispatchToProps = { getMovies, getReservations, getCinemas };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MyDashboard);
+export default connect(null, mapDispatchToProps)(MyDashboard);

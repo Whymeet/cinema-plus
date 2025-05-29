@@ -1,98 +1,77 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import moment from 'moment';
-import { withStyles } from '@material-ui/core';
-import { Avatar, Typography, Button } from '@material-ui/core';
-import {
-  Portlet,
-  PortletContent,
-  PortletFooter
-} from '../../../../../components';
-
-// Component styles
+import { withStyles, Typography, Button, Avatar } from '@material-ui/core';
 import styles from './styles';
+import classNames from 'classnames';
+import bActive from '../../../../../assets/images/b_active.png';
+import bNoactive from '../../../../../assets/images/b_noactive.png';
 
-class AccountProfile extends Component {
-  componentDidUpdate(prevProps) {
-    // Если пользователь изменился, обновляем состояние
-    if (prevProps.user !== this.props.user) {
-      this.forceUpdate();
+const AccountProfile = ({ classes, className, user, uploadImage, onToggleView, showReservations }) => {
+  const handleFileSelect = event => {
+    const file = event.target.files[0];
+    if (file && user._id) {
+      uploadImage(user._id, file);
     }
-  }
+  };
 
-  render() {
-    const { user, classes, className, file, imagePreview, onUpload } = this.props;
-    const rootClassName = classNames(classes.root, className);
-
-    if (!user) {
-      return (
-        <Portlet className={rootClassName}>
-          <PortletContent>
-            <Typography variant="body1">Загрузка данных...</Typography>
-          </PortletContent>
-        </Portlet>
-      );
-    }
-
-    const userName = user.name || 'Без имени';
-    const userEmail = user.email || 'Email не указан';
-    const registrationDate = user.createdAt 
-      ? moment(user.createdAt).format('DD.MM.YYYY')
-      : 'Не указана';
-
-    return (
-      <Portlet className={rootClassName}>
-        <PortletContent>
-          <div className={classes.details}>
-            <div className={classes.info}>
-              <Typography className={classes.nameText} variant="h1">
-                {userName}
-              </Typography>
-              <Typography className={classes.emailText} variant="body1">
-                {userEmail}
-              </Typography>
-              <Typography className={classes.dateText} variant="body1">
-                Дата регистрации: {registrationDate}
-              </Typography>
-            </div>
-            <Avatar
-              className={classes.avatar}
-              src={imagePreview || (user.imageurl ? user.imageurl : '/images/avatars/avatar.png')}
-            />
-          </div>
-        </PortletContent>
-        <PortletFooter>
-          <input
-            accept="image/*"
-            className={classes.input}
-            id="icon-button-file"
-            type="file"
-            onChange={onUpload}
-          />
-          <label htmlFor="icon-button-file">
-            <Button
-              className={classes.uploadButton}
-              component="span"
-              color="primary"
-              variant="text">
-              {file ? 'Изменить фото' : 'Загрузить фото'}
-            </Button>
-          </label>
-          <span>{file && file.name}</span>
-        </PortletFooter>
-      </Portlet>
-    );
-  }
-}
+  return (
+    <div className={classNames(classes.root, className)}>
+      <div className={classes.details}>
+        <div className={classes.info}>
+          <Typography className={classes.nameText} variant="h3">
+            {user.name}
+          </Typography>
+          <Typography className={classes.emailText} variant="h6">
+            {user.email}
+          </Typography>
+          <Typography className={classes.dateText}>
+            Зарегистрирован: {new Date(user.createdAt).toLocaleDateString()}
+          </Typography>
+        </div>
+        <Avatar
+          className={classes.avatar}
+          src={user.imageurl ? user.imageurl : '/images/avatars/avatar.png'}
+        />
+      </div>
+      <div className={classes.actions}>
+        <input
+          accept="image/*"
+          className={classes.input}
+          style={{ display: 'none' }}
+          id="raised-button-file"
+          multiple
+          type="file"
+          onChange={handleFileSelect}
+        />
+        <label htmlFor="raised-button-file">
+          <Button
+            variant="contained"
+            color="primary"
+            component="span"
+            fullWidth
+            className={classes.uploadButton}
+          >
+            Загрузить фото
+          </Button>
+        </label>
+        <img
+          src={showReservations ? bActive : bNoactive}
+          alt="Toggle view"
+          className={classes.toggleButton}
+          onClick={onToggleView}
+        />
+      </div>
+    </div>
+  );
+};
 
 AccountProfile.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  file: PropTypes.object,
-  imagePreview: PropTypes.string,
-  onUpload: PropTypes.func.isRequired
+  uploadImage: PropTypes.func.isRequired,
+  onToggleView: PropTypes.func.isRequired,
+  showReservations: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(AccountProfile);
