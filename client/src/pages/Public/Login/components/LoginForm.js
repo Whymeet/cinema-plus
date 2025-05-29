@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import { Button, TextField, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { login } from '../../../../store/actions';
+import { login, setAlert } from '../../../../store/actions';
 import { history } from '../../../../utils';
 
 const useStyles = makeStyles(theme => ({
@@ -68,6 +68,8 @@ function LoginForm(props) {
   const { isAuthenticated, user, redirect } = props;
   const classes = useStyles();
   const [values, setValues] = useState({ username: '', password: '' });
+  const [usernameError, setUsernameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   useEffect(() => {
     if (isAuthenticated && redirect) {
@@ -77,11 +79,48 @@ function LoginForm(props) {
     }
   }, [isAuthenticated, user, redirect]);
 
-  const handleFieldChange = e =>
+  const handleFieldChange = e => {
+    const { name, value } = e.target;
+    
+    if (name === 'username') {
+      if (value.length < 4) {
+        setUsernameError('Имя пользователя должно содержать минимум 4 символа');
+      } else if (value.length > 10) {
+        setUsernameError('Имя пользователя не должно превышать 10 символов');
+      } else {
+        setUsernameError('');
+      }
+    }
+
+    if (name === 'password') {
+      if (value.length < 7) {
+        setPasswordError('Пароль должен содержать минимум 7 символов');
+      } else if (value.length > 15) {
+        setPasswordError('Пароль не должен превышать 15 символов');
+      } else {
+        setPasswordError('');
+      }
+    }
+    
     setValues({
       ...values,
-      [e.target.name]: e.target.value
+      [name]: value
     });
+  };
+
+  const handleLogin = () => {
+    if (usernameError) {
+      props.dispatch(setAlert(usernameError, 'error', 5000));
+      return;
+    }
+
+    if (passwordError) {
+      props.dispatch(setAlert(passwordError, 'error', 5000));
+      return;
+    }
+
+    props.login(values.username, values.password);
+  };
 
   return (
     <form className={classes.form}>
@@ -97,6 +136,8 @@ function LoginForm(props) {
           onChange={event => handleFieldChange(event)}
           type="text"
           value={values.username}
+          error={!!usernameError}
+          helperText={usernameError}
           variant="outlined"
         />
         <TextField
@@ -106,6 +147,8 @@ function LoginForm(props) {
           onChange={event => handleFieldChange(event)}
           type="password"
           value={values.password}
+          error={!!passwordError}
+          helperText={passwordError}
           variant="outlined"
         />
       </div>
@@ -113,7 +156,7 @@ function LoginForm(props) {
       <Button
         className={classes.loginButton}
         color="primary"
-        onClick={() => props.login(values.username, values.password)}
+        onClick={handleLogin}
         size="large"
         variant="contained">
         Войти
@@ -132,6 +175,6 @@ const mapStateToProps = state => ({
   isAuthenticated: state.authState.isAuthenticated,
   user: state.authState.user
 });
-export default connect(mapStateToProps, { login })(
+export default connect(mapStateToProps, { login, setAlert })(
   LoginForm
 );

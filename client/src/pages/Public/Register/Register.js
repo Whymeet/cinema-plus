@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { register } from '../../../store/actions';
+import { register, setAlert } from '../../../store/actions';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
@@ -26,7 +26,9 @@ class Register extends Component {
       password: '',
       image: null,
       policy: false
-    }
+    },
+    usernameError: '',
+    passwordError: ''
   };
 
   componentDidUpdate(prevProps) {
@@ -43,11 +45,46 @@ class Register extends Component {
   handleFieldChange = (field, value) => {
     const newState = { ...this.state };
     newState.values[field] = value;
+    
+    // Валидация длины имени пользователя
+    if (field === 'username') {
+      if (value.length < 4) {
+        newState.usernameError = 'Имя пользователя должно содержать минимум 4 символа';
+      } else if (value.length > 10) {
+        newState.usernameError = 'Имя пользователя не должно превышать 10 символов';
+      } else {
+        newState.usernameError = '';
+      }
+    }
+
+    // Валидация длины пароля
+    if (field === 'password') {
+      if (value.length < 7) {
+        newState.passwordError = 'Пароль должен содержать минимум 7 символов';
+      } else if (value.length > 15) {
+        newState.passwordError = 'Пароль не должен превышать 15 символов';
+      } else {
+        newState.passwordError = '';
+      }
+    }
+    
     this.setState(newState);
   };
 
   handleRegister = () => {
-    const newUser = this.state.values;
+    const { values, usernameError, passwordError } = this.state;
+    
+    if (usernameError) {
+      this.props.dispatch(setAlert(usernameError, 'error', 5000));
+      return;
+    }
+
+    if (passwordError) {
+      this.props.dispatch(setAlert(passwordError, 'error', 5000));
+      return;
+    }
+    
+    const newUser = values;
     this.props.register(newUser);
   };
 
@@ -99,6 +136,8 @@ class Register extends Component {
                       onChange={event =>
                         this.handleFieldChange('username', event.target.value)
                       }
+                      error={!!this.state.usernameError}
+                      helperText={this.state.usernameError}
                       variant="outlined"
                     />
                     <TextField
@@ -127,6 +166,8 @@ class Register extends Component {
                       type="password"
                       value={values.password}
                       variant="outlined"
+                      error={!!this.state.passwordError}
+                      helperText={this.state.passwordError}
                       onChange={event =>
                         this.handleFieldChange('password', event.target.value)
                       }

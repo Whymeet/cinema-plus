@@ -17,6 +17,8 @@ const userSchema = Schema(
       required: true,
       trim: true,
       lowercase: true,
+      minlength: [4, 'Имя пользователя должно содержать минимум 4 символа'],
+      maxlength: [10, 'Имя пользователя не должно превышать 10 символов'],
     },
     email: {
       type: String,
@@ -33,10 +35,11 @@ const userSchema = Schema(
     password: {
       type: String,
       trim: true,
-      minlength: 7,
+      minlength: [7, 'Пароль должен содержать минимум 7 символов'],
+      maxlength: [15, 'Пароль не должен превышать 15 символов'],
       validate(value) {
         if (value.toLowerCase().includes('password')) {
-          throw new Error('Password should not contain word: password');
+          throw new Error('Пароль не должен содержать слово "password"');
         }
       },
     },
