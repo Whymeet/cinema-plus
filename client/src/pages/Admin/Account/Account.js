@@ -2,76 +2,68 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core';
-import { Grid } from '@material-ui/core';
+import { Grid, CircularProgress } from '@material-ui/core';
 import { AccountProfile, AccountDetails } from './components';
+import { MyReservationTable } from '../../../pages/Public/MyDashboard/components';
 import { uploadImage } from '../../../store/actions';
 
 // Component styles
 const styles = theme => ({
   root: {
     padding: theme.spacing(4)
+  },
+  loadingContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '400px'
   }
 });
 
 class Account extends Component {
-  state = { 
-    image: null,
-    imagePreview: null
+  state = {
+    showReservations: false
   };
 
-  handleImageUpload = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      this.setState({ 
-        image: file,
-        imagePreview: URL.createObjectURL(file)
-      });
-      
-      // Сразу загружаем фото при выборе
-      if (this.props.user && this.props.user._id) {
-        try {
-          await this.props.uploadImage(this.props.user._id, file);
-          // После успешной загрузки очищаем состояние
-          this.setState({
-            image: null
-          });
-        } catch (error) {
-          console.error('Ошибка при загрузке фото:', error);
-        }
-      }
-    }
+  handleToggleView = () => {
+    this.setState(prevState => ({
+      showReservations: !prevState.showReservations
+    }));
   };
-
-  componentWillUnmount() {
-    // Очищаем URL превью при размонтировании компонента
-    if (this.state.imagePreview) {
-      URL.revokeObjectURL(this.state.imagePreview);
-    }
-  }
 
   render() {
-    const { image, imagePreview } = this.state;
-    const { classes, user } = this.props;
-    
+    const { classes, uploadImage, user, reservations, movies, cinemas } = this.props;
+    const { showReservations } = this.state;
+
     if (!user) {
-      return <div>Загрузка...</div>;
+      return (
+        <div className={classes.loadingContainer}>
+          <CircularProgress />
+        </div>
+      );
     }
-    
+
     return (
       <div className={classes.root}>
         <Grid container spacing={4}>
           <Grid item lg={4} md={6} xl={4} xs={12}>
-            <AccountProfile
-              file={image}
-              imagePreview={imagePreview}
+            <AccountProfile 
+              onToggleView={this.handleToggleView} 
+              showReservations={showReservations} 
+              uploadImage={uploadImage}
               user={user}
-              onUpload={this.handleImageUpload}
             />
           </Grid>
           <Grid item lg={8} md={6} xl={8} xs={12}>
-            <AccountDetails
-              user={user}
-            />
+            {showReservations ? (
+              <MyReservationTable
+                reservations={reservations}
+                movies={movies}
+                cinemas={cinemas}
+              />
+            ) : (
+              <AccountDetails user={user} />
+            )}
           </Grid>
         </Grid>
       </div>
@@ -80,15 +72,24 @@ class Account extends Component {
 }
 
 Account.propTypes = {
-  user: PropTypes.object.isRequired,
+  className: PropTypes.string,
   classes: PropTypes.object.isRequired,
-  uploadImage: PropTypes.func.isRequired
+  uploadImage: PropTypes.func.isRequired,
+  user: PropTypes.object,
+  reservations: PropTypes.array,
+  movies: PropTypes.array,
+  cinemas: PropTypes.array
 };
 
-const mapStateToProps = ({ authState }) => ({
+const mapStateToProps = ({ movieState, reservationState, cinemaState, authState }) => ({
+  movies: movieState.movies,
+  reservations: reservationState.reservations.filter(
+    reservation => reservation.username === (authState.user ? authState.user.username : '')
+  ),
+  cinemas: cinemaState.cinemas,
   user: authState.user
 });
 
-export default connect(mapStateToProps, { uploadImage })(
-  withStyles(styles)(Account)
-);
+const mapDispatchToProps = { uploadImage };
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Account));

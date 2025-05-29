@@ -92,11 +92,6 @@ const styles = theme => ({
       backgroundColor: theme.palette.primary.main
     }
   },
-  statusChip: {
-    position: 'absolute',
-    top: theme.spacing(2),
-    right: theme.spacing(2)
-  },
   price: {
     fontSize: '1.25rem',
     fontWeight: 500,
@@ -104,7 +99,19 @@ const styles = theme => ({
     marginTop: theme.spacing(2)
   },
   cancelButton: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    width: '100%',
+    fontSize: '0.8rem'
+  },
+  noReservations: {
+    textAlign: 'center',
+    padding: theme.spacing(3),
+    color: theme.palette.text.secondary,
+    fontSize: '1.1rem',
+    fontWeight: 500,
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.spacing(1),
+    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
   }
 });
 
@@ -153,6 +160,18 @@ function MyReservationTable(props) {
     });
   };
 
+  if (!reservations.length) {
+    return (
+      <Grid container className={classes.root}>
+        <Grid item xs={12}>
+          <Typography className={classes.noReservations}>
+            Нет действительных броней
+          </Typography>
+        </Grid>
+      </Grid>
+    );
+  }
+
   return (
     <>
       <Grid container className={classes.root} spacing={3}>
@@ -163,11 +182,6 @@ function MyReservationTable(props) {
           return (
             <Grid item xs={12} key={reservation._id}>
               <Card className={classes.card} elevation={2}>
-                <Chip
-                  label={reservation.checkin ? "Использовано" : "Активно"}
-                  color={reservation.checkin ? "default" : "secondary"}
-                  className={classes.statusChip}
-                />
                 <CardContent className={classes.cardContent}>
                   <div className={classes.posterContainer}>
                     <CardMedia
@@ -220,17 +234,6 @@ function MyReservationTable(props) {
                     <Typography variant="h6" className={classes.price}>
                       {reservation.total} ₽
                     </Typography>
-
-                    {!reservation.checkin && (
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        className={classes.cancelButton}
-                        onClick={() => handleCancelClick(reservation._id)}
-                      >
-                        Отменить бронирование
-                      </Button>
-                    )}
                   </div>
 
                   <div className={classes.qrContainer}>
@@ -244,6 +247,15 @@ function MyReservationTable(props) {
                         <Typography variant="caption" align="center">
                           QR код для входа
                         </Typography>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          size="small"
+                          className={classes.cancelButton}
+                          onClick={() => handleCancelClick(reservation._id)}
+                        >
+                          Отменить бронирование
+                        </Button>
                       </>
                     )}
                   </div>
