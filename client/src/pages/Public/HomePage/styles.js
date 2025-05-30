@@ -30,5 +30,12 @@ export default theme => ({
     borderRadius: theme.spacing(2),
     boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
     marginBottom: theme.spacing(2)
+  },
+   alText: {
+    textAlign: 'center',
+    color: theme.palette.common.white,
+    fontSize: '1.1rem',
+    lineHeight: 1.6,
+    marginBottom: theme.spacing(2)
   }
 });
