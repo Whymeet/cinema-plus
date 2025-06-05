@@ -79,7 +79,7 @@ const userSchema = Schema(
 userSchema.methods.toJSON = function() {
   const user = this;
   const userObject = user.toObject();
-  if (!userObject.role === 'superadmin') {
+  if (userObject.role !== 'superadmin') {
     delete userObject.updatedAt;
     delete userObject.__v;
   }
