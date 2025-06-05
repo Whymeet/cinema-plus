@@ -26,12 +26,16 @@ const enhance = async (req, res, next) => {
       _id: decoded._id,
       'tokens.token': token,
     });
-    if (!user) throw new Error();
+
+    if (!user || (user.role !== 'admin' && user.role !== 'superadmin')) {
+      throw new Error();
+    }
+
     req.token = token;
     req.user = user;
     next();
   } catch (e) {
-    res.status(401).send({ error: 'Please authenticate.' });
+    res.status(403).send({ error: 'Access denied.' });
   }
 };
 
