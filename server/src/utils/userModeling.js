@@ -58,10 +58,10 @@ const moviesUserModeling = async username => {
   const userReservations = JSON.parse(
     JSON.stringify(await Reservation.find({ username: username }))
   );
-  const Allmovies = JSON.parse(JSON.stringify(await Movie.find({})));
+  const allMovies = JSON.parse(JSON.stringify(await Movie.find({})));
 
   const moviesWatched = userReservations.map(reservation => {
-    for (let movie of Allmovies) {
+    for (let movie of allMovies) {
       if (movie._id == reservation.movieId) {
         return movie;
       }
@@ -92,7 +92,7 @@ const moviesUserModeling = async username => {
     });
   });
 
-  const availableMovies = availableMoviesFilter(Allmovies);
+  const availableMovies = availableMoviesFilter(allMovies);
   const moviesNotWatched = moviesNotWatchedFilter(availableMovies, userReservations);
   const moviesRated = findRates(moviesNotWatched, userPreference);
 
@@ -131,10 +131,10 @@ const getRateOfProperty = (pref, userPreference, movie) => {
   return rate;
 };
 
-const availableMoviesFilter = Allmovies => {
+const availableMoviesFilter = allMovies => {
   const today = new Date();
   const returnMovies = [];
-  Allmovies.map(movie => {
+  allMovies.map(movie => {
     let releaseDate = new Date(movie.releaseDate);
     let endDate = new Date(movie.endDate);
     if (today >= releaseDate && today <= endDate) {
