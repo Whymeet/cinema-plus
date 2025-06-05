@@ -102,7 +102,7 @@ $ Ознакомьтесь с примером .env
 Установите зависимости и devDependencies
 
 ```sh
-$ git clone https://github.com/georgesimos/Movie-app.git
+$ git clone https://github.com/georgesimos/cinema-plus.git
 $ npm install
 $ cd server npm install && npm start
 $ cd client npm install && npm start
