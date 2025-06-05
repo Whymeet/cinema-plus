@@ -20,7 +20,8 @@ class Account extends Component {
     email: '',
     phone: '',
     password: '',
-    phoneError: ''
+    phoneError: '',
+    emailError: ''
   };
 
   componentDidMount() {
@@ -33,13 +34,21 @@ class Account extends Component {
     return phoneRegex.test(phone);
   };
 
+  validateEmail = email => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   handleFieldChange = (field, value) => {
     const newState = { ...this.state };
     newState[field] = value;
     
-    // Очищаем ошибку при изменении номера
+    // Очищаем ошибку при изменении номера или email
     if (field === 'phone') {
       newState.phoneError = '';
+    }
+    if (field === 'email') {
+      newState.emailError = '';
     }
     
     this.setState(newState);
@@ -51,8 +60,16 @@ class Account extends Component {
 
       // Проверяем формат телефона перед отправкой
       if (phone && !this.validatePhoneNumber(phone)) {
-        this.setState({ 
-          phoneError: 'Введите номер в формате +7XXXXXXXXXX' 
+        this.setState({
+          phoneError: 'Введите номер в формате +7XXXXXXXXXX'
+        });
+        return;
+      }
+
+      // Проверяем формат email перед отправкой
+      if (email && !this.validateEmail(email)) {
+        this.setState({
+          emailError: 'Некорректный email'
         });
         return;
       }
@@ -113,6 +130,8 @@ class Account extends Component {
                 required
                 value={email}
                 variant="outlined"
+                error={!!this.state.emailError}
+                helperText={this.state.emailError}
                 onChange={event =>
                   this.handleFieldChange('email', event.target.value)
                 }

@@ -14,7 +14,9 @@ class AddUser extends Component {
     email: '',
     password: '',
     role: '',
-    phone: ''
+    phone: '',
+    phoneError: '',
+    emailError: ''
   };
 
   componentDidMount() {
@@ -38,6 +40,16 @@ class AddUser extends Component {
     }
   }
 
+  validatePhoneNumber = phone => {
+    const phoneRegex = /^\+7\d{10}$/;
+    return phoneRegex.test(phone);
+  };
+
+  validateEmail = email => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   handleChange = e => {
     this.setState({
       state: e.target.value
@@ -47,15 +59,49 @@ class AddUser extends Component {
   handleFieldChange = (field, value) => {
     const newState = { ...this.state };
     newState[field] = value;
+    if (field === 'phone') newState.phoneError = '';
+    if (field === 'email') newState.emailError = '';
     this.setState(newState);
   };
 
   onAddUser = () => {
+    const { phone, email } = this.state;
+
+    let hasError = false;
+
+    if (phone && !this.validatePhoneNumber(phone)) {
+      this.setState({ phoneError: 'Введите номер в формате +7XXXXXXXXXX' });
+      hasError = true;
+    }
+
+    if (email && !this.validateEmail(email)) {
+      this.setState({ emailError: 'Некорректный email' });
+      hasError = true;
+    }
+
+    if (hasError) return;
+
     const user = { ...this.state };
     this.props.addUser(user);
   };
 
   onUpdateUser = () => {
+    const { phone, email } = this.state;
+
+    let hasError = false;
+
+    if (phone && !this.validatePhoneNumber(phone)) {
+      this.setState({ phoneError: 'Введите номер в формате +7XXXXXXXXXX' });
+      hasError = true;
+    }
+
+    if (email && !this.validateEmail(email)) {
+      this.setState({ emailError: 'Некорректный email' });
+      hasError = true;
+    }
+
+    if (hasError) return;
+
     const user = { ...this.state };
     this.props.updateUser(user, this.props.selectedUser._id);
   };
@@ -117,6 +163,8 @@ class AddUser extends Component {
               required
               value={email}
               variant="outlined"
+              error={!!this.state.emailError}
+              helperText={this.state.emailError}
               onChange={event =>
                 this.handleFieldChange('email', event.target.value)
               }
@@ -143,6 +191,9 @@ class AddUser extends Component {
               required
               value={phone}
               variant="outlined"
+              placeholder="+7XXXXXXXXXX"
+              error={!!this.state.phoneError}
+              helperText={this.state.phoneError}
               onChange={event =>
                 this.handleFieldChange('phone', event.target.value)
               }
